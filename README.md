@@ -1,1 +1,3 @@
-# HearthForChangeFrontend
+# HearthForChange Frontend APP
+
+This is the client app for HeartForChange, an application designed for non-governmental organizations (NGOs), will be developed using the React framework, along with the Vite build tool and the SWC JavaScript/TypeScript compiler. The client development will focus on creating a user-friendly interface that enables NGOs to easily access and utilize the application's features. The design will be responsive and optimized for various devices, including desktops, tablets, and mobile devices. Additionally, the client will incorporate features that allow for efficient data retrieval and management, as well as secure authentication and authorization processes to ensure the privacy and security of NGO users' data.
