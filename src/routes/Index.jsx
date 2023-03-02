@@ -6,7 +6,6 @@ import SignIn from './login/SignIn';
 
 
 function Index() {
-  
 
     return (
             <Routes>
