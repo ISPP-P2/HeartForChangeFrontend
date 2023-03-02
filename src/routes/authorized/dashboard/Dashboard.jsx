@@ -12,6 +12,7 @@ function Dashboard() {
             <CustomButton onClick={()=> {console.log()}} text={"LIGHTGREEN"} variantButton={VARIANTES_BUTTON.LIGHTGREEN}/>
             <CustomButton onClick={()=> {console.log()}} text={"PURPLE"} variantButton={VARIANTES_BUTTON.PURPLE}/>
             <CustomButton onClick={()=> {console.log()}} text={"RED"} variantButton={VARIANTES_BUTTON.RED}/>
+            <CustomButton onClick={()=> {console.log()}} text={"ORANGE"} variantButton={VARIANTES_BUTTON.ORANGE}/>
             <CustomCard />
         </div>
     );
