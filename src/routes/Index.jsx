@@ -1,19 +1,72 @@
-import React, { lazy, useContext, useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
-import StickyHeadTable from './activities/activityList';
-import Dashboard from './authorized/dashboard/Dashboard';
-import SignIn from './login/SignIn';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import { Route, Routes } from 'react-router-dom';
+import { Dashboard } from '@mui/icons-material';
+import { TopBar } from '../components/TopBar';
+import Sidebar from '../components/Sidebar';
+import AutorizedRoutes from './authorized/AuthorizedRoutes';
+
+const drawerWidth = 240;
 
 
-function Index() {
 
-    return (
-            <Routes>
-                <Route path={'/login'} element={<SignIn />}/>		
-                <Route path={'/'} element={<StickyHeadTable />}/>		
-                <Route path={'*'} element={<div>Error</div>}/>		
-            </Routes>
-    )
+function Index(props) {
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div>
+      <Toolbar />
+      <Divider />
+      <Sidebar />
+    </div>
+  );
+
+  const container = window !== undefined ? () => window().document.body : undefined;
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <TopBar handleDrawerToggle={handleDrawerToggle} />
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}>
+          {drawer}
+        </Drawer>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          open>
+          {drawer}
+        </Drawer>
+      </Box>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+        <Toolbar />
+        <AutorizedRoutes />
+      </Box>
+    </Box>
+    );
 }
 
-export default Index
+export default Index;
