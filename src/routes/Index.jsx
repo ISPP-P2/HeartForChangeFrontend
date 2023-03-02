@@ -5,9 +5,6 @@ import Dashboard from './authorized/dashboard/Dashboard';
 
 
 function Index() {
-  
-    
-
     
 
     return (

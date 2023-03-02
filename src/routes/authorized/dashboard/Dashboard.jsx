@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 function Dashboard() {
     return (
         <div>
-            <CustomButton onClick={()=> {console.log()}} Icon={ArrowForwardIcon} text={"BLUE"} variantButton={VARIANTES_BUTTON.BLUE}/>
+            <CustomButton onClick={()=> {console.log()}} icon={()=>< ArrowForwardIcon />} text={"BLUE"} variantButton={VARIANTES_BUTTON.BLUE}/>
             <CustomButton onClick={()=> {console.log()}} text={"DARKGREEN"} variantButton={VARIANTES_BUTTON.DARKGREEN}/>
             <CustomButton onClick={()=> {console.log()}} text={"GREEN"} variantButton={VARIANTES_BUTTON.GREEN}/>
             <CustomButton onClick={()=> {console.log()}} text={"LIGHTBLUE"} variantButton={VARIANTES_BUTTON.LIGHTBLUE}/>
