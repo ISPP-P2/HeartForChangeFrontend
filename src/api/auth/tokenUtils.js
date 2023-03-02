@@ -1,6 +1,18 @@
 import jwtDecode from "jwt-decode"
 
 export const parseTokens = (response) => {
+
+    return {
+            token: "awdawd",
+            expiresIn: 1000000,
+            authState:{
+                "username": "usuario1",
+                "rol": "ONG"
+            },
+            refreshToken: "awdawd",
+            refreshTokenExpireIn: 1000000,
+            tokenType: "Bearer",
+    }
     let token = jwtDecode(response.data.token)
     let refresh = jwtDecode(response.data.refresh)   
 

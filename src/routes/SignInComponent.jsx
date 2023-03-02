@@ -4,12 +4,29 @@ import { useSignIn } from 'react-auth-kit'
 import { parseTokens } from '../api/auth/tokenUtils'
 import { useNavigate } from 'react-router-dom'
 
-const SignInComponent  = () => {
+const SignInComponent  = ({prop}) => {
     const navigate = useNavigate()
 
 
     const SignIn = useSignIn()
+
+    const onSubmitDev = () => {
+        const tokens = parseTokens(null)
+        SignIn(
+            {
+                token: tokens.token,
+                expiresIn: tokens.expiresIn,
+                tokenType: tokens.tokenType,
+                authState: tokens.authState,
+                refreshToken: tokens.refreshToken,                   
+                refreshTokenExpireIn: tokens.refreshTokenExpireIn   
+            }
+        )
+        navigate('/') 
+    }
+
     const onSubmit = () => {
+        // Simplemente para que inicie sesion en desarrollo
         axios.post("/accounts/signin", {
             "username": "asds",
             "password": "asds"
@@ -22,8 +39,8 @@ const SignInComponent  = () => {
                         expiresIn: tokens.expiresIn,
                         tokenType: tokens.tokenType,
                         authState: tokens.authState,
-                        refreshToken: tokens.refreshToken,                    // Only if you are using refreshToken feature
-                        refreshTokenExpireIn: tokens.refreshTokenExpireIn     // Only if you are using refreshToken feature
+                        refreshToken: tokens.refreshToken,                   
+                        refreshTokenExpireIn: tokens.refreshTokenExpireIn   
                     }
                 )){
                     console.log("Sesion iniciada")
@@ -38,14 +55,12 @@ const SignInComponent  = () => {
             }
         )
     }
-
     return (
         <>
-            <button onClick={onSubmit}>Sign in</button>
+            <button onClick={onSubmitDev}>Sign in</button>
         </>
     )
 }
-
 
 
 export default SignInComponent;
