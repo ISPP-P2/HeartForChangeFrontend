@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -14,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import users from '../static/user';
+import { useState } from 'react';
 
 
 
@@ -33,30 +33,9 @@ function createData(id,username, name, surname, email, age,role,avatarImage='', 
   }
 
 
-function Row({row, details}) {
-  const [open, setOpen] = React.useState(false);
-
-
-  
+const DetailsComponent = ({details, open}) => {
   return (
-    <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        {row.map((e, i)=>{
-              return (
-                <TableCell key={i}>{e}</TableCell>
-              )
-            })}
-      </TableRow>
-      <TableRow>
+    <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
@@ -74,39 +53,65 @@ function Row({row, details}) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  <TableRow >
                       {details.items.map((e, i)=>{
                       return (
-                        <TableRow key={i}>
-                          {e.map((item, i)=> {
-                            return (
-                              <TableCell component={"th"} key={i} >{item}</TableCell>
-                            )
-                          })}
-                          </TableRow>
+                            <TableCell component={"th"} key={i} >{e}</TableCell>
                       )
                     })}
+                    </TableRow>
                 </TableBody>
               </Table>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+  )
+}
+
+
+
+
+function Row({row}) {
+  const [open, setOpen] = useState(false);
+
+  let details = row.slice(-1)[0] 
+  row = row.slice(0, -1)
+  
+  return (
+    <>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell sx={{width: "4rem"}}>
+          <IconButton 
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+          {row.map((e, i)=>{
+              return (
+                <TableCell key={i}>{e}</TableCell>
+              )
+            })}
+      </TableRow>
+      <DetailsComponent details={details} open={open} />
+    </>
   );
 }
 
 
 
-export default function BasicTable({objetoTabla = null}){
+export default function BasicTable({maxHeight = null, objetoTabla = null}){
 
   if(objetoTabla == null){
     return <div></div>
   }
 
-
-
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{
+      maxHeight: maxHeight === null ? null : maxHeight
+    }} component={Paper}>
       <Table aria-label="able">
         <TableHead>
           <TableRow>
@@ -120,7 +125,7 @@ export default function BasicTable({objetoTabla = null}){
         </TableHead>
         <TableBody>
         {objetoTabla.items.map((row, i) => (
-            <Row key={i} row={row} details={objetoTabla.details}/>
+            <Row key={i} row={row}/>
           ))}
         </TableBody>
       </Table>
