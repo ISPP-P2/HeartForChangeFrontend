@@ -35,6 +35,7 @@ const onSubmitDev = () => {
 }
 
 
+
 return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -48,7 +49,7 @@ return (
         <div  style={{ display: 'flex',justifyContent:'center' }}>
           <img style={{ maxWidth: '50%' }}  src={logo}   ></img>
         </div>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="#686868">
           Iniciar sesión
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
@@ -102,7 +103,11 @@ return (
           </div>
           <Grid container>
             <Grid item >
-              <CustomButton  onClick={onSubmitDev} text={"Crear Cuenta"} variantButton={VARIANTES_BUTTON.ORANGE}/>
+            <Link color="text.secondary" variant="h5" fontSize= "1em" href="/" underline="none" sx={{"&:hover": {
+                    opacity: 0.70
+                }}}>
+            Crear Cuenta
+    </Link>
             </Grid>
           </Grid>
         </Box>
@@ -110,5 +115,6 @@ return (
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
 );
+
 }
 
