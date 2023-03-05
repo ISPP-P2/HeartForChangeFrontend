@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import users from "../static/user";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 export const TopBar = ({ handleDrawerToggle }) => {
 
   return (
@@ -13,7 +13,8 @@ export const TopBar = ({ handleDrawerToggle }) => {
       sx={{
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
-        background: 'linear-gradient(to right, #FFA500, #FFFFFF)',
+        background: "rgb(255,137,49)",
+        background: "linear-gradient(90deg, rgba(255,137,49,1) 0%, rgba(255,137,49,1) 65%, rgba(255,179,79,1) 100%)"
       }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>

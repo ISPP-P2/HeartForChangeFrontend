@@ -9,11 +9,11 @@ import { TopBar } from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
 import AutorizedRoutes from './authorized/AuthorizedRoutes';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 
 
-function Index(props) {
+export function Index(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -24,7 +24,6 @@ function Index(props) {
   const drawer = (
     <div>
       <Toolbar />
-      <Divider />
       <Sidebar />
     </div>
   );
@@ -33,10 +32,11 @@ function Index(props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <TopBar handleDrawerToggle={handleDrawerToggle} />
+      <TopBar handleDrawerToggle={handleDrawerToggle}/>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+        sx={{ 
+          width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
         <Drawer
           container={container}
           variant="temporary"
@@ -46,8 +46,13 @@ function Index(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
+            background: "rgb(0,0,0,0.1)",
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiPaper-root': {
+              background: "rgb(255,137,49)",
+              background:" linear-gradient(173deg, rgba(255,137,49,1) 0%, rgba(255,137,49,1) 20%, rgba(255,182,81,1) 100%)",
+            }
           }}>
           {drawer}
         </Drawer>
@@ -56,6 +61,10 @@ function Index(props) {
           sx={{
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiPaper-root': {
+              background: "rgb(255,137,49)",
+              background:" linear-gradient(173deg, rgba(255,137,49,1) 0%, rgba(255,137,49,1) 20%, rgba(255,182,81,1) 100%)",
+            }
           }}
           open>
           {drawer}
@@ -68,5 +77,3 @@ function Index(props) {
     </Box>
     );
 }
-
-export default Index;
