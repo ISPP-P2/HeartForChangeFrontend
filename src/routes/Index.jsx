@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-import { Route, Routes } from 'react-router-dom';
-import { Dashboard } from '@mui/icons-material';
 import { TopBar } from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
 import AutorizedRoutes from './authorized/AuthorizedRoutes';
+import BasicTable from '../components/BasicTable';
+import CustomCard from '../components/CustomCard';
 
 const drawerWidth = 200;
 
@@ -74,6 +74,10 @@ export function Index(props) {
         <Toolbar />
         <AutorizedRoutes />
       </Box>
+      
     </Box>
+
+
+    
     );
 }

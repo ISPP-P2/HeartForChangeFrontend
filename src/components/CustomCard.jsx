@@ -1,23 +1,27 @@
 import React from 'react'
 import Card from '@mui/material/Card';
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
 import { Box, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 
 
-function CustomCard() {
+
+function CustomCard({
+  title = 'Cosas',
+  quantity = '100'}) {
   return (
     <Card sx={{
       width: "min-content",
       filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.3))"
     }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
-            1000
+            {quantity}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
-            Voluntarios
+          <Typography variant="body" color="text.secondary" component="div">
+            {title}
           </Typography>
-        </CardContent>
+        </CardContent>  
       </Box>
     </Card>
   )
