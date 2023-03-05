@@ -11,10 +11,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import { Avatar } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import users from '../static/user';
+
+
+
 
 function createData(id,username, name, surname, email, age,role,avatarImage='', activityHistory) {
     return {
@@ -31,8 +33,7 @@ function createData(id,username, name, surname, email, age,role,avatarImage='', 
   }
 
 
-function Row(props) {
-  const { row } = props;
+function Row({row, details}) {
   const [open, setOpen] = React.useState(false);
 
 
@@ -49,19 +50,11 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="right">
-            <Avatar
-              alt={row.username}
-              src={row.avatarImage}
-              sx={{ width: 56, height: 56 }}>
-            
-            </Avatar>
-        </TableCell>
-        <TableCell align="right">{row.name}</TableCell>
-        <TableCell align="right">{row.username}</TableCell>
-        <TableCell align="right">{row.surname}</TableCell>
-        <TableCell align="right">{row.email}</TableCell>
-        <TableCell align="right">{row.age}</TableCell>
+        {row.map((e, i)=>{
+              return (
+                <TableCell key={i}>{e}</TableCell>
+              )
+            })}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -73,19 +66,25 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Activity</TableCell>
+                  {details.header.map((e, i)=>{
+                      return (
+                        <TableCell  key={i} >{e}</TableCell>
+                      )
+                    })}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.activityHistory.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.activityName}</TableCell>
-                    </TableRow>
-                  ))}
+                      {details.items.map((e, i)=>{
+                      return (
+                        <TableRow key={i}>
+                          {e.map((item, i)=> {
+                            return (
+                              <TableCell component={"th"} key={i} >{item}</TableCell>
+                            )
+                          })}
+                          </TableRow>
+                      )
+                    })}
                 </TableBody>
               </Table>
             </Box>
@@ -96,41 +95,32 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    surname: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    age: PropTypes.string.isRequired,
-    avatarImage: PropTypes.string.isRequired,
-    activityHistory: PropTypes.array.isRequired,
-     
-    }),
 
-};
-console.log(users)
-const rows = users.map(user => createData(user.id,user.username, user.name, user.surname, user.email, user.age, user.role, user.avatarImage, user.activityHistory));
 
-export default function BasicTable() {
+export default function BasicTable({objetoTabla = null}){
+
+  if(objetoTabla == null){
+    return <div></div>
+  }
+
+
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="able">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Avatar</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Username</TableCell>
-            <TableCell align="right">Surname</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Age</TableCell>
+            {objetoTabla.header.map((e, i)=>{
+              return (
+                <TableCell key={i}>{e}</TableCell>
+              )
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-        {rows.map((row) => (
-            <Row key={row.id} row={row} />
+        {objetoTabla.items.map((row, i) => (
+            <Row key={i} row={row} details={objetoTabla.details}/>
           ))}
         </TableBody>
       </Table>

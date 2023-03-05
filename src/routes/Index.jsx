@@ -7,6 +7,7 @@ import { TopBar } from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
 import AutorizedRoutes from './authorized/AuthorizedRoutes';
 import BasicTable from '../components/BasicTable';
+import CustomCard from '../components/CustomCard';
 
 const drawerWidth = 240;
 
