@@ -43,5 +43,7 @@ export const VARIANTES_BUTTON = {
     RED: "#da5240",
     LIGHTBLUE: "#88b0d6",
     BLUE: "#495bfc",
-    PURPLE: "#ba81e7"
+    PURPLE: "#ba81e7",
+    ORANGE: "#ff862f"
+
 }

@@ -6,9 +6,11 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import logo from '../../static/logo.png'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
+import CustomButton, { VARIANTES_BUTTON } from '../../components/CustomButton';
 
 function Copyright(props) {
 return (
@@ -43,11 +45,11 @@ return (
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <div  style={{ display: 'flex',justifyContent:'center' }}>
+          <img style={{ maxWidth: '50%' }}  src={logo}   ></img>
+        </div>
         <Typography component="h1" variant="h5">
-          Inicio de Sesión
+          Iniciar sesión
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
@@ -59,6 +61,18 @@ return (
             name="email"
             autoComplete="email"
             autoFocus
+            sx={{
+              // input label when focused
+              "& label.Mui-focused": {
+                color:  "#ff862f"
+              },
+            // focused color for input with variant='outlined'
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff862f"
+                  }
+                }
+                }}
           />
           <TextField
             margin="normal"
@@ -69,21 +83,26 @@ return (
             type="password"
             id="password"
             autoComplete="current-password"
+             sx={{
+              // input label when focused
+              "& label.Mui-focused": {
+                color:  "#ff862f"
+              },
+            // focused color for input with variant='outlined'
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff862f"
+                  }
+                }
+                }}
           />
-        
-          <Button
-            onClick={onSubmitDev}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Iniciar sesión
-          </Button>
+                
+          <div  style={{ display: 'flex', justifyContent:'center' }}>
+          <CustomButton  onClick={onSubmitDev} text={"Entrar"} variantButton={VARIANTES_BUTTON.ORANGE }/>
+          </div>
           <Grid container>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"No tienes una cuenta? Regístrate"}
-              </Link>
+            <Grid item >
+              <CustomButton  onClick={onSubmitDev} text={"Crear Cuenta"} variantButton={VARIANTES_BUTTON.ORANGE}/>
             </Grid>
           </Grid>
         </Box>
