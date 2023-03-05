@@ -10,6 +10,7 @@ import BasicTable from '../components/BasicTable';
 import CustomCard from '../components/CustomCard'
 import users, { CustomList } from '../static/user'
 import { Avatar } from '@mui/material';
+import DetailsCard from "../components/DetailsCard.jsx";
 
 
 const actividades = [
