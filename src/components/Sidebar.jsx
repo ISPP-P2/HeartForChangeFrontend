@@ -45,7 +45,6 @@ const SecondaryText = ({text}) => {
 const ButtonSideBoard = ({text, icon, href}) => {
     const navigate = useNavigate()
     const location = useLocation()
-    console.log(location)
     return (
       <ListItem onClick={()=> navigate(href)} sx={{
           color: "white",

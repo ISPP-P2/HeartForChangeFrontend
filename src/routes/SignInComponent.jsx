@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 
 const SignInComponent  = ({prop}) => {
     const navigate = useNavigate()
-
-
     const SignIn = useSignIn()
 
     const onSubmitDev = () => {
