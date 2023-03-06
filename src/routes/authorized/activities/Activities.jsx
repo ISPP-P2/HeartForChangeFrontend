@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import BasicTable from '../components/BasicTable';
-import CustomCard from '../components/CustomCard'
-import { CustomList } from '../static/activity'
+import BasicTable from '../../../components/BasicTable';
+import CustomCard from '../../../components/CustomCard'
+import { CustomList } from '../../../static/activity'
 
 
 const actividades = [
