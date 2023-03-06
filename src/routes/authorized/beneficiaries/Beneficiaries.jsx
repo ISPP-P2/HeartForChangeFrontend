@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import BasicTable from '../components/BasicTable';
-import CustomCard from '../components/CustomCard'
-import beneficiaries, { CustomList } from '../static/beneficiary'
+import BasicTable from '../../../components/BasicTable';
+import CustomCard from '../../../components/CustomCard'
+import beneficiaries, { CustomList } from '../../../static/beneficiary'
 import { Avatar } from '@mui/material';
 
 const beneficiarios = [
@@ -72,8 +72,8 @@ const beneficiarios = [
 
 
 function Beneficiaries() {
-  const UsuarioList = new CustomList(beneficiarios)
-  let objetoTabla = UsuarioList.parseToTable(
+  const BeneficiariesList = new CustomList(beneficiarios)
+  let objetoTabla = BeneficiariesList.parseToTable(
     ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar"], 
     ["id","username", "name", "surname", "email", "age","role","avatarImage", "activityHistory"],
     ["Actividades Realizadas", "Fecha"],
