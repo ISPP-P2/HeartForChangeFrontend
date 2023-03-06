@@ -4,18 +4,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import CustomButton, { VARIANTES_BUTTON } from '../components/CustomButton';
 
-function DetailsCard() {
+function DetailsCard({title, buttonText}) {
     return (
         <Card sx={{ display: 'flex' , width: "min-content"}}>
             <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                     <Typography component="div" variant="h5">
-                        Live From Space
+                        {title}
                     </Typography>
                 </CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                </Box>
+                <CustomButton onClick={()=> {console.log()}} text={buttonText} variantButton={VARIANTES_BUTTON.RED}/>
             </Box>
             <CardMedia
                 component="img"

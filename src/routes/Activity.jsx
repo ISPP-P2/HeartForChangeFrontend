@@ -74,6 +74,8 @@ function Activity() {
   
   return (
     <Box>
+        <DetailsCard title={"Asignar participantes a la actividad"} buttonText={"Asignar"}/>
+        <DetailsCard title={"Finalizar la actividad"} buttonText={"Finalizar"}/>
         <CustomButton onClick={()=> {console.log()}} text={"Eliminar usuario de actividad"} variantButton={VARIANTES_BUTTON.RED}/>
         <BasicTable objetoTabla = {objetoTablaParticipantes}  maxHeight={"60vh"}></BasicTable>
       </Box>
