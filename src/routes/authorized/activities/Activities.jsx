@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard'
-import { CustomList } from '../../../static/activity'
+import CustomCard from '../../../components/CustomCard';
+import CustomFlex from '../../../components/CustomFlex';
+import { CustomList } from '../../../static/user';
 
 
 const actividades = [
@@ -59,10 +60,12 @@ function Activities() {
 
   
   return (
-    <Box>
+    <CustomFlex direction={"column"}>
+      <CustomFlex direction={"row"}>
         <CustomCard title="Actividades" quantity={actividades.length}> </CustomCard>
+      </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
-      </Box>
+      </CustomFlex>
     );
 }
 

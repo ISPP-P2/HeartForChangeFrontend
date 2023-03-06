@@ -7,7 +7,8 @@ import { Box, CardContent, CardHeader, IconButton, Typography } from '@mui/mater
 
 function CustomCard({
   title = 'Cosas',
-  quantity = '100'}) {
+  quantity = '100',
+  buttonSidebar}) {
   return (
     <Card sx={{
       width: "min-content",
@@ -20,7 +21,7 @@ function CustomCard({
           </Typography>
           <Typography variant="body" color="text.secondary" component="div">
             {title}
-          </Typography>
+          </Typography> 
         </CardContent>  
       </Box>
     </Card>

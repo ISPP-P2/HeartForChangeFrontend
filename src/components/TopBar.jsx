@@ -14,7 +14,6 @@ export const TopBar = ({ handleDrawerToggle }) => {
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
         background: "rgb(255,137,49)",
-        background: "linear-gradient(90deg, rgba(255,137,49,1) 0%, rgba(255,137,49,1) 65%, rgba(255,179,79,1) 100%)"
       }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -27,7 +26,7 @@ export const TopBar = ({ handleDrawerToggle }) => {
         >
           <MenuIcon />
         </IconButton>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: "black", marginRight: "1rem" }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: "#686868", fontWeight: 600, marginRight: "1rem" }}>
           <Typography variant="h6" noWrap component="div" alignItems="right">
             Bienvenido, {users[0].name}
           </Typography>

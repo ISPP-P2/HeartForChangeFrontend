@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard'
-import beneficiaries, { CustomList } from '../../../static/beneficiary'
 import { Avatar } from '@mui/material';
+import CustomCard from '../../../components/CustomCard';
+import BasicTable from '../../../components/BasicTable';
+import CustomFlex from '../../../components/CustomFlex';
+import { CustomList } from '../../../static/user';
 
 const beneficiarios = [
     {
@@ -83,10 +83,15 @@ function Beneficiaries() {
 
   
   return (
-    <Box>
-        <CustomCard title="Beneficiarios" quantity={beneficiarios.length}> </CustomCard>
+      <CustomFlex direction={"column"}>
+          <CustomFlex direction={"row"}>
+              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
+              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
+              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
+              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
+          </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
-      </Box>
+      </CustomFlex>
     );
 }
 
