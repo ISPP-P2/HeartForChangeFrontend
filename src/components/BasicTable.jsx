@@ -29,11 +29,6 @@ function createData(id,username, name, surname, email, age,role,avatarImage='', 
       role,
       avatarImage,
       activityHistory,
-      moreDetails,
-      gender,
-      birthDate,
-      dni,
-      phoneNumber
     };
   }
 
