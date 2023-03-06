@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Volunteers from '../Volunteers'
 import Dashboard from './dashboard/Dashboard'
 import Activities from '../Activities'
-import ActivityDetails from "../ActivityDetails.jsx";
+import Activity from '../Activity'
 
 
 
@@ -13,7 +13,7 @@ export default function AutorizedRoutes() {
         <Route path='*' element={<Dashboard />}/>
         <Route path={'/voluntarios'} element={<Volunteers/>}/>
         <Route path={'/actividades'} element={<Activities/>}/>
-        <Route path={'/actividades/1'} element={<ActivityDetails/>}/>
+        <Route path={'/actividad/2'} element={<Activity/>}/>
     </Routes>
   )
 }
