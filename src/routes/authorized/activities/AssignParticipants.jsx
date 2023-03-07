@@ -67,7 +67,7 @@ function AssignVolunteers() {
   return (
     <CustomFlex direction={"column"}>
       <Box>
-        <CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/>
+      <Link to="/actividad/1/"><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></Link>
       </Box>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>

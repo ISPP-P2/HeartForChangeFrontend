@@ -118,9 +118,9 @@ function ActivityDetails() {
             <CustomCard
                 title='Añadir participante a la actividad'
                 iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton  text={"Añadir"}  
+                buttonSidebar={<Link to="/actividad/1/asignarVoluntarios"><CustomButton  text={"Añadir"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>}/>     
+                variantButton={VARIANTES_BUTTON.GREEN}/> </Link>}/>     
             <CustomCard
                 title='Dar por finalizada la actividad'
                 iconD={<PeopleOutlineIcon color='disabled' />}
