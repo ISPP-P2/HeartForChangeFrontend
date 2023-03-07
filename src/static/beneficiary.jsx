@@ -37,17 +37,19 @@ export class CustomList {
 }
 
 
-class Activity {
-    constructor(id, name, description, type, location,capacity,date) {
+class Beneficiary {
+    constructor(id,username, name, surname, email, age,role,avatarImage, activityHistory = []) {
       this.id = id;
+      this.username = username;
       this.name = name;
-      this.description = description;
-      this.type = type;
-      this.location = location;
-      this.capacity = capacity;
-      this.date = date;
+      this.surname = surname;
+      this.email = email;
+      this.age = age;
+      this.role = role;
+      this.avatarImage = avatarImage;
+      this.activityHistory = activityHistory;
     }
 
   }
 
-  export default users;
+  export default Beneficiary;

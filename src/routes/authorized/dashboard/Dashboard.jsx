@@ -1,20 +1,35 @@
+import { Grid, useMediaQuery } from '@mui/material';
 import React from 'react';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import CustomCard from '../../../components/CustomCard';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 function Dashboard() {
+    
+    const mobile = useMediaQuery('(min-width:600px)')
+
     return (
-        <div>
-            <CustomButton onClick={()=> {console.log()}} text={"BLUE"} variantButton={VARIANTES_BUTTON.BLUE}/>
-            <CustomButton onClick={()=> {console.log()}} text={"DARKGREEN"} variantButton={VARIANTES_BUTTON.DARKGREEN}/>
-            <CustomButton onClick={()=> {console.log()}} text={"GREEN"} variantButton={VARIANTES_BUTTON.GREEN}/>
-            <CustomButton onClick={()=> {console.log()}} text={"LIGHTBLUE"} variantButton={VARIANTES_BUTTON.LIGHTBLUE}/>
-            <CustomButton onClick={()=> {console.log()}} text={"LIGHTGREEN"} variantButton={VARIANTES_BUTTON.LIGHTGREEN}/>
-            <CustomButton onClick={()=> {console.log()}} text={"PURPLE"} variantButton={VARIANTES_BUTTON.PURPLE}/>
-            <CustomButton onClick={()=> {console.log()}} text={"RED"} variantButton={VARIANTES_BUTTON.RED}/>
-            <CustomButton onClick={()=> {console.log()}} text={"ORANGE"} variantButton={VARIANTES_BUTTON.ORANGE}/>
-            <CustomCard />
-        </div>
+        <Grid display={"grid"} gap="1rem" gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(25rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
+            <CustomCard 
+                title='Registrar una nueva actividad'
+                iconD={<PeopleOutlineIcon color='disabled'/>}
+                buttonSidebar={<CustomButton text={"Crear"}  
+                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+            <CustomCard
+                title='Registrar una nueva actividad'
+                iconD={<PeopleOutlineIcon color='disabled' />}
+                buttonSidebar={<CustomButton  text={"Registar"}  
+                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+            <CustomCard 
+                title='Registrar una nueva actividad'
+                iconD={<PeopleOutlineIcon color='disabled' />}
+                buttonSidebar={<CustomButton text={"Registar"}  
+                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+        </Grid>
     );
 }
 

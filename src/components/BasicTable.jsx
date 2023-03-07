@@ -102,7 +102,7 @@ function Row({row}) {
 
 
 
-export default function BasicTable({maxHeight = null, objetoTabla = null}){
+export default function BasicTable({maxHeight = null, objetoTabla = null, maxWidth = null}){
 
   if(objetoTabla == null){
     return <div></div>
@@ -110,7 +110,8 @@ export default function BasicTable({maxHeight = null, objetoTabla = null}){
 
   return (
     <TableContainer sx={{
-      maxHeight: maxHeight === null ? null : maxHeight
+      maxHeight: maxHeight === null ? null : maxHeight,
+      maxWidth: maxWidth === null ? null : maxWidth
     }} component={Paper}>
       <Table aria-label="able">
         <TableHead>

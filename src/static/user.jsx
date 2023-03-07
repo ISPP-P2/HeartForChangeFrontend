@@ -3,7 +3,7 @@ export class CustomList {
     constructor(list = null){
       this.list = list
     }
-
+  
     parseToTable(header = null, information = null, headerInformation = null, details = null){
         if(header === null && information === null){
           console.log("faltan cosas")
@@ -52,7 +52,7 @@ class User {
 
   }
   const users = [
-    new User(1,"pabloben","pablo","Benitez","pablobenitez@gmail.com","10","Voluntario","https://randomuser.me/api/portraits/women/20.jpg", [{
+    new User(1,"pabloben","Pablo","Benitez","pablobenitez@gmail.com","10","Voluntario","https://randomuser.me/api/portraits/men/20.jpg", [{
       date: "2-02-2023",
       activityName: "Actividad de prueba"
     },
