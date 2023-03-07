@@ -46,7 +46,7 @@ export default function AutorizedRoutes() {
           </BodyWrapper>
         }/>
          <Route path={'/subvenciones'} element={
-          <BodyWrapper title={"Lista de beneficiarios"}>
+          <BodyWrapper title={"Lista de subvenciones"}>
               <Subventions />
           </BodyWrapper>
         }/>
