@@ -4,12 +4,13 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-
+import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
 const actividades = [
     {
       id: "1",
-      name: "Ayudanos a salvar a los lemures rojos",
+      name: "Ayúdanos a salvar a los lemures rojos",
       description: "Se realizará en el campo verde de la fuensanta donde les llevaremos mangos a todos los lemúres rojos de la zona. Todo el mundo es bienvenido a esta actividad",
       type: "Ayuda",
       location: "Parque de la Fuensanta",
@@ -42,19 +43,26 @@ const actividades = [
       location: "Sevilla",
       capacity: "12",
       date: "14-03-2023",
-    }, 
-    
+    },
 ]
+
+const actividadesConBoton = actividades.map((actividad) => {
+  return {
+    ...actividad,
+    button: <Link to="/actividad/1"><SearchIcon /></Link>,
+  };
+});
+
 
 
 
 function Activities() {
-  const ActivityList = new CustomList(actividades)
+  const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
-    ["Id", "Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha"], 
-    ["id", "name", "type", "location","capacity","date"],
+    ["Id", "Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha","Ver detalles"],
+    ["id", "name", "type", "location","capacity","date", "button"],
     ["Descripcion"],
-    ["description"]
+    ["description"]   
     )
 
 
