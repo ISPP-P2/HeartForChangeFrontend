@@ -1,17 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import { TopBar } from '../components/TopBar';
-import Sidebar from '../components/Sidebar';
-import AutorizedRoutes from './authorized/AuthorizedRoutes';
-import BasicTable from '../components/BasicTable';
-import CustomCard from '../components/CustomCard'
-import users, { CustomList } from '../static/user'
-import { Avatar } from '@mui/material';
-import DetailsCard from "../components/DetailsCard.jsx";
-import { Link } from 'react-router-dom';
+import BasicTable from '../../../components/BasicTable';
+import CustomCard from '../../../components/CustomCard';
+import CustomFlex from '../../../components/CustomFlex';
+import { CustomList } from '../../../static/user';
+
 
 const actividades = [
     {
@@ -22,7 +15,6 @@ const actividades = [
       location: "Parque de la Fuensanta",
       capacity: "100",
       date: "22-03-2023",
-      moreDetails: <Link to="/actividad/2">Ver más</Link>
     },
     {
       id: "2",
@@ -32,7 +24,6 @@ const actividades = [
       location: "España",
       capacity: "Ilimitada",
       date: "2023",
-      moreDetails: <Link to="/actividad/2">Ver más</Link>
     },
     {
       id: "3",
@@ -42,7 +33,6 @@ const actividades = [
       location: "Sevilla",
       capacity: "3",
       date: "05-03-2023",
-      moreDetails: <Link to="/actividad/2">Ver más</Link>
     },
     {
       id: "4",
@@ -52,7 +42,6 @@ const actividades = [
       location: "Sevilla",
       capacity: "12",
       date: "14-03-2023",
-      moreDetails: <Link to="/actividad/2">Ver más</Link>
     }, 
     
 ]
@@ -62,8 +51,8 @@ const actividades = [
 function Activities() {
   const ActivityList = new CustomList(actividades)
   let objetoTabla = ActivityList.parseToTable(
-    ["Id", "Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha","Ver detalles"], 
-    ["id", "name", "type", "location","capacity","date","moreDetails"],
+    ["Id", "Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha"], 
+    ["id", "name", "type", "location","capacity","date"],
     ["Descripcion"],
     ["description"]
     )
@@ -71,10 +60,12 @@ function Activities() {
 
   
   return (
-    <Box>
+    <CustomFlex direction={"column"}>
+      <CustomFlex direction={"row"}>
         <CustomCard title="Actividades" quantity={actividades.length}> </CustomCard>
+      </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
-      </Box>
+      </CustomFlex>
     );
 }
 
