@@ -1,20 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import { TopBar } from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
 import AutorizedRoutes from './authorized/AuthorizedRoutes';
-import BasicTable from '../components/BasicTable';
-import CustomCard from '../components/CustomCard';
+import LogoNavBar from '../components/LogoNavBar';
+
 
 const drawerWidth = 200;
 
 
 
-export function Index(props) {
-  const { window } = props;
+export function Index({ window } ) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -34,17 +32,18 @@ export function Index(props) {
     <Box sx={{ display: 'flex' }}>
       <TopBar handleDrawerToggle={handleDrawerToggle}/>
       <Box
-        component="nav"
-        sx={{ 
-          width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
+            component="nav"
+            sx={{ 
+              width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+            <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+           
           sx={{
             background: "rgb(0,0,0,0.1)",
             display: { xs: 'block', sm: 'none' },
@@ -54,6 +53,7 @@ export function Index(props) {
               background:" linear-gradient(173deg, rgba(255,137,49,1) 0%, rgba(255,137,49,1) 20%, rgba(255,182,81,1) 100%)",
             }
           }}>
+          <LogoNavBar />
           {drawer}
         </Drawer>
         <Drawer
@@ -67,6 +67,7 @@ export function Index(props) {
             }
           }}
           open>
+          <LogoNavBar height={"3rem"}/>
           {drawer}
         </Drawer>
       </Box>

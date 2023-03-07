@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import {Index} from "./routes/Index"
 import SignIn from "./routes/login/SignIn"
-
+import "./index.css";
 
 
 function App() {

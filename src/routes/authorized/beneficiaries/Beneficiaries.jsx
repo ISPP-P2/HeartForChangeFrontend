@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar } from '@mui/material';
+import { Avatar, Grid, useMediaQuery } from '@mui/material';
 import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
 import CustomFlex from '../../../components/CustomFlex';
@@ -80,17 +80,14 @@ function Beneficiaries() {
     ["nombreActividad", "fechaActividad"]
     )
 
-
+    const mobile = useMediaQuery('(min-width:600px)')
   
   return (
       <CustomFlex direction={"column"}>
-          <CustomFlex direction={"row"}>
-              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
-              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
-              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
-              <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
-          </CustomFlex>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+          <Grid display={"grid"} gap="1rem" gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(20rem, 1fr))" }  >
+            <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
+          </Grid>
+        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"} ></BasicTable>
       </CustomFlex>
     );
 }

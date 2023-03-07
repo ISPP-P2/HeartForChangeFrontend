@@ -7,6 +7,7 @@ import React from 'react'
 function CustomButton({
     variantButton = VARIANTES_BUTTON.GREEN,
     onClick, 
+    iconD,
     text, 
     outline = false}) {
 
@@ -26,8 +27,8 @@ function CustomButton({
             variant="contained"
             >
                 {text}
+                {iconD}
             </Button>
-
         </Box>
         
     )

@@ -26,7 +26,7 @@ export const TopBar = ({ handleDrawerToggle }) => {
         >
           <MenuIcon />
         </IconButton>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: "#686868", fontWeight: 600, marginRight: "1rem" }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: "white", fontWeight: 600, marginRight: "1rem" }}>
           <Typography variant="h6" noWrap component="div" alignItems="right">
             Bienvenido, {users[0].name}
           </Typography>

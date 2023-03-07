@@ -53,7 +53,7 @@ function Subventions() {
   return (
     <Box>
         <CustomCard title="Subvenciones" quantity={subvenciones.length}> </CustomCard>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"} maxWidth={"85vw"}></BasicTable>
       </Box>
     );
 }
