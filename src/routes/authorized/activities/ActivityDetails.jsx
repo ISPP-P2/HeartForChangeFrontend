@@ -10,6 +10,7 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 
 const actividades = [
   {
@@ -69,8 +70,9 @@ function ActivityDetails() {
     ["id", "name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]   
-    )
-
+    );
+    
+    const [finalizada, setFinalizada] = useState(false);
 
   
   return (
@@ -103,7 +105,7 @@ function ActivityDetails() {
           disabled
           id="standard-disabled"
           label="Finalizada"
-          defaultValue="No"
+          value={finalizada ? "Sí" : "No"}
           variant="standard"
         />          
         <TextField
@@ -124,7 +126,7 @@ function ActivityDetails() {
             <CustomCard
                 title='Dar por finalizada la actividad'
                 iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton  text={"Finalizar"}  
+                buttonSidebar={<CustomButton onClick={() => {setFinalizada(!finalizada)}} text={"Finalizar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.RED}/>}/>   
           </CustomFlex>      
