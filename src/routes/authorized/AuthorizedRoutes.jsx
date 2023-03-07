@@ -5,7 +5,9 @@ import Dashboard from './dashboard/Dashboard'
 import Beneficiaries from './beneficiaries/Beneficiaries'
 import BodyWrapper from '../../components/BodyWrapper'
 import Activities from './activities/Activities'
+import ActivityDetails from './activities/ActivityDetails'
 import Subventions from './subventions/Subventions'
+import Activity from '../../static/activity'
 
 
 
@@ -27,6 +29,11 @@ export default function AutorizedRoutes() {
               <Activities/>
           </BodyWrapper>
         }/>
+        <Route path={'/actividad/1'} element={
+          <BodyWrapper title={"Detalles de actividad"}>
+              <ActivityDetails/>
+          </BodyWrapper>
+        }/>        
         <Route path={'/beneficiarios'} element={
           <BodyWrapper title={"Lista de beneficiarios"}>
               <Beneficiaries/>
