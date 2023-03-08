@@ -49,8 +49,8 @@ function CustomCard({
         </Box>
         <Box  sx={{
           "& .MuiSvgIcon-root": {
-            width: mobile ? "8rem" : "5rem",
-            height:  mobile ? "8rem" : "5rem",
+            width: mobile ? "8rem" : "0rem",
+            height:  mobile ? "8rem" : "0rem",
             color: "disabled"
           }
         }}>
