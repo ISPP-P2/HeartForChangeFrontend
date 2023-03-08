@@ -102,7 +102,12 @@ function Row({row}) {
 
 
 
-export default function BasicTable({maxHeight = null, objetoTabla = null, maxWidth = null}){
+export default function BasicTable({
+  maxHeight = null,
+  objetoTabla = null, 
+  maxWidth = null,
+  filter = null
+}){
 
   if(objetoTabla == null){
     return <div></div>

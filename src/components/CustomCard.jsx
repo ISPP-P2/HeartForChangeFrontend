@@ -14,7 +14,9 @@ function CustomCard({
 
   return (  
     <Card sx={{
-      width: "100%",
+      width: "80%",
+      height: "min-content",
+      margin: "5%",
       filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.3))",
     }}>
       <Box sx={{ 
@@ -38,7 +40,7 @@ function CustomCard({
               flexDirection: "column",
               gap: "2rem"
             }}>
-            <Typography component="div" fontSize={"1.5rem"} fontWeight={550}>
+            <Typography component="div" fontSize={"1.2rem"} fontWeight={550}>
               {title}
             </Typography>
              {buttonSidebar}
@@ -47,8 +49,8 @@ function CustomCard({
         </Box>
         <Box  sx={{
           "& .MuiSvgIcon-root": {
-            width: mobile ? "10rem" : "5rem",
-            height:  mobile ? "10rem" : "5rem",
+            width: mobile ? "8rem" : "5rem",
+            height:  mobile ? "8rem" : "5rem",
             color: "disabled"
           }
         }}>

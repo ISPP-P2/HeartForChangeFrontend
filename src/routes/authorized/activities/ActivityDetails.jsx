@@ -69,10 +69,9 @@ function ActivityDetails() {
     ["Id", "Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
     ["id", "name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
-    ["description"]   
-    );
+    ["description"]);
     
-    const [finalizada, setFinalizada] = useState(false);
+  const [finalizada, setFinalizada] = useState(false);
 
   
   return (
