@@ -55,10 +55,6 @@ function Dashboard() {
                 buttonSidebar={<CustomButton text={"Registar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
-
-
-
-            
         </Grid>
         </>
     );

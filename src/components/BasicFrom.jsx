@@ -22,7 +22,8 @@ function BasicFrom({
   handleSubmitForm = null,
   width = "max-content",
   columns = null,
-  buttonText = "Guardar"
+  buttonText = null,
+  readOnly = false
 }) {
   if (form == null || handleSubmitForm == null) {
     <div>Loading form...</div>;
@@ -67,16 +68,18 @@ function BasicFrom({
                   handleBlur={handleBlur}
                   handleChange={handleChange}
                   values={values}
+                  readOnly={readOnly}
                 />
                 {errors[props.name] && touched[props.name] ? (
                   <div style={{ color: "red" }}>{errors[props.name]}</div>
                 ) : null}
               </FormControl>
             ))}
+            {buttonText === null ?  null : 
             <CustomButton 
                 onClick={handleSubmit} 
                 text={buttonText} 
-            />
+            />}
           </Grid>
         </Box>
       )}
@@ -88,6 +91,8 @@ const CustomInput = (props) => {
   if (props.type == FORM_TYPES.TEXT) {
     return (
       <TextField
+        disabled={props.readOnly}
+        value={props.values[`${props.name}`]}
         variant="standard"
         label={props.label}
         InputProps={{
@@ -99,6 +104,8 @@ const CustomInput = (props) => {
   if (props.type === FORM_TYPES.SELECT) {
     return (
       <Select
+        disabled={props.readOnly}
+        value={props.values[`${props.name}`]}
         onChange={(event, value) => {
           console.log(value);
           props.setFieldValue(`${props.name}`, value.props.value);
@@ -127,10 +134,12 @@ const CustomInput = (props) => {
   if (props.type === FORM_TYPES.TEXTEAREA) {
     return (
       <TextareaAutosize
+        disabled={props.readOnly}
         minRows={4}
         name={props.name}
         onChange={props.handleChange(`${props.name}`)}
         onBlur={props.handleBlur(`${props.name}`)}
+        value={props.values[`${props.name}`]}
         type={props.type}
         placeholder={props.label}
       />
