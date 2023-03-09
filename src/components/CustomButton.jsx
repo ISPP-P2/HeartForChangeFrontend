@@ -8,6 +8,7 @@ function CustomButton({
     variantButton = VARIANTES_BUTTON.GREEN,
     onClick, 
     iconD,
+    type = 'button', 
     text, 
     outline = false}) {
 
@@ -16,7 +17,7 @@ function CustomButton({
             margin: "2px",
 
         }}>
-            <Button sx={{
+            <Button type={'button'} sx={{
                 margin: "1sw",
                 backgroundColor: variantButton + "!important",
                 "&:hover": {

@@ -4,6 +4,7 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import CustomCard from '../../../components/CustomCard';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import BasicFrom from '../../../components/BasicFrom';
 
 function Dashboard() {
     
