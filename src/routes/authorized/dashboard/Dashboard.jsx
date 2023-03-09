@@ -10,9 +10,11 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import SavingsIcon from '@mui/icons-material/Savings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
+
 function Dashboard() {
     
     const mobile = useMediaQuery('(min-width:600px)')
+   
 
     return (
         <>
@@ -53,6 +55,10 @@ function Dashboard() {
                 buttonSidebar={<CustomButton text={"Registar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+
+
+
+            
         </Grid>
         </>
     );
