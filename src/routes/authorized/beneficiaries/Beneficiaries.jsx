@@ -4,6 +4,7 @@ import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
+import FormBeneficiaries from './FormBeneficiaries';
 
 const beneficiarios = [
     {
