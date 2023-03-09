@@ -105,10 +105,7 @@ function ActivityDetails() {
     ["id", "name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]);
-    
-  const [finalizada, setFinalizada] = useState(false);
 
-  const mobile = useMediaQuery('(min-width:1200px)');
   
   return (
     <CustomFlex direction={"column"}>
@@ -119,50 +116,42 @@ function ActivityDetails() {
         <Grid
       display={"grid"}
       gap={"1rem"}
-      gridTemplateColumns={"1fr 4fr"}
-      gridTemplateRows={mobile ? "100%":"1fr 1fr"}>
+      gridTemplateColumns={"1fr 2fr"}
+      gridTemplateRows={"100%"}>
         <BasicFrom 
         form={form} 
         columns={1}   
         width={"auto"} 
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
-        />     
-         <CustomFlex direction={"column"} align={"flex-end"}>     
+        /> 
+          <CustomFlex direction={"column"} align={"flex-end"}>        
           <Grid
               display={"grid"}
               gap={"1rem"}
-              gridTemplateColumns={mobile ? "1fr 1fr":"100%"}
-              gridTemplateRows={mobile ? "1fr 1fr":"1fr 1fr 1fr 1fr" }>  
+              gridTemplateColumns={"100%"}
+              gridTemplateRows={"1fr 1fr"}>    
                 <CustomCard
-                  title='Editar actividad'
+                  title='Solicitud para apuntarse'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Editar"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
-                  <CustomCard
-                  title='Añadir participante a la actividad'
-                  iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<Link to="/actividad/1/asignarVoluntarios"><CustomButton  text={"Añadir"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.GREEN}/> </Link>}/>  
+                  buttonSidebar={<CustomButton text={"Apuntarse"}  
+                  iconD={<ArrowForwardIcon sx={{marginLeft: "0rem"}}/>} 
+                  variantButton={VARIANTES_BUTTON.GREEN}/>}/> 
                 <CustomCard
-                  title='Dar por finalizada una actividad'
+                  title='Salir de la actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton onClick={() => {setFinalizada(!finalizada)}} text={"Finalizar"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                  buttonSidebar={<CustomButton text={"Salir"}  
+                  iconD={<ArrowForwardIcon sx={{marginLeft: "1rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
-                <CustomCard
-                  title='Lista de solicitudes'
-                  iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Ver"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.PURPLE}/>}/>
           </Grid> 
-          </CustomFlex>    
+          </CustomFlex> 
         </Grid> 
         </Box>
         
+      </CustomFlex>
+
+      <CustomFlex direction={"row"}>
+        <CustomCard title="Usuarios que han participado en la actividad" quantity={actividades.length}> </CustomCard>
       </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
