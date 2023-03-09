@@ -4,16 +4,17 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { useState } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
+import BodyWrapper from '../../../components/BodyWrapper';
   
 
 
@@ -99,6 +100,9 @@ const actividadesConBoton = actividades.map((actividad) => {
 });
 
 function ActivityDetails() {
+
+  const {id} = useParams()
+
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
     ["Id", "Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
@@ -111,18 +115,18 @@ function ActivityDetails() {
   const mobile = useMediaQuery('(min-width:1200px)');
   
   return (
+    <BodyWrapper title={`Detalles de la actividad ${id}`} >
     <CustomFlex direction={"column"}>
+      <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
       <CustomFlex direction={"column"}>
-      <CustomCard title="Ayudanos a salvar a los lemures rojos" quantity={actividades.length}> </CustomCard>
-      
         <Box>
         <Grid
-      display={"grid"}
-      gap={"1rem"}
-      gridTemplateColumns={"1fr 4fr"}
-      gridTemplateRows={mobile ? "100%":"1fr 1fr"}>
+        display={"grid"}
+        gap={"1rem"}
+        gridTemplateColumns={"1fr 4fr"}
+        gridTemplateRows={mobile ? "100%":"1fr 1fr"}> 
         <BasicFrom 
-        form={form} 
+        form={form}
         columns={1}   
         width={"auto"} 
         readOnly={true}
@@ -143,7 +147,7 @@ function ActivityDetails() {
                   <CustomCard
                   title='Añadir participante a la actividad'
                   iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<Link to="/actividad/1/asignarVoluntarios"><CustomButton  text={"Añadir"}  
+                  buttonSidebar={<Link to={`/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.GREEN}/> </Link>}/>  
                 <CustomCard
@@ -162,10 +166,10 @@ function ActivityDetails() {
           </CustomFlex>    
         </Grid> 
         </Box>
-        
       </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
+      </BodyWrapper>
     );
 }
 
