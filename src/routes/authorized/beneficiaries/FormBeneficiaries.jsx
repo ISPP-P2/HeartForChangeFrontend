@@ -10,7 +10,8 @@ const form = [
         name: "nombre1",
         type: FORM_TYPES.TEXT,
         label: "Nombre",
-        icon: <AssignmentIndIcon />
+        icon: <AssignmentIndIcon />,
+        validation: Yup.string("asfas").required("No puede estar vacido")
 
     }, {
         name: "nombre2",

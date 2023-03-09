@@ -9,7 +9,11 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SavingsIcon from '@mui/icons-material/Savings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
+import BasicModal from '../../../components/BasicModal'
+import AcademicExperienceForm from '../volunteers/AcademicExperienceForm';
+import FormBeneficiaries from '../beneficiaries/FormBeneficiaries';
+import WorkExperienceForm from '../volunteers/WorkExperienceForm';
+import ComplementaryFormationForm from '../volunteers/ComplementaryFormationForm';
 
 function Dashboard() {
     
@@ -57,7 +61,12 @@ function Dashboard() {
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
 
 
+            <BasicModal text='experiencia academica' title='Añadir experiencia academica'body='<div>sdgsdgvsdvsdv </div>'></BasicModal>
 
+            <AcademicExperienceForm>     </AcademicExperienceForm>
+            <FormBeneficiaries>     </FormBeneficiaries>
+            <WorkExperienceForm>     </WorkExperienceForm>
+            <ComplementaryFormationForm>     </ComplementaryFormationForm>
             
         </Grid>
         </>
