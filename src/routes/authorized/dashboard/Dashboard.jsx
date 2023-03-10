@@ -9,7 +9,11 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SavingsIcon from '@mui/icons-material/Savings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
+import BasicModal from '../../../components/BasicModal'
+import AcademicExperienceForm from '../volunteers/AcademicExperienceForm';
+import FormBeneficiaries from '../beneficiaries/FormBeneficiaries';
+import WorkExperienceForm from '../volunteers/WorkExperienceForm';
+import ComplementaryFormationForm from '../volunteers/ComplementaryFormationForm';
 
 function Dashboard() {
     
@@ -55,6 +59,7 @@ function Dashboard() {
                 buttonSidebar={<CustomButton text={"Registar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+
         </Grid>
         </Grid>
     );

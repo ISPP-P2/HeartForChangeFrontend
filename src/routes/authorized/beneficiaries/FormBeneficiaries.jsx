@@ -12,6 +12,7 @@ const form = [
         label: "Nombre",
         icon: <AssignmentIndIcon />,
         value: 'aaas'
+
     }, {
         name: "nombre2",
         type: FORM_TYPES.SELECT,
