@@ -10,7 +10,7 @@ import AssignParticipants from "./activities/AssignParticipants";
 import Subventions from "./subventions/Subventions";
 import Activity from "../../static/activity";
 import VolunteerDetails from "./volunteers/VolunteersDetails";
-
+import ActivityVolunteerDetails from "./activities/ActivityDetailsVolunteers";
 export default function AutorizedRoutes() {
   return (
     <Routes>
@@ -79,6 +79,7 @@ export default function AutorizedRoutes() {
 
       }
     ></Route></Route>
+        <Route path={'/actividadVol'} element={<ActivityVolunteerDetails  />}/>
     </Routes>
   );
 }

@@ -98,7 +98,7 @@ const actividadesConBoton = actividades.map((actividad) => {
   };
 });
 
-function ActivityDetails() {
+function ActivityVolunteerDetails() {
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
     ["Id", "Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
@@ -158,4 +158,4 @@ function ActivityDetails() {
     );
 }
 
-export default ActivityDetails;
+export default ActivityVolunteerDetails;
