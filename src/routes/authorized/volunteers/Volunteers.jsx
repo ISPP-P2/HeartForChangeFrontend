@@ -6,7 +6,8 @@ import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomCardMini from '../../../components/CustomCardMini';
-
+import SearchIcon from '@mui/icons-material/Search';
+import { Link } from 'react-router-dom';
 const usuarios = [
     {
       id: "1",
@@ -58,14 +59,19 @@ const usuarios = [
     }, 
     
 ]
-
+const voluntariosConBoton = usuarios.map((usuario) => {
+  return {
+    ...usuario,
+    button: <Link to="/voluntario/1"><SearchIcon /></Link>,
+  };
+});
 
 
 function Volunteers() {
-  const UsuarioList = new CustomList(usuarios)
+  const UsuarioList = new CustomList(voluntariosConBoton)
   let objetoTabla = UsuarioList.parseToTable(
-    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar"], 
-    ["id","username", "name", "surname", "email", "age","role","avatarImage", "activityHistory"],
+    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar","Ver detalles"], 
+    ["id","username", "name", "surname", "email", "age","role","avatarImage", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
     )
