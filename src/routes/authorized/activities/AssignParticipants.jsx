@@ -4,8 +4,9 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 
 const participants = [
@@ -54,6 +55,8 @@ const participants = [
 
 
 function AssignVolunteers() {
+  const {id} = useParams("id");
+
   const ActivityList = new CustomList(participants)
   let objetoTabla = ActivityList.parseToTable(
     ["", "Id", "Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono"],
@@ -61,16 +64,16 @@ function AssignVolunteers() {
     ["Descripcion"],
     ["description"]
     )
-
-
-  
+    
   return (
-    <CustomFlex direction={"column"}>
-      <Box>
-      <Link to="/actividad/1/"><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></Link>
-      </Box>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+    <BodyWrapper title={`Asignar voluntarios a la actividad ${id}`}>
+      <CustomFlex direction={"column"}>
+        <Box> 
+            <Link to={`/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></Link>
+        </Box>
+          <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
+    </BodyWrapper>
     );
 }
 
