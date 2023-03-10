@@ -4,7 +4,11 @@ import  {object} from 'yup'
 export const FORM_TYPES ={
     TEXT: 'text',
     SELECT: 'select',
-    TEXTEAREA: 'textearea'
+    TEXTEAREA: 'textearea',
+    DATE:'datetime-local',
+    CHECKBOX: 'checkbox',
+    NUMBER: 'number',
+
 }
 
 

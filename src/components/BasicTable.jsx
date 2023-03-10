@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import users from '../static/user';
 import { useState } from 'react';
+import { margin } from '@mui/system';
 
 
 
@@ -106,7 +107,8 @@ export default function BasicTable({
   maxHeight = null,
   objetoTabla = null, 
   maxWidth = null,
-  filter = null
+  filter = null,
+  margin = "0"
 }){
 
   if(objetoTabla == null){
@@ -116,7 +118,8 @@ export default function BasicTable({
   return (
     <TableContainer sx={{
       maxHeight: maxHeight === null ? null : maxHeight,
-      maxWidth: maxWidth === null ? null : maxWidth
+      maxWidth: maxWidth === null ? null : maxWidth,
+      margin: margin
     }} component={Paper}>
       <Table aria-label="able">
         <TableHead>

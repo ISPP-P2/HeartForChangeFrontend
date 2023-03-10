@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { Avatar, Grid, useMediaQuery } from '@mui/material';
+import { Avatar, Grid, Paper, useMediaQuery } from '@mui/material';
 import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
 import FormBeneficiaries from './FormBeneficiaries';
+import { Box } from '@mui/system';
+import CustomCardMini from '../../../components/CustomCardMini';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const beneficiarios = [
     {
@@ -85,10 +88,13 @@ function Beneficiaries() {
   
   return (
       <CustomFlex direction={"column"}>
-          <Grid display={"grid"} gap="1rem" gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(20rem, 1fr))" }  >
-            <CustomCard title="Beneficiarios" quantity={beneficiarios.length} />
-          </Grid>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"} ></BasicTable>
+          <CustomFlex direction={"row"}>
+            <CustomCardMini 
+                  title='Beneficiarios registrados'
+                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                  totalNumber="100"/>
+          </CustomFlex>
+            <BasicTable objetoTabla = {objetoTabla} maxHeight={"60vh"} ></BasicTable>
       </CustomFlex>
     );
 }

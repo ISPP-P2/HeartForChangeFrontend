@@ -4,8 +4,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CustomButton from './CustomButton';
-
-const style = {
+import { useMediaQuery } from '@mui/material';
+import CustomFlex from './CustomFlex';
+import CloseIcon from '@mui/icons-material/Close';
+const style = (mobile) => {
+  return {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -15,19 +18,20 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  width:'20 rem',
+  width: mobile ? "max-content" : "100vw",
+  height: mobile ? "max-content" : "100vh",
+  }
 };
-const modalStyle ={
-   
-}
 
 export default function BasicModal({text,title,body}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const mobile = useMediaQuery('(min-width:600px)')
+
   return (
-    <div>
+    <>
       <CustomButton onClick={handleOpen} text= {text}> </CustomButton>
       <Modal
         open={open}
@@ -35,15 +39,24 @@ export default function BasicModal({text,title,body}) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} >
-          <Typography id="modal-modal-title" variant="h4" component="h2">
-            {title}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {body}
-          </Typography>
+        <Box sx={style(mobile)} >
+          <CustomFlex  margin='1rem' direction={"column"}>
+            <Box display={"flex"} justifyContent={'end'}>
+              <Button onClick={handleClose}>
+                <CloseIcon />
+              </Button>
+            </Box>
+            <Typography id="modal-modal-title" variant="h4" component="h2">
+              {title}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              {body}
+            </Typography>
+          </CustomFlex>
+
+         
         </Box>
       </Modal>
-    </div>
+    </>
   );
 }

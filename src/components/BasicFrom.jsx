@@ -88,9 +88,11 @@ function BasicFrom({
 }
 
 const CustomInput = (props) => {
-  if (props.type == FORM_TYPES.TEXT) {
+  if (props.type == FORM_TYPES.TEXT || props.type == FORM_TYPES.NUMBER || props.type == FORM_TYPES.DATE) {
     return (
       <TextField
+
+        type={props.type}
         disabled={props.readOnly}
         value={props.values[`${props.name}`]}
         variant="standard"
