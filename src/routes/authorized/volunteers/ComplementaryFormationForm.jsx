@@ -47,11 +47,8 @@ const form = [
 
 
 function ComplementaryFormationForm() {
-
-    
-
   return (
-    <BasicFrom 
+        <BasicFrom 
         form={form} 
         columns={2}   
         width={"500px"} 

@@ -15,7 +15,7 @@ function Sidebar() {
           <ButtonSideBoard text={"Página principal"} href={"/"} icon={<BubbleChartIcon sx={{color: 'white'}}/>}/>
           <SecondaryText text={"Registros"} />
           <ButtonSideBoard text={"Beneficiarios"} href={"/beneficiarios"}  icon={<FaceIcon sx={{color: 'white'}}/>}/>
-          <ButtonSideBoard text={"Voluntarios"} href={"/volunteers"} icon={<PeopleAltIcon sx={{color: 'white'}}/>}/>
+          <ButtonSideBoard text={"Voluntarios"} href={"/voluntarios"} icon={<PeopleAltIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Actividades"} href={"/actividades"} icon={<FormatListBulletedIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Subvenciones"} href={"/subvenciones"}  icon={<AttachMoneyIcon sx={{color: 'white'}}/>} />
       </List>

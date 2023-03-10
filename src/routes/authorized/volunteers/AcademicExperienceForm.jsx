@@ -21,12 +21,8 @@ const form = [
         icon: <EventAvailableIcon />,
 
         validation: Yup.number("Deber ser un numero")
-
                         .min(1900, "Deber ser un año válido")
                         .max(9000, "Deber ser un año válido")
-                        
-                    
-
     },
     {
         name: "nivel",
@@ -59,7 +55,7 @@ function AcademicExperienceForm() {
     
 
   return (
-    <BasicFrom 
+        <BasicFrom 
         form={form} 
         columns={2}   
         width={"500px"} 
