@@ -48,7 +48,8 @@ function BasicFrom({
           <Grid
             display={"grid"}
             gap={"1rem"}
-            gridTemplateColumns={columns === null ? null : `repeat(${columns}, 1fr)`}
+            gridAutoColumns={"1fr"}
+            gridTemplateColumns= {"repeat(auto-fill , minmax(15rem , 1fr))"}
             >
             {form.map((props, i) => (
               <FormControl
@@ -56,7 +57,7 @@ function BasicFrom({
                     display:'flex', 
                     margin: 0, 
                     mt: "3vh",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                 
                 }}
                 key={props.name + i}
