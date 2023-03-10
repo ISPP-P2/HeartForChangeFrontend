@@ -102,24 +102,6 @@ const form2 = [
     value: voluntarios?.description,
   },
   {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Educación Extra",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
-  {
     name: "address",
     type: FORM_TYPES.TEXT,
     label: "Dirección",
@@ -298,7 +280,7 @@ function ActivityDetails() {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
+          gridTemplateColumns: "23em 1fr",
           gridTemplateRows: "repeat(2, 10em)",
         }}
       >
@@ -308,9 +290,8 @@ function ActivityDetails() {
         <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
           <BasicFrom
             form={form2}
-            columns={3}
-            width={"500px"}
             readOnly={true}
+            width={"100%"}
             handleSubmitForm={(values) => console.log(values)}
           />
         </Box>
