@@ -8,8 +8,7 @@ import Activities from './activities/Activities'
 import ActivityDetails from './activities/ActivityDetails'
 import AssignParticipants from './activities/AssignParticipants'
 import Subventions from './subventions/Subventions'
-import Activity from '../../static/activity'
-
+import VolunteersDetails from './volunteers/VolunteersDetails'
 
 
 export default function AutorizedRoutes() {
@@ -20,11 +19,16 @@ export default function AutorizedRoutes() {
               <Dashboard />
           </BodyWrapper>
         }/>
-        <Route path={'/volunteers'} element={
+        <Route path={'/voluntarios'} element={
           <BodyWrapper title={"Lista de voluntarios"}>
               <Volunteers/>
           </BodyWrapper>
         }/>
+         <Route path={'/voluntarios/1'} element={
+          <BodyWrapper title={"Detalles de voluntario"}>
+              <VolunteersDetails/>
+          </BodyWrapper>
+        }/>     
         <Route path={'/actividades'} element={
           <BodyWrapper title={"Lista de actividades"}>
               <Activities/>
@@ -34,7 +38,7 @@ export default function AutorizedRoutes() {
           <BodyWrapper title={"Detalles de actividad"}>
               <ActivityDetails/>
           </BodyWrapper>
-        }/>        
+        }/>       
         <Route path={'/actividad/1/asignarVoluntarios'} element={
           <BodyWrapper title={"Asignar voluntarios a actividad"}>
               <AssignParticipants/>
