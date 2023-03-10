@@ -11,7 +11,7 @@ const form = [
         type: FORM_TYPES.TEXT,
         label: "Nombre",
         icon: <AssignmentIndIcon />,
-        validation: Yup.string("asfas").required("No puede estar vacido")
+        value: 'aaas'
 
     }, {
         name: "nombre2",
@@ -21,15 +21,16 @@ const form = [
         list: [{
                 value: "a",
                 label: "SEXO"
-            }]
-
+            }],
+        value: 'a'
     }, {
         name: "nombre3",
         type: FORM_TYPES.TEXTEAREA,
         label: "Nombre",
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido")
+                        .required("No puede estar vacido"),
+        value: 'aaas'
     }
 ]
 
@@ -44,7 +45,7 @@ function FormBeneficiaries() {
         form={form} 
         columns={2}   
         width={"500px"} 
-        buttonText={"Prueba"}
+        readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
     />
   )

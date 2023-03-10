@@ -21,26 +21,26 @@ function Dashboard() {
    
 
     return (
-        <>
-        <Grid display={"grid"} gap="1rem" gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(25rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
-        <CustomCardMini 
-            title='Beneficiarios registrados'
-            iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
-            totalNumber="100"/>
-        <CustomCardMini 
-            title='Actividades'
-            iconD={<AssignmentIcon htmlColor='#0055FF'/>}
-            totalNumber="100"/>
-        <CustomCardMini 
-            title='Voluntarios'
-            iconD={<VolunteerActivismIcon htmlColor='#0055FF'/>}
-            totalNumber="100"/>
-        <CustomCardMini 
-            title='Subvenciones último mes'
-            iconD={<SavingsIcon  htmlColor='#0055FF'/>}
-            totalNumber="100"/>
-        </Grid>
-        <Grid display={"grid"} gap="1rem" gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(25rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
+        <Grid display={"grid"} gap="1rem">
+        <Grid display={"grid"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
+            <CustomCardMini 
+                title='Beneficiarios registrados'
+                iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                totalNumber="100"/>
+            <CustomCardMini 
+                title='Actividades'
+                iconD={<AssignmentIcon htmlColor='#0055FF'/>}
+                totalNumber="100"/>
+            <CustomCardMini 
+                title='Voluntarios'
+                iconD={<VolunteerActivismIcon htmlColor='#0055FF'/>}
+                totalNumber="100"/>
+            <CustomCardMini 
+                title='Subvenciones último mes'
+                iconD={<SavingsIcon  htmlColor='#0055FF'/>}
+                totalNumber="100 €"/>
+            </Grid>
+        <Grid display={"grid"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(23rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
             <CustomCard 
                 title='Registrar una nueva actividad'
                 iconD={<PeopleOutlineIcon color='disabled'/>}
@@ -60,16 +60,8 @@ function Dashboard() {
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
 
-
-            <BasicModal text='experiencia academica' title='Añadir experiencia academica'body='<div>sdgsdgvsdvsdv </div>'></BasicModal>
-
-            <AcademicExperienceForm>     </AcademicExperienceForm>
-            <FormBeneficiaries>     </FormBeneficiaries>
-            <WorkExperienceForm>     </WorkExperienceForm>
-            <ComplementaryFormationForm>     </ComplementaryFormationForm>
-            
         </Grid>
-        </>
+        </Grid>
     );
 }
 
