@@ -4,6 +4,8 @@ import { Avatar } from '@mui/material';
 import CustomFlex from '../../../components/CustomFlex';
 import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CustomCardMini from '../../../components/CustomCardMini';
 
 const usuarios = [
     {
@@ -72,9 +74,12 @@ function Volunteers() {
   
   return (
       <CustomFlex direction={"column"}>
-        <CustomFlex direction={"row"}>
-          <CustomCard title="Volunteers" quantity={usuarios.length}> </CustomCard>
-        </CustomFlex>
+         <CustomFlex  direction={"row"}>
+            <CustomCardMini 
+                  title='Voluntarios'
+                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                  totalNumber="100"/>
+          </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
     );

@@ -6,6 +6,8 @@ import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
+import CustomCardMini from '../../../components/CustomCardMini';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 export const actividades = [
     {
@@ -82,9 +84,12 @@ function Activities() {
   
   return (
     <CustomFlex direction={"column"}>
-      <CustomFlex direction={"row"}>
-        <CustomCard title="Actividades" quantity={actividades.length}> </CustomCard>
-      </CustomFlex>
+        <CustomFlex direction={"row"}>
+            <CustomCardMini 
+                  title='Activades'
+                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                  totalNumber="100"/>
+          </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
     );

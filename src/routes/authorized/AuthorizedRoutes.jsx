@@ -9,6 +9,18 @@ import ActivityDetails from "./activities/ActivityDetails";
 import AssignParticipants from "./activities/AssignParticipants";
 import Subventions from "./subventions/Subventions";
 import Activity from "../../static/activity";
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Volunteers from './volunteers/Volunteers'
+import Dashboard from './dashboard/Dashboard'
+import Beneficiaries from './beneficiaries/Beneficiaries'
+import BodyWrapper from '../../components/BodyWrapper'
+import Activities from './activities/Activities'
+import ActivityDetails from './activities/ActivityDetails'
+import AssignParticipants from './activities/AssignParticipants'
+import Subventions from './subventions/Subventions'
+import VolunteersDetails from './volunteers/VolunteersDetails'
+
 
 export default function AutorizedRoutes() {
   return (
