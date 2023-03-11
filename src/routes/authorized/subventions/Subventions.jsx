@@ -10,6 +10,7 @@ import BasicModal from '../../../components/BasicModal';
 import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import SubventionForm from './SubventionForm';
 const subvenciones = [
     {
       id: "1",
@@ -71,7 +72,7 @@ const subvencionesConBoton = React.useMemo(() => {
           <CustomFlex direction={"row"}>
               <CustomCardMini
                     title='Nº de subvenciones'
-                    iconD={<BasicModal title={"Añadir subvención"} text={"Añadir"} body={<></>}/>}
+                    iconD={<BasicModal title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm></SubventionForm>}/>}
                     totalNumber="100"/>
           </CustomFlex>
 
