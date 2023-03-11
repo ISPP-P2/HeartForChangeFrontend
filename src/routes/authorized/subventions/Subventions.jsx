@@ -7,9 +7,10 @@ import CustomCardMini from '../../../components/CustomCardMini';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomFlex from '../../../components/CustomFlex';
 import BasicModal from '../../../components/BasicModal';
-
+import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import SubventionForm from './SubventionForm';
 const subvenciones = [
     {
       id: "1",
@@ -45,10 +46,20 @@ const subvenciones = [
 
 
 function Subventions() {
-  const SubventionList = new CustomList(subvenciones)
+
+  
+const subvencionesConBoton = React.useMemo(() => {
+  return subvenciones.map((subvencion) => {
+    return {
+      ...subvencion,
+      button: <ToolList  subvencion={subvencion} />,
+    };
+  });
+}, [subvenciones]);
+  const SubventionList = new CustomList(subvencionesConBoton)
   let objetoTabla = SubventionList.parseToTable(
-    ["Nombre", "Tipo", "Estado"], 
-    ["name", "type", "status"],
+    ["Nombre", "Tipo", "Estado","Eliminar"], 
+    ["name", "type", "status","button"],
     ["Cantidad"],
     ["quantity"]
     )
@@ -60,14 +71,27 @@ function Subventions() {
         <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
               <CustomCardMini
-                    title='Subvenciones'
-                    iconD={<BasicModal title={"Añadir subvención"} text={"Añadir"} body={<></>}/>}
+                    title='Nº de subvenciones'
+                    iconD={<BasicModal title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm></SubventionForm>}/>}
                     totalNumber="100"/>
           </CustomFlex>
+
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"}></BasicTable>
+       
+    
         </CustomFlex>
       </Box>
     );
 }
 
+
 export default Subventions;
+
+const ToolList = ({subvencion, handleEliminar}) => {
+  return (
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box><Typography>La subvención se eliminará permanentemente</Typography><CustomButton text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} /></Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+    </CustomFlex>
+  )
+
+}

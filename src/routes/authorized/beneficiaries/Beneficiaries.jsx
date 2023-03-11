@@ -48,7 +48,7 @@ function Beneficiaries() {
       <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
             <CustomCardMini 
-                  title='Beneficiarios registrados'
+                  title='Nº de beneficiarios'
                   iconD={<CustomLink to="/añadir/beneficiario"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber="100"/>
           </CustomFlex>
@@ -63,7 +63,7 @@ export default Beneficiaries;
 
 const ToolList = ({usuario, handleEliminar}) => {
   return (
-    <CustomFlex justifyContent={"space-evenly"} direction={"row"}>
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink to={`/beneficiario/${usuario.id}`}>
           <SearchIcon />
         </CustomLink>

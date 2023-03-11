@@ -97,8 +97,8 @@ function Activities() {
     <CustomFlex direction={"column"}>
         <CustomFlex direction={"row"}>
             <CustomCardMini
-                  title='Activades'
-                  iconD={<BasicModal title={"Añadir actividad"} body={<ActivityForm/>} text={"Añadir"}/>}
+                   title='Nº de actividades'
+                  iconD={<BasicModal title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm/>}/>}
                   totalNumber="100"/>
           </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
@@ -112,7 +112,7 @@ export default Activities;
 
 const ToolList = ({actividad, handleEliminar}) => {
   return (
-    <CustomFlex justifyContent={"space-evenly"} direction={"row"}>
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink to={`/actividad/${actividad.id}`}><SearchIcon /></CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box><Typography>La actividad se eliminará permanentemente</Typography><CustomButton text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} /></Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
