@@ -100,7 +100,7 @@ function Volunteers() {
          <CustomFlex  direction={"row"}>
             <CustomCardMini 
                   title='Nº de voluntarios'
-                  iconD={<CustomLink to="/añadir/voluntario"><CustomButton text={"Añadir"} /></CustomLink>}
+                  iconD={<CustomLink to="/voluntario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber="100"/>
           </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>

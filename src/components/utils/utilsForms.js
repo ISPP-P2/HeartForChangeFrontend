@@ -6,6 +6,7 @@ export const FORM_TYPES ={
     SELECT: 'select',
     TEXTEAREA: 'textearea',
     DATE:'datetime-local',
+    ONLYDATE: 'date',
     CHECKBOX: 'checkbox',
     NUMBER: 'number',
 

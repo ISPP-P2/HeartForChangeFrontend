@@ -12,6 +12,8 @@ import Subventions from "./subventions/Subventions";
 import Activity from "../../static/activity";
 import VolunteerDetails from "./volunteers/VolunteersDetails";
 import ActivityVolunteerDetails from "./activities/ActivityDetailsVolunteers";
+import FormBeneficiaries from "./beneficiaries/FormBeneficiaries";
+import FormVolunteers from "./volunteers/FormVolunteers";
 export default function AutorizedRoutes() {
   return (
     <Routes>
@@ -69,30 +71,27 @@ export default function AutorizedRoutes() {
           </BodyWrapper>
         }
       ></Route>
-      <Route
-      
-        path={"/voluntario"}
-        
-      >  <Route
-      path={":id"}
-      element={
-       <VolunteerDetails> </VolunteerDetails>
-
-      }
-    ></Route></Route>
-        <Route path={'/actividadVol'} element={<ActivityVolunteerDetails  />}/>
-
+      <Route path={"/voluntario"}>  
         <Route
-      
-      path={"/beneficiario"}
-      
-    >  <Route
-    path={":id"}
-    element={
-     <BeneficiariesDetails> </BeneficiariesDetails>
-
-    }
-  ></Route></Route>
+          path={":id"}
+          element={<VolunteerDetails />}>
+           </Route>
+           <Route
+            path={"añadir"}
+            element={<FormVolunteers />}>
+        </Route>
+    </Route>
+    <Route path={'/actividadVol'} element={<ActivityVolunteerDetails  />}/>
+    <Route path={"/beneficiario"}>
+      <Route
+            path={":id"}
+            element={<BeneficiariesDetails> </BeneficiariesDetails>}>
+        </Route>
+        <Route
+            path={"añadir"}
+            element={<FormBeneficiaries />}>
+        </Route>
+    </Route>
     </Routes>
     
   );

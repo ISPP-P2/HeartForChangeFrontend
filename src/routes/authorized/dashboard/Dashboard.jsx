@@ -14,6 +14,7 @@ import AcademicExperienceForm from '../volunteers/AcademicExperienceForm';
 import FormBeneficiaries from '../beneficiaries/FormBeneficiaries';
 import WorkExperienceForm from '../volunteers/WorkExperienceForm';
 import ComplementaryFormationForm from '../volunteers/ComplementaryFormationForm';
+import CustomLink from '../../../components/CustomLink';
 
 function Dashboard() {
     
@@ -41,27 +42,41 @@ function Dashboard() {
              <CustomCard
                 title='Registrar una beneficiario'
                 iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton widthButton='10rem' text={"Registar"}  
+                buttonSidebar={
+                <CustomLink to={'beneficiario/añadir'}>
+                <CustomButton widthButton='10rem' text={"Registar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+                variantButton={VARIANTES_BUTTON.GREEN}/>
+                </CustomLink>
+                }/>
             <CustomCard 
                 title='Crear una actividad'
                 iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton widthButton='10rem' text={"Crear"}  
-                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+                buttonSidebar={
+                <CustomLink to={"/actividades"}>
+                    <CustomButton widthButton='10rem' text={"Crear"}  
+                    iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                    variantButton={VARIANTES_BUTTON.GREEN}/>
+                </CustomLink>
+            }/>
             <CustomCard 
                 title='Registrar un voluntario'
                 iconD={<PeopleOutlineIcon color='disabled'/>}
-                buttonSidebar={<CustomButton widthButton='10rem' text={"Registrar"}  
-                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+                buttonSidebar={
+                <CustomLink to={"voluntario/añadir"}>
+                    <CustomButton widthButton='10rem' text={"Registrar"}  
+                    iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                    variantButton={VARIANTES_BUTTON.GREEN}/>
+                </CustomLink>}/>
             <CustomCard 
                 title='Registrar una subvención'
                 iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton widthButton='10rem' text={"Registrar"}  
-                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+                buttonSidebar={
+                <CustomLink to={'subvenciones'}>
+                    <CustomButton widthButton='10rem' text={"Registrar"}  
+                    iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                    variantButton={VARIANTES_BUTTON.GREEN}/>
+                </CustomLink>}/>
             </Grid>
             
     );

@@ -76,10 +76,13 @@ function BasicFrom({
               </FormControl>
             ))}
             {buttonText === null ?  null : 
-            <CustomButton 
+            <Box gridColumn={"-2/-1"}>
+                <CustomButton 
                 onClick={handleSubmit} 
                 text={buttonText} 
-            />}
+                />
+            </Box>
+            }
           </Grid>
         </Box>
       )}
@@ -88,15 +91,19 @@ function BasicFrom({
 }
 
 const CustomInput = (props) => {
-  if (props.type == FORM_TYPES.TEXT || props.type == FORM_TYPES.NUMBER || props.type == FORM_TYPES.DATE) {
+  if (props.type == FORM_TYPES.TEXT || props.type == FORM_TYPES.ONLYDATE   || props.type == FORM_TYPES.NUMBER || props.type == FORM_TYPES.DATE) {
     return (
       <TextField
-
         type={props.type}
         disabled={props.readOnly}
         value={props.values[`${props.name}`]}
+        onChange={props.handleChange(`${props.name}`)}
         variant="standard"
         label={props.label}
+        InputLabelProps={{
+          shrink: true,
+        }}
+
         InputProps={{
           endAdornment: props.icon,
         }}
@@ -108,16 +115,10 @@ const CustomInput = (props) => {
       <Select
         disabled={props.readOnly}
         value={props.values[`${props.name}`]}
-        onChange={(event, value) => {
-          console.log(value);
-          props.setFieldValue(`${props.name}`, value.props.value);
-        }}
+        onChange={(event, value) => {props.setFieldValue(`${props.name}`, value.props.value);}}
         variant="standard"
         label={props.label}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
         {props.list === null || props.list === undefined ? (
           <MenuItem>Cargando lista</MenuItem>
         ) : (

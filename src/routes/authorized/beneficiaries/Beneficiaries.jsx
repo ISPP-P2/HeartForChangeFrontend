@@ -49,7 +49,7 @@ function Beneficiaries() {
           <CustomFlex direction={"row"}>
             <CustomCardMini 
                   title='Nº de beneficiarios'
-                  iconD={<CustomLink to="/añadir/beneficiario"><CustomButton text={"Añadir"} /></CustomLink>}
+                  iconD={<CustomLink to="/beneficiario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber="100"/>
           </CustomFlex>
             <BasicTable objetoTabla = {objetoTabla} maxHeight={"60vh"} ></BasicTable>
