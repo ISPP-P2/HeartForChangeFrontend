@@ -21,8 +21,7 @@ function Dashboard() {
    
 
     return (
-        <Grid display={"grid"} gap="1rem">
-        <Grid display={"grid"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
+        <Grid display={mobile ? "grid" : "flex"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
             <CustomCardMini 
                 title='Beneficiarios registrados'
                 iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
@@ -39,29 +38,32 @@ function Dashboard() {
                 title='Subvenciones último mes'
                 iconD={<SavingsIcon  htmlColor='#0055FF'/>}
                 totalNumber="100 €"/>
-            </Grid>
-        <Grid display={"grid"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(23rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
+             <CustomCard
+                title='Registrar una beneficiario'
+                iconD={<PeopleOutlineIcon color='disabled' />}
+                buttonSidebar={<CustomButton widthButton='10rem' text={"Registar"}  
+                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
             <CustomCard 
-                title='Registrar una nueva actividad'
+                title='Crear una actividad'
+                iconD={<PeopleOutlineIcon color='disabled' />}
+                buttonSidebar={<CustomButton widthButton='10rem' text={"Crear"}  
+                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
+            <CustomCard 
+                title='Registrar un voluntario'
                 iconD={<PeopleOutlineIcon color='disabled'/>}
-                buttonSidebar={<CustomButton text={"Crear"}  
-                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>}/>
-            <CustomCard
-                title='Registrar una nueva actividad'
-                iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton  text={"Registar"}  
+                buttonSidebar={<CustomButton widthButton='10rem' text={"Registrar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
             <CustomCard 
-                title='Registrar una nueva actividad'
+                title='Registrar una subvención'
                 iconD={<PeopleOutlineIcon color='disabled' />}
-                buttonSidebar={<CustomButton text={"Registar"}  
+                buttonSidebar={<CustomButton widthButton='10rem' text={"Registrar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
-
-        </Grid>
-    </Grid>
+            </Grid>
+            
     );
 }
 

@@ -49,10 +49,9 @@ const ButtonSideBoard = ({text, icon, href}) => {
       <ListItem onClick={()=> navigate(href)} sx={{
           color: "white",
           filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.1))",
-          fontSize: "10%",
           backgroundColor: location.pathname === href ? "#f28635" : null,
           "& .MuiTypography-root":{
-            fontSize: "0.85rem"
+            fontSize: "0.95rem"
           }
       }} disablePadding>
             <ListItemButton>

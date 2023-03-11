@@ -8,6 +8,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomFlex from '../../../components/CustomFlex';
 import BasicModal from '../../../components/BasicModal';
 
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const subvenciones = [
     {
@@ -46,8 +47,8 @@ const subvenciones = [
 function Subventions() {
   const SubventionList = new CustomList(subvenciones)
   let objetoTabla = SubventionList.parseToTable(
-    ["Id","Nombre", "Tipo", "Estado"], 
-    ["id","name", "type", "status"],
+    ["Nombre", "Tipo", "Estado"], 
+    ["name", "type", "status"],
     ["Cantidad"],
     ["quantity"]
     )

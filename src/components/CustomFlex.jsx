@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import React from 'react'
 
-function CustomFlex({children, direction, margin= 'none',wrap = "none", align="normal", justifyContent = null}) {
+function CustomFlex({children, direction,flexBasis='auto', margin= 'none',wrap = "none", align="normal", justifyContent = null}) {
   return (
         <Box   sx={{
                 display: "flex",

@@ -12,6 +12,8 @@ import { useState } from 'react';
 import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import CustomLink from '../../../components/CustomLink';
+import { Grid, Typography } from '@mui/material';
+import BodyWrapper from '../../../components/BodyWrapper';
   
 
 
@@ -99,36 +101,36 @@ const actividadesConBoton = actividades.map((actividad) => {
 function ActivityVolunteerDetails() {
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
-    ["Id", "Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
-    ["id", "name", "dni", "gender", "birthDate", "phoneNumber", "button"],
+    ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
+    ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]);
 
   
   return (
+  
+  <BodyWrapper title={"Actividad: Parque de la Fuensanta"}>
+    
     <CustomFlex direction={"column"}>
+    <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
       <CustomFlex direction={"column"}>
-      <CustomCard title="Ayudanos a salvar a los lemures rojos" quantity={actividades.length}> </CustomCard>
-      
         <Box>
-        <Grid
-      display={"grid"}
-      gap={"1rem"}
-      gridTemplateColumns={"1fr 2fr"}
-      gridTemplateRows={"100%"}>
+          <Grid
+          display={"grid"}
+          gap={"1rem"}
+          gridTemplateColumns={"1fr 1fr"}
+          gridTemplateRows={"100%"}>
         <BasicFrom 
         form={form} 
-        columns={1}   
-        width={"auto"} 
+        width={"-webkit-fill-available"} 
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         /> 
-          <CustomFlex direction={"column"} align={"flex-end"}>        
           <Grid
               display={"grid"}
-              gap={"1rem"}
-              gridTemplateColumns={"100%"}
-              gridTemplateRows={"1fr 1fr"}>    
+              justifyContent={"center"}
+              marginLeft={"2rem"}
+              gridTemplateColumns={"1fr 1fr"}>    
                 <CustomCard
                   title='Solicitud para apuntarse'
                   iconD={<PeopleOutlineIcon color='disabled' />}
@@ -142,17 +144,15 @@ function ActivityVolunteerDetails() {
                   iconD={<ArrowForwardIcon sx={{marginLeft: "1rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
           </Grid> 
-          </CustomFlex> 
         </Grid> 
         </Box>
         
       </CustomFlex>
-
-      <CustomFlex direction={"row"}>
-        <CustomCard title="Usuarios que han participado en la actividad" quantity={actividades.length}> </CustomCard>
+        <Box sx={{marginTop:"5rem"}}>
+          <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+        </Box>
       </CustomFlex>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
-      </CustomFlex>
+      </BodyWrapper>
     );
 }
 

@@ -69,9 +69,9 @@ function AssignVolunteers() {
   return (
     <BodyWrapper title={`Asignar voluntarios a la actividad ${id}`}>
       <CustomFlex direction={"column"}>
-        <Box> 
+        <CustomFlex direction={"row"}> 
             <CustomLink to={`/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></CustomLink>
-        </Box>
+        </CustomFlex>
           <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
     </BodyWrapper>

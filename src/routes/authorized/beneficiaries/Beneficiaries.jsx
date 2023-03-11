@@ -36,8 +36,8 @@ function Beneficiaries() {
 
   const BeneficiariesList = new CustomList(beneficiariosConBoton)
   let objetoTabla = BeneficiariesList.parseToTable(
-    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar", "Ver Detalles"], 
-    ["id","username", "name", "surname", "email", "age","role","avatarImage", "button"],
+    [ "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar", "Ver Detalles"], 
+    ["username", "name", "surname", "email", "age","role","avatarImage", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
     )
@@ -67,7 +67,7 @@ const ToolList = ({usuario, handleEliminar}) => {
       <CustomLink to={`/beneficiario/${usuario.id}`}>
           <SearchIcon />
         </CustomLink>
-      <BasicModal title={"Eliminar"} heightButton={"1rem"} widthButton={"2rem"} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+      <BasicModal title={"Eliminar"} heightButton={"1.5rem"} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 

@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import CustomLink from '../../../components/CustomLink';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import BasicModal from '../../../components/BasicModal';
-
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useEffect, useMemo } from 'react';
 const usuarios = [
@@ -88,11 +87,11 @@ function Volunteers() {
   const UsuarioList = new CustomList(voluntariosConBoton)
 
   let objetoTabla = UsuarioList.parseToTable(
-    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar","Herramientas"], 
-    ["id","username", "name", "surname", "email", "age","role","avatarImage", "button"],
+    ["Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar","Herramientas"], 
+    ["username", "name", "surname", "email", "age","role","avatarImage", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
-    )
+  )
 
 
   
@@ -119,7 +118,7 @@ const ToolList = ({usuario, handleEliminar}) => {
       <CustomLink to={`/voluntario/${usuario.id}`}>
           <SearchIcon />
         </CustomLink>
-      <BasicModal title={"Eliminar"} heightButton={"1rem"} widthButton={"2rem"} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+      <BasicModal title={"Eliminar"} heightButton={"1.5rem"}variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 

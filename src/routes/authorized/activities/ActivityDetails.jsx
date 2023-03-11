@@ -106,8 +106,8 @@ function ActivityDetails() {
 
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
-    ["Id", "Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
-    ["id", "name", "dni", "gender", "birthDate", "phoneNumber", "button"],
+    ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
+    ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]);
     
@@ -144,19 +144,19 @@ function ActivityDetails() {
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
                   <CustomCard
-                  title='Añadir participante a la actividad'
+                  title='Añadir'
                   iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<Link to={`/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
+                  buttonSidebar={<CustomLink to={`/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.GREEN}/> </Link>}/>  
+                  variantButton={VARIANTES_BUTTON.GREEN}/> </CustomLink>}/>  
                 <CustomCard
-                  title='Dar por finalizada una actividad'
+                  title='Finalizar'
                   iconD={<PeopleOutlineIcon color='disabled' />}
                   buttonSidebar={<CustomButton onClick={() => {setFinalizada(!finalizada)}} text={"Finalizar"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
                 <CustomCard
-                  title='Lista de solicitudes'
+                  title='Solicitudes'
                   iconD={<PeopleOutlineIcon color='disabled' />}
                   buttonSidebar={<CustomButton text={"Ver"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 

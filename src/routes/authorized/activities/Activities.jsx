@@ -10,6 +10,9 @@ import CustomCardMini from '../../../components/CustomCardMini';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomLink from '../../../components/CustomLink';
 import BasicModal from '../../../components/BasicModal';
+import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Typography } from '@mui/material';
 
 export const actividades = [
     {
@@ -63,25 +66,30 @@ export const actividades = [
     },
 ]
 
-const actividadesConBoton = actividades.map((actividad) => {
-  return {
-    ...actividad,
-    button: <CustomLink to={`/actividad/${actividad.id}`}><SearchIcon /></CustomLink>,
-  };
-});
+
 
 
 
 
 function Activities() {
+
+  const actividadesConBoton = React.useMemo(() => {
+    return actividades.map((actividad) => {
+      return {
+        ...actividad,
+        button: <ToolList  actividad={actividad} />,
+      };
+    });
+  }, [actividades]);
+
+
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
-    ["Id", "Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha","Ver detalles"],
-    ["id", "name", "type", "location","capacity","date", "button"],
+    ["Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha","Ver detalles"],
+    ["name", "type", "location","capacity","date", "button"],
     ["Descripcion"],
     ["description"]   
     )
-
 
   
   return (
@@ -98,3 +106,15 @@ function Activities() {
 }
 
 export default Activities;
+
+
+
+const ToolList = ({actividad, handleEliminar}) => {
+  return (
+    <CustomFlex justifyContent={"space-evenly"} direction={"row"}>
+      <CustomLink to={`/actividad/${actividad.id}`}><SearchIcon /></CustomLink>
+      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box><Typography>La actividad se eliminará permanentemente</Typography><CustomButton text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} /></Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+    </CustomFlex>
+  )
+
+}
