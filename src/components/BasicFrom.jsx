@@ -52,7 +52,7 @@ function BasicFrom({
             gridTemplateColumns= {"repeat(auto-fill , minmax(15rem , 1fr))"}
             >
             {form.map((props, i) => (
-              <FormControl
+              <FormControl 
                 sx={{
                     display:'flex', 
                     margin: 0, 
@@ -91,7 +91,7 @@ function BasicFrom({
 const CustomInput = (props) => {
   if (props.type == FORM_TYPES.TEXT || props.type == FORM_TYPES.NUMBER || props.type == FORM_TYPES.DATE) {
     return (
-      <TextField
+      <TextField 
 
         type={props.type}
         disabled={props.readOnly}
@@ -106,7 +106,7 @@ const CustomInput = (props) => {
   }
   if (props.type === FORM_TYPES.SELECT) {
     return (
-      <Select
+      <Select 
         disabled={props.readOnly}
         value={props.values[`${props.name}`]}
         onChange={(event, value) => {

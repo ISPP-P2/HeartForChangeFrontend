@@ -9,6 +9,7 @@ import CustomButton, {
 import BasicFrom from "../../../components/BasicFrom";
 import { FORM_TYPES } from "../../../components/utils/utilsForms";
 import BodyWrapper from '../../../components/BodyWrapper';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const voluntarios = {
   id: "1",
@@ -80,239 +81,243 @@ const form2 = [
     type: FORM_TYPES.TEXT,
     label: "Fecha de Nacimiento",
     value: voluntarios?.birthDate,
-  },
-  {
-    name: "phoneNumber",
-    type: FORM_TYPES.TEXT,
-    label: "Número de Teléfono",
-    value: voluntarios?.phoneNumber,
-  },
-  {
-    name: "description",
-    type: FORM_TYPES.TEXT,
-    label: "Descripción",
-    value: voluntarios?.description,
-  },
-  {
-    name: "address",
-    type: FORM_TYPES.TEXT,
-    label: "Dirección",
-    value: voluntarios?.address,
-  },
-  {
-    name: "postalCode",
-    type: FORM_TYPES.TEXT,
-    label: "Código Postal",
-    value: voluntarios?.postalCode,
-  },
-  {
-    name: "town",
-    type: FORM_TYPES.TEXT,
-    label: "Ciudad",
-    value: voluntarios?.town,
-  },
-  {
-    name: "province",
-    type: FORM_TYPES.TEXT,
-    label: "Provincia",
-    value: voluntarios?.province,
-  },
-  {
-    name: "country",
-    type: FORM_TYPES.TEXT,
-    label: "País",
-    value: voluntarios?.country,
-  },
-  {
-    name: "civilState",
-    type: FORM_TYPES.TEXT,
-    label: "Estado Civil",
-    value: voluntarios?.civilState,
-  },
-  {
-    name: "email",
-    type: FORM_TYPES.TEXT,
-    label: "Correo Electrónico",
-    value: voluntarios?.email,
-  },
-  {
-    name: "startDate",
-    type: FORM_TYPES.TEXT,
-    label: "Fecha de Inicio",
-    value: voluntarios?.startDate,
-  },
-  {
-    name: "endDate",
-    type: FORM_TYPES.TEXT,
-    label: "Fecha de Finalización",
-    value: voluntarios?.endDate,
-  },
-  {
-    name: "drivingLicense",
-    type: FORM_TYPES.TEXT,
-    label: "Licencia de Conducir",
-    value: voluntarios?.drivingLicense,
-  },
-  {
-    name: "homologado",
-    type: FORM_TYPES.TEXT,
-    label: "Homologado",
-    value: voluntarios?.homologado,
-  },
-  {
-    name: "census",
-    type: FORM_TYPES.TEXT,
-    label: "Censo",
-    value: "España",
-  },
-  {
-    name: "skills",
-    type: FORM_TYPES.TEXT,
-    label: "Habilidades",
-    value: "Jugar a la peonza",
-  },
-  {
-    name: "jobSector",
-    type: FORM_TYPES.TEXT,
-    label: "Sector laboral",
-    value: "Emergencias",
-  },
-  {
-    name: "nationality",
-    type: FORM_TYPES.TEXT,
-    label: "Nacionalidad",
-    value: "Español",
-  },
-  {
-    name: "arrivalDate",
-    type: FORM_TYPES.TEXT,
-    label: "Fecha de llegada",
-    value: "No procede",
-  },
-  {
-    name: "authorization",
-    type: FORM_TYPES.TEXT,
-    label: "Autorización",
-    value: "Visado(2023)",
-  },
-  {
-    name: "sanitaryCard",
-    type: FORM_TYPES.TEXT,
-    label: "Tarjeta Sanitaria",
-    value: "",
-  },
-  {
-    name: "grants",
-    type: FORM_TYPES.TEXT,
-    label: "Subvenciones",
-    value: "No",
-  },
-  {
-    name: "savings",
-    type: FORM_TYPES.TEXT,
-    label: "Ahorros",
-    value: "No",
-  },
-  {
-    name: "saeInscription",
-    type: FORM_TYPES.TEXT,
-    label: "Inscripción en SAE",
-    value: "Si",
-  },
-  {
-    name: "working",
-    type: FORM_TYPES.TEXT,
-    label: "Trabajando",
-    value: "Si",
-  },
-  {
-    name: "itKnowledge",
-    type: FORM_TYPES.TEXT,
-    label: "Conocimientos informáticos",
-    value: "Si",
-  },
-  {
-    name: "languages",
-    type: FORM_TYPES.TEXT,
-    label: "Idiomas",
-    value: "Español",
-  },
-  {
-    name: "devices",
-    type: FORM_TYPES.TEXT,
-    label: "Dispositivos",
-    value: "Móvil, Internet",
-  },
+},
+{
+  name: "phoneNumber",
+  type: FORM_TYPES.TEXT,
+  label: "Número de Teléfono",
+  value: voluntarios?.phoneNumber,
+},
+{
+  name: "description",
+  type: FORM_TYPES.TEXT,
+  label: "Descripción",
+  value: voluntarios?.description,
+},
+{
+  name: "address",
+  type: FORM_TYPES.TEXT,
+  label: "Dirección",
+  value: voluntarios?.address,
+},
+{
+  name: "postalCode",
+  type: FORM_TYPES.TEXT,
+  label: "Código Postal",
+  value: voluntarios?.postalCode,
+},
+{
+  name: "town",
+  type: FORM_TYPES.TEXT,
+  label: "Ciudad",
+  value: voluntarios?.town,
+},
+{
+  name: "province",
+  type: FORM_TYPES.TEXT,
+  label: "Provincia",
+  value: voluntarios?.province,
+},
+{
+  name: "country",
+  type: FORM_TYPES.TEXT,
+  label: "País",
+  value: voluntarios?.country,
+},
+{
+  name: "civilState",
+  type: FORM_TYPES.TEXT,
+  label: "Estado Civil",
+  value: voluntarios?.civilState,
+},
+{
+  name: "email",
+  type: FORM_TYPES.TEXT,
+  label: "Correo Electrónico",
+  value: voluntarios?.email,
+},
+{
+  name: "startDate",
+  type: FORM_TYPES.TEXT,
+  label: "Fecha de Inicio",
+  value: voluntarios?.startDate,
+},
+{
+  name: "endDate",
+  type: FORM_TYPES.TEXT,
+  label: "Fecha de Finalización",
+  value: voluntarios?.endDate,
+},
+{
+  name: "drivingLicense",
+  type: FORM_TYPES.TEXT,
+  label: "Licencia de Conducir",
+  value: voluntarios?.drivingLicense,
+},
+{
+  name: "homologado",
+  type: FORM_TYPES.TEXT,
+  label: "Homologado",
+  value: voluntarios?.homologado,
+},
+{
+  name: "census",
+  type: FORM_TYPES.TEXT,
+  label: "Censo",
+  value: "España",
+},
+{
+  name: "skills",
+  type: FORM_TYPES.TEXT,
+  label: "Habilidades",
+  value: "Jugar a la peonza",
+},
+{
+  name: "jobSector",
+  type: FORM_TYPES.TEXT,
+  label: "Sector laboral",
+  value: "Emergencias",
+},
+{
+  name: "nationality",
+  type: FORM_TYPES.TEXT,
+  label: "Nacionalidad",
+  value: "Español",
+},
+{
+  name: "arrivalDate",
+  type: FORM_TYPES.TEXT,
+  label: "Fecha de llegada",
+  value: "No procede",
+},
+{
+  name: "authorization",
+  type: FORM_TYPES.TEXT,
+  label: "Autorización",
+  value: "Visado(2023)",
+},
+{
+  name: "sanitaryCard",
+  type: FORM_TYPES.TEXT,
+  label: "Tarjeta Sanitaria",
+  value: "",
+},
+{
+  name: "grants",
+  type: FORM_TYPES.TEXT,
+  label: "Subvenciones",
+  value: "No",
+},
+{
+  name: "savings",
+  type: FORM_TYPES.TEXT,
+  label: "Ahorros",
+  value: "No",
+},
+{
+  name: "saeInscription",
+  type: FORM_TYPES.TEXT,
+  label: "Inscripción en SAE",
+  value: "Si",
+},
+{
+  name: "working",
+  type: FORM_TYPES.TEXT,
+  label: "Trabajando",
+  value: "Si",
+},
+{
+  name: "itKnowledge",
+  type: FORM_TYPES.TEXT,
+  label: "Conocimientos informáticos",
+  value: "Si",
+},
+{
+  name: "languages",
+  type: FORM_TYPES.TEXT,
+  label: "Idiomas",
+  value: "Español",
+},
+{
+  name: "devices",
+  type: FORM_TYPES.TEXT,
+  label: "Dispositivos",
+  value: "Móvil, Internet",
+},
 ];
 
 const extraForm = [
-  {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
+{
+  name: "academicExperience",
+  type: FORM_TYPES.TEXT,
+  label: "Experiencia Académica",
+  value: voluntarios?.academicExperience,
+},
+{
+  name: "extraEducation",
+  type: FORM_TYPES.TEXT,
+  label: "Formación Complementaria",
+  value: voluntarios?.extraEducation,
+},
+{
+  name: "workingExperience",
+  type: FORM_TYPES.TEXT,
+  label: "Experiencia Laboral",
+  value: voluntarios?.workingExperience,
+},
 ];
 
 function VolunteerDetails() {
-  return (
-  <BodyWrapper title={"Voluntario 1"}>
-          
-    <CustomFlex direction={"column"}>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "23em 1fr",
-          gridTemplateRows: "repeat(2, 10em)",
-        }}
-      >
-        <Box sw={{innerHeight:'10px',gridColumn: "1/1", gridRow: "1/1"}}>
-          <img src={voluntarios.avatar} sx={{ width: "300px" }}></img>
-        </Box>
-        <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
-          <BasicFrom
-            form={form2}
-            readOnly={true}
-            width={"100%"}
-            handleSubmitForm={(values) => console.log(values)}
-          />
-        </Box>
-        <Box>
-        <CustomFlex direction={"row"}>
-          <CustomButton variantButton="" text="ACTIVIDADES"></CustomButton>
-          <CustomButton text="MOSTRAR DATOS"></CustomButton>
-        </CustomFlex>
-        <Box>
-          <BasicFrom
-            form={extraForm}
-            columns={1}
-            width={"350px"}
-            readOnly={true}
-            handleSubmitForm={(values) => console.log(values)}
-          />
-        </Box>
-        </Box>
+  const mobile = useMediaQuery('(min-width:1200px)');
+return (
+<BodyWrapper title={"Voluntario 1"}>
+        
+  <CustomFlex direction={"column"}>
+    <Box
+      sx={{
+        display: mobile? "grid" : "flex",
+        gridTemplateColumns: "23em 1fr",
+        gridTemplateRows: "10em 2em",
+        flexDirection: "column"
+      }}
+    >
+      
+      <Box sw={{innerHeight:'10px',gridColumn: "1/1", gridRow: "1/1"}}>
+        <img src={voluntarios.avatar} sx={{ width: "300px" }}></img>
       </Box>
-
-      <CustomFlex direction={"column"}>
-        
-        
+      <CustomFlex direction={"row"}>
+        <CustomButton variantButton="" text="ACTIVIDADES"></CustomButton>
+        <CustomButton text="MOSTRAR DATOS"></CustomButton>
       </CustomFlex>
+      <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
+        <BasicFrom
+          form={form2}
+          readOnly={true}
+          width={"100%"}
+          handleSubmitForm={(values) => console.log(values)}
+        />
+      </Box>
+      <Box>
+      
+      <Box>
+        <BasicFrom
+          form={extraForm}
+          columns={1}
+          width={"350px"}
+          readOnly={true}
+          handleSubmitForm={(values) => console.log(values)}
+        />
+      </Box>
+      </Box>
+    </Box>
+
+    <CustomFlex direction={"column"}>
+      
+      
     </CustomFlex>
-  </BodyWrapper>
-  );
+  </CustomFlex>
+</BodyWrapper>
+);
 }
 
 export default  VolunteerDetails 
