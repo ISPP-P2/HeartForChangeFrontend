@@ -99,7 +99,7 @@ function Volunteers() {
       <CustomFlex direction={"column"}>
          <CustomFlex  direction={"row"}>
             <CustomCardMini 
-                  title='Voluntarios'
+                  title='Nº de voluntarios'
                   iconD={<CustomLink to="/añadir/voluntario"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber="100"/>
           </CustomFlex>
@@ -114,7 +114,7 @@ export default Volunteers;
 
 const ToolList = ({usuario, handleEliminar}) => {
   return (
-    <CustomFlex justifyContent={"space-evenly"} direction={"row"}>
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink to={`/voluntario/${usuario.id}`}>
           <SearchIcon />
         </CustomLink>
