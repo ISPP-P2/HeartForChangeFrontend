@@ -54,8 +54,6 @@ function WorkExperienceForm() {
   return (
     <BasicFrom 
         form={form} 
-        columns={2}   
-        width={"500px"} 
         buttonText={"añadir"}
         handleSubmitForm={(values) => console.log(values)}
     />

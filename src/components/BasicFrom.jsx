@@ -20,8 +20,7 @@ import CustomButton from "./CustomButton";
 function BasicFrom({
   form = null,
   handleSubmitForm = null,
-  width = "max-content",
-  columns = null,
+  width = "-webkit-fill-available",
   buttonText = null,
   readOnly = false
 }) {

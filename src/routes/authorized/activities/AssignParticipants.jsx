@@ -7,6 +7,7 @@ import { CustomList } from '../../../static/user';
 import { Link, useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import BodyWrapper from '../../../components/BodyWrapper';
+import CustomLink from '../../../components/CustomLink';
 
 
 const participants = [
@@ -69,7 +70,7 @@ function AssignVolunteers() {
     <BodyWrapper title={`Asignar voluntarios a la actividad ${id}`}>
       <CustomFlex direction={"column"}>
         <Box> 
-            <Link to={`/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></Link>
+            <CustomLink to={`/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></CustomLink>
         </Box>
           <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import users, { CustomList } from '../../../static/user'
 import { Avatar } from '@mui/material';
 import CustomFlex from '../../../components/CustomFlex';
@@ -8,6 +7,12 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomCardMini from '../../../components/CustomCardMini';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
+import CustomLink from '../../../components/CustomLink';
+import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import BasicModal from '../../../components/BasicModal';
+
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useEffect, useMemo } from 'react';
 const usuarios = [
     {
       id: "1",
@@ -59,18 +64,31 @@ const usuarios = [
     }, 
     
 ]
-const voluntariosConBoton = usuarios.map((usuario) => {
-  return {
-    ...usuario,
-    button: <Link to="/voluntario/1"><SearchIcon /></Link>,
-  };
-});
 
 
 function Volunteers() {
+  const handleEliminar = () => {
+    console.log("Eliminar")
+  }
+
+
+
+ const voluntariosConBoton = useMemo(() => {
+    return usuarios.map((usuario) => {
+      return {
+        ...usuario,
+        button:<ToolList usuario={usuario} handleEliminar={handleEliminar} /> ,
+      };
+    });
+  }, [usuarios])
+
+ 
+
+
   const UsuarioList = new CustomList(voluntariosConBoton)
+
   let objetoTabla = UsuarioList.parseToTable(
-    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar","Ver detalles"], 
+    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar","Herramientas"], 
     ["id","username", "name", "surname", "email", "age","role","avatarImage", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
@@ -83,7 +101,7 @@ function Volunteers() {
          <CustomFlex  direction={"row"}>
             <CustomCardMini 
                   title='Voluntarios'
-                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                  iconD={<CustomLink to="/añadir/voluntario"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber="100"/>
           </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
@@ -92,3 +110,17 @@ function Volunteers() {
 }
 
 export default Volunteers;
+
+
+
+const ToolList = ({usuario, handleEliminar}) => {
+  return (
+    <CustomFlex justifyContent={"space-evenly"} direction={"row"}>
+      <CustomLink to={`/voluntario/${usuario.id}`}>
+          <SearchIcon />
+        </CustomLink>
+      <BasicModal title={"Eliminar"} heightButton={"1rem"} widthButton={"2rem"} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+    </CustomFlex>
+  )
+
+}

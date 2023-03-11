@@ -9,6 +9,10 @@ import CustomButton, {
 import BasicFrom from "../../../components/BasicFrom";
 import { FORM_TYPES } from "../../../components/utils/utilsForms";
 import BodyWrapper from '../../../components/BodyWrapper';
+import BasicModal from "../../../components/BasicModal";
+import AcademicExperienceForm from "./AcademicExperienceForm";
+import ComplementaryFormationForm from "./ComplementaryFormationForm";
+import WorkExperienceForm from "./WorkExperienceForm";
 
 const voluntarios = {
   id: "1",
@@ -264,6 +268,92 @@ const extraForm = [
     label: "Experiencia Laboral",
     value: voluntarios?.workingExperience,
   },
+  {
+    name: "academicExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Académica",
+    value: voluntarios?.academicExperience,
+  },
+  {
+    name: "extraEducation",
+    type: FORM_TYPES.TEXT,
+    label: "Formación Complementaria",
+    value: voluntarios?.extraEducation,
+  },
+  {
+    name: "workingExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Laboral",
+    value: voluntarios?.workingExperience,
+  },{
+    name: "academicExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Académica",
+    value: voluntarios?.academicExperience,
+  },
+  {
+    name: "extraEducation",
+    type: FORM_TYPES.TEXT,
+    label: "Formación Complementaria",
+    value: voluntarios?.extraEducation,
+  },
+  {
+    name: "workingExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Laboral",
+    value: voluntarios?.workingExperience,
+  },{
+    name: "academicExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Académica",
+    value: voluntarios?.academicExperience,
+  },
+  {
+    name: "extraEducation",
+    type: FORM_TYPES.TEXT,
+    label: "Formación Complementaria",
+    value: voluntarios?.extraEducation,
+  },
+  {
+    name: "workingExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Laboral",
+    value: voluntarios?.workingExperience,
+  },{
+    name: "academicExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Académica",
+    value: voluntarios?.academicExperience,
+  },
+  {
+    name: "extraEducation",
+    type: FORM_TYPES.TEXT,
+    label: "Formación Complementaria",
+    value: voluntarios?.extraEducation,
+  },
+  {
+    name: "workingExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Laboral",
+    value: voluntarios?.workingExperience,
+  },{
+    name: "academicExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Académica",
+    value: voluntarios?.academicExperience,
+  },
+  {
+    name: "extraEducation",
+    type: FORM_TYPES.TEXT,
+    label: "Formación Complementaria",
+    value: voluntarios?.extraEducation,
+  },
+  {
+    name: "workingExperience",
+    type: FORM_TYPES.TEXT,
+    label: "Experiencia Laboral",
+    value: voluntarios?.workingExperience,
+  },
 ];
 
 function VolunteerDetails() {
@@ -290,25 +380,43 @@ function VolunteerDetails() {
           />
         </Box>
         <Box>
+        <Box sx={{marginTop:"1rem"}}>
         <CustomFlex direction={"row"}>
           <CustomButton variantButton="" text="ACTIVIDADES"></CustomButton>
           <CustomButton text="MOSTRAR DATOS"></CustomButton>
         </CustomFlex>
-        <Box>
-          <BasicFrom
-            form={extraForm}
-            columns={1}
-            width={"350px"}
-            readOnly={true}
-            handleSubmitForm={(values) => console.log(values)}
-          />
+        </Box>
+        <Box sx={{marginTop:"1rem", marginRight:'1rem'}}>
+          <CustomFlex direction={"column"}>
+            <CustomFlex direction={"row"} justifyContent={"space-between"}>
+              <Box flexBasis={"fit-content"}>
+                <BasicModal text={"Experiencia Académica"} title={"Experiencia Académica"} body={<BasicFrom form={extraForm} readOnly={true}/>} />
+              </Box>         
+              <BasicModal text={"+"} variant={VARIANTES_BUTTON.ORANGE}  title={"Experiencia Académica"} body={<AcademicExperienceForm /> } />
+            </CustomFlex>
+            <CustomFlex direction={"row"} justifyContent={"space-between"}>
+              <Box flexBasis={"fit-content"}>
+              <BasicModal text={"Experiencia Laboral"} title={"Experiencia Laboral"} body={<BasicFrom form={extraForm} readOnly={true}/>} />
+              </Box>
+              <Box right={"0"}> 
+                <BasicModal text={"+"} variant={VARIANTES_BUTTON.ORANGE} title={"Experiencia Laboral"} body={<WorkExperienceForm />} />
+              </Box>
+            </CustomFlex>
+            <CustomFlex direction={"row"} justifyContent={"space-between"}>
+              <Box flexBasis={"fit-content"}>
+              <BasicModal text={"Formación Complementaria"} title={"Formación Complementaria"} body={<BasicFrom form={extraForm} readOnly={true}/>} />
+              </Box>
+                <BasicModal text={"+"} variant={VARIANTES_BUTTON.ORANGE} title={"Formación Complementaria"} body={<ComplementaryFormationForm />} />
+            </CustomFlex>
+           
+           
+
+          </CustomFlex>
         </Box>
         </Box>
       </Box>
 
       <CustomFlex direction={"column"}>
-        
-        
       </CustomFlex>
     </CustomFlex>
   </BodyWrapper>

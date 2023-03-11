@@ -6,6 +6,7 @@ import { CustomList } from '../../../static/activity'
 import CustomCardMini from '../../../components/CustomCardMini';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomFlex from '../../../components/CustomFlex';
+import BasicModal from '../../../components/BasicModal';
 
 
 const subvenciones = [
@@ -55,13 +56,15 @@ function Subventions() {
   
   return (
     <Box>
-      <CustomFlex direction={"row"}>
-            <CustomCardMini 
-                  title='Activades'
-                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
-                  totalNumber="100"/>
+        <CustomFlex direction={"column"}>
+          <CustomFlex direction={"row"}>
+              <CustomCardMini
+                    title='Subvenciones'
+                    iconD={<BasicModal title={"Añadir subvención"} text={"Añadir"} body={<></>}/>}
+                    totalNumber="100"/>
           </CustomFlex>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"} maxWidth={"85vw"}></BasicTable>
+        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"}></BasicTable>
+        </CustomFlex>
       </Box>
     );
 }

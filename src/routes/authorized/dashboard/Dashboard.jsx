@@ -61,8 +61,7 @@ function Dashboard() {
                 variantButton={VARIANTES_BUTTON.GREEN}/>}/>
 
         </Grid>
-            <BasicModal title={"aaa"} text={'awdad'} />
-        </Grid>
+    </Grid>
     );
 }
 

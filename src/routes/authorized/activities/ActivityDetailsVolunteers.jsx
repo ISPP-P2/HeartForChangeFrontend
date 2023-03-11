@@ -4,16 +4,14 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { useState } from 'react';
-import { Grid } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
+import CustomLink from '../../../components/CustomLink';
   
 
 
@@ -55,7 +53,7 @@ const actividades = [
     gender: "Mujer",
     birthDate: "03/05/1998",
     phoneNumber: "666254876",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>,
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
     description: "Hola" 
   },
   {
@@ -65,7 +63,7 @@ const actividades = [
     gender: "Hombre",
     birthDate: "18/01/1971",
     phoneNumber: "698754687",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>,
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
     description: "Hola" 
   },
   {
@@ -75,7 +73,7 @@ const actividades = [
     gender: "Hombre",
     birthDate: "15/11/1982",
     phoneNumber: "669857438",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>, 
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>, 
     description: "Hola" 
   },
   {
@@ -85,7 +83,7 @@ const actividades = [
     gender: "Fluido",
     birthDate: "20/02/1995",
     phoneNumber: "611997854",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>,    
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,    
     description: "Hola" 
   }, 
 
@@ -94,7 +92,7 @@ const actividades = [
 const actividadesConBoton = actividades.map((actividad) => {
   return {
     ...actividad,
-    button: <Link to="/actividad/1"><SearchIcon /></Link>,
+    button: <CustomLink to="/actividad/1"><SearchIcon /></CustomLink>,
   };
 });
 

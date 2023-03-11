@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomCardMini from '../../../components/CustomCardMini';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CustomLink from '../../../components/CustomLink';
+import BasicModal from '../../../components/BasicModal';
 
 export const actividades = [
     {
@@ -64,7 +66,7 @@ export const actividades = [
 const actividadesConBoton = actividades.map((actividad) => {
   return {
     ...actividad,
-    button: <Link to={`/actividad/${actividad.id}`}><SearchIcon /></Link>,
+    button: <CustomLink to={`/actividad/${actividad.id}`}><SearchIcon /></CustomLink>,
   };
 });
 
@@ -85,9 +87,9 @@ function Activities() {
   return (
     <CustomFlex direction={"column"}>
         <CustomFlex direction={"row"}>
-            <CustomCardMini 
+            <CustomCardMini
                   title='Activades'
-                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                  iconD={<BasicModal title={"Añadir actividad"} text={"Añadir"} body={<></>}/>}
                   totalNumber="100"/>
           </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>

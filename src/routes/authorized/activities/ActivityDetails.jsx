@@ -15,6 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import BodyWrapper from '../../../components/BodyWrapper';
+import CustomLink from '../../../components/CustomLink';
   
 
 
@@ -56,7 +57,7 @@ const actividades = [
     gender: "Mujer",
     birthDate: "03/05/1998",
     phoneNumber: "666254876",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>,
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
     description: "Hola" 
   },
   {
@@ -66,7 +67,7 @@ const actividades = [
     gender: "Hombre",
     birthDate: "18/01/1971",
     phoneNumber: "698754687",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>,
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
     description: "Hola" 
   },
   {
@@ -76,7 +77,7 @@ const actividades = [
     gender: "Hombre",
     birthDate: "15/11/1982",
     phoneNumber: "669857438",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>, 
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>, 
     description: "Hola" 
   },
   {
@@ -86,7 +87,7 @@ const actividades = [
     gender: "Fluido",
     birthDate: "20/02/1995",
     phoneNumber: "611997854",
-    botonVerMas: <Link to="/actividad/2">Ver más</Link>,    
+    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,    
     description: "Hola" 
   }, 
 
@@ -95,7 +96,7 @@ const actividades = [
 const actividadesConBoton = actividades.map((actividad) => {
   return {
     ...actividad,
-    button: <Link to="/actividad/1"><SearchIcon /></Link>,
+    button: <CustomLink to="/actividad/1"><SearchIcon /></CustomLink>,
   };
 });
 
@@ -123,12 +124,10 @@ function ActivityDetails() {
         <Grid
         display={"grid"}
         gap={"1rem"}
-        gridTemplateColumns={"1fr 4fr"}
+        gridTemplateColumns={"4fr 4fr"}
         gridTemplateRows={mobile ? "100%":"1fr 1fr"}> 
         <BasicFrom 
         form={form}
-        columns={1}   
-        width={"auto"} 
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         />     

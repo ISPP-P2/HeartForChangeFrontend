@@ -8,78 +8,36 @@ import FormBeneficiaries from './FormBeneficiaries';
 import { Box } from '@mui/system';
 import CustomCardMini from '../../../components/CustomCardMini';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import CustomLink from '../../../components/CustomLink';
+import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import BasicModal from '../../../components/BasicModal';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { beneficiarios } from './forms';
 
-const beneficiarios = [
-    {
-      id: "1",
-      username: "gonzmart",
-      name: "Gonzalo",
-      surname: "Martin",
-      email: "gonzalomartin@gmail.com",
-      age: "12",
-      role: "Beneficiario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/men/3.jpg"> </Avatar>,
-      nombreActividad: "Viaje a DisneyLand",
-      fechaActividad: "22-03-2023"
-    },
-    {
-      id: "2",
-      username: "rodrigo13",
-      name: "Rodrigo",
-      surname: "Pérez",
-      email: "rodriper@gmail.com",
-      age: "25",
-      role: "Beneficiario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/men/4.jpg"> </Avatar>,
-      nombreActividad: "",
-      fechaActividad: ""
-    }, 
-    {
-      id: "3",
-      username: "alejandro41",
-      name: "Alejandro",
-      surname: "Rodriguez",
-      email: "alex23@gmail.com",
-      age: "14",
-      role: "Beneficiario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/men/35.jpg"> </Avatar>,
-      nombreActividad: "Aquapark",
-      fechaActividad: "25-03-2023"
-    }, 
-    {
-      id: "4",
-      username: "franny23",
-      name: "Francisco",
-      surname: "López",
-      email: "franlopez@gmail.com",
-      age: "22",
-      role: "Beneficiario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/women/14.jpg"> </Avatar>,
-      nombreActividad: "Apoyo a actividad 2",
-      fechaActividad: "25-03-2023"
-    }, 
-    {
-        id: "5",
-        username: "tere1132",
-        name: "Teresa",
-        surname: "López",
-        email: "teresaa@gmail.com",
-        age: "21",
-        role: "Beneficiario",
-        avatarImage: <Avatar src="https://randomuser.me/api/portraits/women/36.jpg"> </Avatar>,
-        nombreActividad: "Apoyo a actividad 2",
-        fechaActividad: "25-03-2023"
-      }, 
-    
-]
+
+
 
 
 
 function Beneficiaries() {
-  const BeneficiariesList = new CustomList(beneficiarios)
+
+
+
+
+  const beneficiariosConBoton = React.useMemo(() => beneficiarios.map((usuario) => {
+    return {
+      ...usuario,
+      button: <ToolList usuario={usuario} handleEliminar={()=> {}} />
+    };
+  }), [beneficiarios]);
+
+
+  const BeneficiariesList = new CustomList(beneficiariosConBoton)
   let objetoTabla = BeneficiariesList.parseToTable(
-    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar"], 
-    ["id","username", "name", "surname", "email", "age","role","avatarImage", "activityHistory"],
+    ["Id", "Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar", "Ver Detalles"], 
+    ["id","username", "name", "surname", "email", "age","role","avatarImage", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
     )
@@ -91,7 +49,7 @@ function Beneficiaries() {
           <CustomFlex direction={"row"}>
             <CustomCardMini 
                   title='Beneficiarios registrados'
-                  iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
+                  iconD={<CustomLink to="/añadir/beneficiario"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber="100"/>
           </CustomFlex>
             <BasicTable objetoTabla = {objetoTabla} maxHeight={"60vh"} ></BasicTable>
@@ -100,3 +58,17 @@ function Beneficiaries() {
 }
 
 export default Beneficiaries;
+
+
+
+const ToolList = ({usuario, handleEliminar}) => {
+  return (
+    <CustomFlex justifyContent={"space-evenly"} direction={"row"}>
+      <CustomLink to={`/beneficiario/${usuario.id}`}>
+          <SearchIcon />
+        </CustomLink>
+      <BasicModal title={"Eliminar"} heightButton={"1rem"} widthButton={"2rem"} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+    </CustomFlex>
+  )
+
+}

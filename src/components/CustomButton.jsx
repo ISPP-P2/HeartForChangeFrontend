@@ -10,15 +10,15 @@ function CustomButton({
     iconD,
     type = 'button', 
     text, 
+    widthButton = "100%",
+    heightButton = "100%",
     outline = false}) {
-
     return (
         <Box sx={{
-            margin: "2px",
-
+            width: widthButton,
+            height: heightButton,
         }}>
             <Button type={'button'} sx={{
-                margin: "1sw",
                 backgroundColor: variantButton + "!important",
                 "&:hover": {
                     opacity: 0.85

@@ -18,12 +18,16 @@ const style = (mobile) => {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  width: mobile ? "max-content" : "100vw",
-  height: mobile ? "max-content" : "100vh",
+  paddingTop: "0",
+  width: mobile ? "max-content" : "90vw",
+  height:"max-content",
+  maxHeight: "80vh",
+  overflowY: "auto",
+  scrollBehavior: "smooth",
   }
 };
 
-export default function BasicModal({text,title,body}) {
+export default function BasicModal({text,title,body,variant,widthButton,heightButton}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -32,20 +36,20 @@ export default function BasicModal({text,title,body}) {
 
   return (
     <>
-      <CustomButton onClick={handleOpen} text= {text}> </CustomButton>
+      <CustomButton widthButton={widthButton} heightButton={heightButton} onClick={handleOpen} variantButton={variant} text={text} />
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style(mobile)} >
+        <Box sx={style(mobile)}  >
           <CustomFlex  margin='1rem' direction={"column"}>
-            <Box display={"flex"} justifyContent={'end'}>
+            {mobile ? null : <Box display={"flex"} justifyContent={'end'}>
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>
-            </Box>
+            </Box>}
             <Typography id="modal-modal-title" variant="h4" component="h2">
               {title}
             </Typography>
@@ -53,7 +57,6 @@ export default function BasicModal({text,title,body}) {
               {body}
             </Typography>
           </CustomFlex>
-
          
         </Box>
       </Modal>
