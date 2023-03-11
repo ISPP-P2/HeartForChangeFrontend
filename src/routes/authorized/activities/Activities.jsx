@@ -13,6 +13,7 @@ import BasicModal from '../../../components/BasicModal';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Typography } from '@mui/material';
+import ActivityForm from './ActivityForm';
 
 export const actividades = [
     {
@@ -97,7 +98,7 @@ function Activities() {
         <CustomFlex direction={"row"}>
             <CustomCardMini
                   title='Activades'
-                  iconD={<BasicModal title={"Añadir actividad"} text={"Añadir"} body={<></>}/>}
+                  iconD={<BasicModal title={"Añadir actividad"} body={<ActivityForm/>} text={"Añadir"}/>}
                   totalNumber="100"/>
           </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
