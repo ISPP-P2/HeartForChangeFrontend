@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Volunteers from "./volunteers/Volunteers";
 import Dashboard from "./dashboard/Dashboard";
 import Beneficiaries from "./beneficiaries/Beneficiaries";
+import BeneficiariesDetails from "./beneficiaries/BeneficiariesDetails";
 import BodyWrapper from "../../components/BodyWrapper";
 import Activities from "./activities/Activities";
 import ActivityDetails from "./activities/ActivityDetails";
@@ -80,6 +81,19 @@ export default function AutorizedRoutes() {
       }
     ></Route></Route>
         <Route path={'/actividadVol'} element={<ActivityVolunteerDetails  />}/>
+
+        <Route
+      
+      path={"/beneficiario"}
+      
+    >  <Route
+    path={":id"}
+    element={
+     <BeneficiariesDetails> </BeneficiariesDetails>
+
+    }
+  ></Route></Route>
     </Routes>
+    
   );
 }
