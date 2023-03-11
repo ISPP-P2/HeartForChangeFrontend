@@ -1,22 +1,14 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import BasicTable from "../../../components/BasicTable";
-import CustomCard from "../../../components/CustomCard";
+
 import CustomFlex from "../../../components/CustomFlex";
-import { CustomList } from "../../../static/user";
-import { Link } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
 import CustomButton, {
   VARIANTES_BUTTON,
 } from "../../../components/CustomButton";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
-import TextField from "@mui/material/TextField";
-import { useState } from "react";
+
 import BasicFrom from "../../../components/BasicFrom";
 import { FORM_TYPES } from "../../../components/utils/utilsForms";
-import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import * as Yup from "yup";
+import BodyWrapper from '../../../components/BodyWrapper';
 
 const voluntarios = {
   id: "1",
@@ -274,8 +266,10 @@ const extraForm = [
   },
 ];
 
-function ActivityDetails() {
+function VolunteerDetails() {
   return (
+  <BodyWrapper title={"Voluntario 1"}>
+          
     <CustomFlex direction={"column"}>
       <Box
         sx={{
@@ -317,7 +311,8 @@ function ActivityDetails() {
         
       </CustomFlex>
     </CustomFlex>
+  </BodyWrapper>
   );
 }
 
-export default ActivityDetails;
+export default  VolunteerDetails 
