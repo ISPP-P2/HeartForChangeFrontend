@@ -1,19 +1,22 @@
 import React from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import { FORM_TYPES } from '../../../components/utils/utilsForms'
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import * as Yup from 'yup';
 import TimelapseIcon from '@mui/icons-material/Timelapse';
-import SchoolIcon from '@mui/icons-material/School';
 import PlaceIcon from '@mui/icons-material/Place';
-import BusinessIcon from '@mui/icons-material/Business';
+import BadgeIcon from '@mui/icons-material/Badge';
+import DescriptionIcon from '@mui/icons-material/Description';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import GroupIcon from '@mui/icons-material/Group';
+import EventIcon from '@mui/icons-material/Event';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 
 const form = [
     {
         name: "name",
         type: FORM_TYPES.TEXT,
         label: "Nombre de la actividad",
-        icon: <SchoolIcon />,
+        icon: <BadgeIcon />,
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
@@ -22,7 +25,7 @@ const form = [
         name: "description",
         type: FORM_TYPES.TEXTEAREA,
         label: "Descripción",
-        icon: <BusinessIcon />,
+        icon: <DescriptionIcon />,
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
@@ -35,7 +38,7 @@ const form = [
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
-        icon: <PlaceIcon />,
+        icon: <CelebrationIcon />,
     },
 
     {
@@ -45,20 +48,19 @@ const form = [
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
-        icon: <TimelapseIcon />,
+        icon: <PlaceIcon />,
     },
     {
         name: "capacity",
         type: FORM_TYPES.TEXT,
         label: "Capacidad",
-        icon: <TimelapseIcon />,
+        icon: <GroupIcon />,
     },
     {
         name: "date",
         type: FORM_TYPES.DATE,
         label: "Fecha",
         validation: Yup.date("Deber ser una fecha"),
-        icon: <TimelapseIcon />,
     },
     {
         name: "coordinator",
@@ -66,14 +68,14 @@ const form = [
         label: "Coordinador",
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere"),
-        icon: <TimelapseIcon />,
+        icon: <EmojiPeopleIcon />,
     },
     {
         name: "group",
         type: FORM_TYPES.TEXT,
         label: "Grupos",
         validation: Yup.string("Deber ser una cadena de caracteres"),
-        icon: <TimelapseIcon />,
+        icon: <GroupIcon />,
     },
 
    
