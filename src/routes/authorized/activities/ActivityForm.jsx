@@ -87,7 +87,6 @@ function ActivityForm() {
   return (
         <BasicFrom 
         form={form}
-        width="25em"
         buttonText={"añadir"}
         handleSubmitForm={(values) => console.log(values)}
     />

@@ -119,19 +119,17 @@ function ActivityDetails() {
     <BodyWrapper title={`Detalles de la actividad ${id}`} >
     <CustomFlex direction={"column"}>
       <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
-      <CustomFlex direction={"column"}>
-        <Box>
+      <CustomFlex direction={mobile ? "column" : "row"}>
         <Grid
         display={"grid"}
         gap={"1rem"}
-        gridTemplateColumns={"4fr 4fr"}
-        gridTemplateRows={mobile ? "100%":"1fr 1fr"}> 
+        gridTemplateColumns={mobile ? "1fr 1fr":"1fr"}
+        gridTemplateRows={mobile ? "100%":"1fr"}> 
         <BasicFrom 
         form={form}
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         />     
-         <CustomFlex direction={"column"} align={"flex-end"}>     
           <Grid
               display={"grid"}
               gap={"1rem"}
@@ -162,9 +160,7 @@ function ActivityDetails() {
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.PURPLE}/>}/>
           </Grid> 
-          </CustomFlex>    
         </Grid> 
-        </Box>
       </CustomFlex>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>

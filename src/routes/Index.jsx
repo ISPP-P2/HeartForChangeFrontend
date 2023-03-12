@@ -55,7 +55,6 @@ export function Index({ window } ) {
           }}>
           <LogoNavBar />
           {drawer}
-          <div>a</div>
           <CustomSignOut />
         </Drawer>
         <Drawer
