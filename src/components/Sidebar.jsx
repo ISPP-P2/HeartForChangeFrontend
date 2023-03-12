@@ -1,4 +1,4 @@
-import {List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import {Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import React from 'react'
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import FaceIcon from '@mui/icons-material/Face';
@@ -6,6 +6,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useLocation, useNavigate } from 'react-router-dom';
+import CustomFlex from './CustomFlex';
 
 
 function Sidebar() {
@@ -42,7 +43,7 @@ const SecondaryText = ({text}) => {
   )
 }
 
-const ButtonSideBoard = ({text, icon, href}) => {
+export const ButtonSideBoard = ({text, icon, href}) => {
     const navigate = useNavigate()
     const location = useLocation()
     return (

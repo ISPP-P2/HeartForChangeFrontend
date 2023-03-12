@@ -1,27 +1,14 @@
-import axios from '../api/auth/axios'
+import axios from '../../api/auth/axios'
 
 import { useSignIn } from 'react-auth-kit'
-import { parseTokens } from '../api/auth/tokenUtils'
+import { parseTokens } from '../../api/auth/tokenUtils'
 import { useNavigate } from 'react-router-dom'
 
 const SignInComponent  = ({prop}) => {
     const navigate = useNavigate()
     const SignIn = useSignIn()
 
-    const onSubmitDev = () => {
-        const tokens = parseTokens(null)
-        SignIn(
-            {
-                token: tokens.token,
-                expiresIn: tokens.expiresIn,
-                tokenType: tokens.tokenType,
-                authState: tokens.authState,
-                refreshToken: tokens.refreshToken,                   
-                refreshTokenExpireIn: tokens.refreshTokenExpireIn   
-            }
-        )
-        navigate('/') 
-    }
+    
 
     const onSubmit = () => {
         // Simplemente para que inicie sesion en desarrollo
@@ -42,7 +29,7 @@ const SignInComponent  = ({prop}) => {
                     }
                 )){
                     console.log("Sesion iniciada")
-                    navigate('/signed')
+                    navigate('/')
                 }else {
                     console.log("error")
                 }

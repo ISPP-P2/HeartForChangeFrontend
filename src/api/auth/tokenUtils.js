@@ -3,13 +3,13 @@ import jwtDecode from "jwt-decode"
 export const parseTokens = (response) => {
 
     return {
-            token: "awdawd",
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
             expiresIn: 1000000,
             authState:{
                 "username": "usuario1",
                 "rol": "ONG"
             },
-            refreshToken: "awdawd",
+            refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
             refreshTokenExpireIn: 1000000,
             tokenType: "Bearer",
     }

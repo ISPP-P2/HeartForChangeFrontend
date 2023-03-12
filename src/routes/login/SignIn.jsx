@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import CustomButton, { VARIANTES_BUTTON } from '../../components/CustomButton';
+import { parseTokens } from '../../api/auth/tokenUtils';
+import { useSignIn } from 'react-auth-kit';
 
 function Copyright(props) {
 return (
@@ -28,12 +30,35 @@ return (
 
 export default function SignIn() {
 
+  const [username, setUsername] = React.useState('ONG');
 
-const navigate = useNavigate()
-const onSubmitDev = () => {
-    navigate('/') 
-}
+  const onChangeUser = (event) => {
+    setUsername(event.target.value);
+  };
 
+  const SignIn = useSignIn()
+  const navigate = useNavigate()
+  const onSubmitDev = () => {
+    const tokens = parseTokens(null)
+    if(SignIn(
+      {
+          token: tokens.token,
+          expiresIn: tokens.expiresIn,
+          tokenType: tokens.tokenType,
+          authState: {
+            "username": username,
+            "rol": "ONG"
+        },
+          refreshToken: tokens.refreshToken,                   
+          refreshTokenExpireIn: tokens.refreshTokenExpireIn   
+      }
+  )){
+      console.log("Sesion iniciada")
+      navigate('/')
+  }else {
+      console.log("error")
+  }
+  }
 
 
 return (
@@ -56,6 +81,7 @@ return (
           <TextField
             margin="normal"
             required
+            onChange={onChangeUser}
             fullWidth
             id="email"
             label="Correo electrónico"

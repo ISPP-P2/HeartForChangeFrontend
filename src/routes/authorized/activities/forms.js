@@ -2,8 +2,6 @@ import { FORM_TYPES } from "../../../components/utils/utilsForms";
 
 export const formONGACTIVITYDetails = (form) => {
     
-    console.log(form) 
-    
     return [
     {
         type: FORM_TYPES.TEXT,
