@@ -107,8 +107,8 @@ const Listado = ({data}) => {
 
   const BeneficiarieList = new CustomList(beneficiariosConBoton)
   let objetoTabla = BeneficiarieList.parseToTable(
-    ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad"], 
-    ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality"],
+    ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
+    ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
     ["Fecha de nacimiento","Trabaja","correo","Dirección"],
     ["birthday","working","email","address"]
     )

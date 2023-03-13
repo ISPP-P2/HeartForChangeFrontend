@@ -1,5 +1,6 @@
 import users, { CustomList } from '../../../static/user'
 import { Avatar } from '@mui/material';
+import Box from '@mui/material/Box';
 import CustomFlex from '../../../components/CustomFlex';
 import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
@@ -12,88 +13,69 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import BasicModal from '../../../components/BasicModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useEffect, useMemo } from 'react';
-const usuarios = [
-    {
-      id: "1",
-      username: "mariorey",
-      name: "Mario",
-      surname: "Rey",
-      email: "marioreymario@gmail.com",
-      age: "12",
-      role: "Voluntario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/men/21.jpg"> </Avatar>,
-      nombreActividad: "Apoyo a actividad",
-      fechaActividad: "22-03-2023"
-    },
-    {
-      id: "2",
-      username: "william",
-      name: "Will",
-      surname: "Smith",
-      email: "willy@gmail.com",
-      age: "25",
-      role: "Voluntario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/men/20.jpg"> </Avatar>,
-      nombreActividad: "",
-      fechaActividad: ""
-    }, 
-    {
-      id: "3",
-      username: "Alexander2134",
-      name: "Alex",
-      surname: "Rodriguez",
-      email: "alex@gmail.com",
-      age: "14",
-      role: "Voluntario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/men/25.jpg"> </Avatar>,
-      nombreActividad: "Aquapark",
-      fechaActividad: "25-03-2023"
-    }, 
-    {
-      id: "4",
-      username: "paqui23",
-      name: "Francisco",
-      surname: "Velazquez",
-      email: "paquipaqui@gmail.com",
-      age: "22",
-      role: "Voluntario",
-      avatarImage: <Avatar src="https://randomuser.me/api/portraits/women/29.jpg"> </Avatar>,
-      nombreActividad: "Apoyo a actividad 2",
-      fechaActividad: "25-03-2023"
-    }, 
-    
-]
+import { useAuthUser } from 'react-auth-kit';
+import { useQuery } from 'react-query';
+import { Typography, useMediaQuery } from '@mui/material';
+import { deleteVolunteerAPI, getVolunteersAPI } from '../../../api/voluntarios/api';
 
+const Listado = ({data}) => {
 
-function Volunteers() {
-  const handleEliminar = () => {
-    console.log("Eliminar")
+  const user = useAuthUser();
+  const handleDelete = (id) => {
+    deleteVolunteerAPI(user().token, id)
+    location.reload()
   }
 
 
+  if(data.length === 0){
+    return <Typography variant="h4" component="div" gutterBottom>
+            No hay voluntarios
+        </Typography>
+  }
 
- const voluntariosConBoton = useMemo(() => {
-    return usuarios.map((usuario) => {
+  const voluntariosConBoton = useMemo(() => {
+    return data.map((usuario) => {
       return {
         ...usuario,
-        button:<ToolList usuario={usuario} handleEliminar={handleEliminar} /> ,
+        rolAccount: RolAccountParser(usuario.rolAccount),
+        button:<ToolList usuario={usuario} handleDelete={handleDelete} id={usuario.id}/>,
       };
     });
-  }, [usuarios])
+  }, [data])
 
- 
-
-
-  const UsuarioList = new CustomList(voluntariosConBoton)
-
-  let objetoTabla = UsuarioList.parseToTable(
-    ["Nombre de usuario", "Nombre","Apellido", "Email","Edad","Rol","Avatar","Herramientas"], 
-    ["username", "name", "surname", "email", "age","role","avatarImage", "button"],
+  const VolunteersList = new CustomList(voluntariosConBoton)
+  let objetoTabla = VolunteersList.parseToTable(
+    ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Rol","Herramientas"], 
+    ["username", "name", "firstSurname","secondSurname", "email","gender","rolAccount", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
   )
 
+    return (
+        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+    )
 
+}
+
+
+function Volunteers() {
+
+  const user = useAuthUser();
+  const query = useQuery(["QUERY_VOLUNTEERS"],() => getVolunteersAPI(user().token));
+  
+  console.log(query)
+
+  if(query.isLoading){
+    return <Typography variant="h4" component="div" gutterBottom>
+            Cargando...
+        </Typography>
+  }
+
+  if(query.isError){
+    return <Typography variant="h4" component="div" gutterBottom>
+           {query.error}
+        </Typography>
+  }
   
   return (
       <CustomFlex direction={"column"}>
@@ -101,9 +83,9 @@ function Volunteers() {
             <CustomCardMini 
                   title='Nº de voluntarios'
                   iconD={<CustomLink to="/voluntario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
-                  totalNumber="100"/>
+                  totalNumber={query.data.length}/>
           </CustomFlex>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+          <Listado data={query.data} />
       </CustomFlex>
     );
 }
@@ -112,14 +94,28 @@ export default Volunteers;
 
 
 
-const ToolList = ({usuario, handleEliminar}) => {
+const ToolList = ({usuario, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink to={`/voluntario/${usuario.id}`}>
-          <SearchIcon />
-        </CustomLink>
-      <BasicModal title={"Eliminar"} heightButton={"1.5rem"}variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+        <Typography>El voluntario se eliminará permanentemente</Typography>
+        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 
+}
+
+
+const RolAccountParser = (rolAccount) => {
+  if(rolAccount == "ONG"){
+    return "ONG"
+  } 
+  if(rolAccount == "VOLUNTEER"){
+    return "Voluntario"
+  } 
+  if(rolAccount == "BENEFICIARY"){
+    return "Beneficiario"
+  } 
+  return "Error"
 }
