@@ -3,7 +3,7 @@ import axios from 'axios'
 export const axiosWithToken =  (bearerToken) => {
     let res = axios.create(
         {
-            baseURL: import.meta.env.VITE_BASE_URL
+            baseURL:  'https://heartforchangebackend.ew.r.appspot.com/'
         }
     )
     res.defaults.headers.common['Authorization'] = `Bearer ${bearerToken}`;
@@ -12,6 +12,6 @@ export const axiosWithToken =  (bearerToken) => {
 
 export default axios.create(
     {
-        baseURL: import.meta.env.VITE_BASE_URL
+        baseURL: 'https://heartforchangebackend.ew.r.appspot.com/'
     }
 )

@@ -3,9 +3,6 @@ import BasicFrom from '../../../components/BasicFrom'
 import BodyWrapper from '../../../components/BodyWrapper';
 import { beneficiarioYvoluntarioBasicForm } from './forms';
 
-
-
-
 function FormBeneficiaries() {
     
 
