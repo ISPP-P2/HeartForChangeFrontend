@@ -106,7 +106,7 @@ const form = [
   },
   {
     name: "postalCode",
-    type: FORM_TYPES.TEXT,
+    type: FORM_TYPES.NUMBER,
     label: "Código Postal",
   },
   {
@@ -145,7 +145,7 @@ const form = [
   },
   {
     name: "telephone",
-    type: FORM_TYPES.TEXT,
+    type: FORM_TYPES.NUMBER,
     label: "Teléfono",
   }
 ];
@@ -159,7 +159,7 @@ function FormVolunteers() {
     const saveVolunteer = (values) => {
         console.log(values)
         saveVolunteerAPI(user().token, values)
-        navigate("/voluntarios")
+        //navigate("/voluntarios")
         
     }
 
