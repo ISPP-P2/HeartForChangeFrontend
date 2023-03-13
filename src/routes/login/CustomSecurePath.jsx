@@ -9,8 +9,6 @@ function CustomSecurePath({children, login}) {
 
     const [isLoading, setIsLoading] = useState(true)
      
-    console.log(isLogged())
-
     useEffect(() => {
         if(!isLogged()){
             setIsLoading(false)

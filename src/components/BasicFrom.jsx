@@ -16,6 +16,7 @@ import {
   FORM_TYPES,
 } from "./utils/utilsForms";
 import CustomButton from "./CustomButton";
+import { useId } from "react";
 
 function BasicFrom({
   form = null,
@@ -59,7 +60,7 @@ function BasicFrom({
                     justifyContent: "flex-end",
                 
                 }}
-                key={props.name + i}
+                key={i}
                 fullWidth
               >
                 <CustomInput
@@ -117,6 +118,7 @@ const CustomInput = (props) => {
         value={props.values[`${props.name}`]}
         onChange={(event, value) => {props.setFieldValue(`${props.name}`, value.props.value);}}
         variant="standard"
+        
         label={props.label}
       >
         {props.list === null || props.list === undefined ? (

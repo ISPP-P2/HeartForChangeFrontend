@@ -27,9 +27,11 @@ const style = (mobile) => {
 };
 
 export default function BasicModal({text,title,body,variant,widthButton,heightButton}) {
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
 
   const mobile = useMediaQuery('(min-width:600px)')
 

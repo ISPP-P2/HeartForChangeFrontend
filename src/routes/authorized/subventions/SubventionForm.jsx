@@ -8,58 +8,109 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import FilterFramesIcon from '@mui/icons-material/FilterFrames';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import SubjectIcon from '@mui/icons-material/Subject';
+import { Co2Sharp } from '@mui/icons-material';
+import { axiosWithToken } from '../../../api/auth/axios';
+import { useAuthUser } from 'react-auth-kit';
+import { getSubventions, saveSubventionAPI } from '../../../api/subvenciones/api';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 const form = [
     {
-        name: "type",
-        type: FORM_TYPES.TEXT,
-        label: "Tipo",
+        name: "privateGrant",
+        type: FORM_TYPES.SELECT,
+        label: "PUBLICA/PRIVADA",
         icon: <FilterFramesIcon />,
+        list: [
+            {
+                value: false,
+                label: "Publica"
+            }, {
+                value: true,
+                label: "Privada"
+            }
+        ],
+        validation: Yup.boolean()
+
+    },
+    {
+        name: "gubernamental",
+        type: FORM_TYPES.SELECT,
+        label: "Gubernametal",
+        icon: <FilterFramesIcon />,
+        list: [
+            {
+                value: true,
+                label: "Si"
+            }, {
+                value: false,
+                label: "No"
+            }
+        ],
+        validation: Yup.boolean()
 
     }, {
         name: "state",
-        type: FORM_TYPES.TEXT,
+        type: FORM_TYPES.SELECT,
         label: "Estado",
         icon: <MonitorHeartIcon />,
+        list: [
+            {
+                label: "Pendiente",
+                value: "REQUESTED"
+            }, {
+                label: "Aceptada",
+                value: "ACCEPTED"
+            }, {
+                label: "Denegada",
+                value: "DENIED"
+            }, {
+                value: "Reformulada",
+                value: "REFORMULATION"
+            },
+        ],
+        validation: Yup.string()
 
 
     },
     {
         name: "justification",
-        type: FORM_TYPES.TEXT,
+        type: FORM_TYPES.TEXTEAREA,
         label: "Justificación",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacio"),
+        validation: Yup.string("Deber ser una cadena de caracteres").nonNullable("No puede estar vacio"),
                       
         icon: <SubjectIcon />,
     },
-
     {
-        name: "description",
-        type: FORM_TYPES.TEXTEAREA,
-        label: "Descripción",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacio"),
-                       
-        
+        name: "amount",
+        type: FORM_TYPES.TEXT,
+        label: "Cantidad",
+        validation: Yup.number("Deber ser un numero"),
+                      
+        icon: <SubjectIcon />,
     }
    
 ]
 
 
+function SubventionForm({handleClose}) {
+    const user = useAuthUser();
 
-function AcademicExperienceForm() {
+    const saveSubvention = (values) => {
+        console.log(values)
+        if(!(values.privateGrant === "" || values.gubernamental === "" || values.state === "" || values.justification === "" || values.amount === "")){
+            saveSubventionAPI(user().token, values)
+            location.reload()
+        }
+        
+    }
 
-    
-
-  return (
+    return (
         <BasicFrom 
-        form={form} 
-        buttonText={"añadir"}
-        handleSubmitForm={(values) => console.log(values)}
-    />
-  )
+            form={form} 
+            buttonText={"añadir"}
+            handleSubmitForm={saveSubvention}
+        />
+    )
 }
 
-export default AcademicExperienceForm
+export default SubventionForm

@@ -1,11 +1,8 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {Box} from '@mui/material';
 import logo from '../../static/logo.png'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -13,6 +10,7 @@ import { useNavigate } from 'react-router';
 import CustomButton, { VARIANTES_BUTTON } from '../../components/CustomButton';
 import { parseTokens } from '../../api/auth/tokenUtils';
 import { useSignIn } from 'react-auth-kit';
+import axios from '../../api/auth/axios';
 
 function Copyright(props) {
 return (
@@ -30,37 +28,46 @@ return (
 
 export default function SignIn() {
 
-  const [username, setUsername] = React.useState('ONG');
+  const [credentials, setCredentials] = React.useState({
+    username: '',
+    password: '',
+  });
+
+  const onChangePassword = (event) => {
+    setCredentials({ ...credentials, password: event.target.value });
+  };
 
   const onChangeUser = (event) => {
-    setUsername(event.target.value);
+    setCredentials({ ...credentials, username: event.target.value });
   };
 
   const SignIn = useSignIn()
   const navigate = useNavigate()
   const onSubmitDev = () => {
-    const tokens = parseTokens(null)
-    if(SignIn(
-      {
-          token: tokens.token,
-          expiresIn: tokens.expiresIn,
-          tokenType: tokens.tokenType,
-          authState: {
-            "username": username,
-            "rol": "ONG"
-        },
-          refreshToken: tokens.refreshToken,                   
-          refreshTokenExpireIn: tokens.refreshTokenExpireIn   
+    axios.post("/api/accounts/signin", {
+      username: credentials.username,
+      password: credentials.password
+    }).then((response) => {
+      const tokens = parseTokens(response)
+      console.log(response)
+      if(SignIn(
+        {
+            token: tokens.token,
+            expiresIn: tokens.expiresIn,
+            tokenType: tokens.tokenType,
+            authState: tokens.authState,
+            refreshToken: tokens.refreshToken,                   
+            refreshTokenExpireIn: tokens.refreshTokenExpireIn   
+        }
+      )){
+          console.log("Sesion iniciada");
+          navigate('/');
+      }else {
+          console.log("error");
       }
-  )){
-      console.log("Sesion iniciada")
-      navigate('/')
-  }else {
-      console.log("error")
+    })
   }
-  }
-
-
+  
 return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -106,6 +113,7 @@ return (
             required
             fullWidth
             name="password"
+            onChange={onChangePassword}
             label="Contraseña"
             type="password"
             id="password"
