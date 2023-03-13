@@ -63,8 +63,7 @@ export const beneficiarios = [
         fechaActividad: "25-03-2023"
       }, 
     
-]
-
+];
 export const voluntarios = {
   id: "1",
   name: "Jose Carlos López",
@@ -105,8 +104,6 @@ export const voluntarios = {
   languages: "Español",
   devices: "Móvil, Internet",
 };
-
-
 export const beneficiarioBasicFormValue = [
   {
     name: "fullName",

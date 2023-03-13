@@ -36,7 +36,7 @@ function CustomCardMini({
               alignItems: "flex-start",
               flexDirection: "column",
             }}>
-            <Typography component="div" fontSize={"1rem"} fontWeight={220} color={"#C6C6CD"} >
+            <Typography component="div" fontSize={"1rem"} fontWeight={550} color={"#5C5C5C"} >
               {title}
             </Typography>
             <Typography component="div" fontSize={"1.75rem"} fontWeight={550}>

@@ -19,10 +19,14 @@ export function Index({ window } ) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleClose = () => {
+    setMobileOpen(false);
+  };
+
   const drawer = (
     <div>
       <Toolbar />
-      <Sidebar />
+      <Sidebar handleClose={handleClose}/>
     </div>
   );
 

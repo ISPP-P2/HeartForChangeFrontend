@@ -252,115 +252,13 @@ const form2 = [
   },
 ];
 
-const extraForm = [
+const extraForm = (title, variable) => [
   {
     name: "academicExperience",
     type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
-  {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
-  {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
-  {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
-  {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
-  {
-    name: "academicExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Académica",
-    value: voluntarios?.academicExperience,
-  },
-  {
-    name: "extraEducation",
-    type: FORM_TYPES.TEXT,
-    label: "Formación Complementaria",
-    value: voluntarios?.extraEducation,
-  },
-  {
-    name: "workingExperience",
-    type: FORM_TYPES.TEXT,
-    label: "Experiencia Laboral",
-    value: voluntarios?.workingExperience,
-  },
+    label: title,
+    value: voluntarios[variable]
+  }
 ];
 
 function VolunteerDetails() {
@@ -399,7 +297,7 @@ function VolunteerDetails() {
                       variant={VARIANTES_BUTTON.ORANGE}
                       text={"Experiencia Académica"}
                       title={"Experiencia Académica"}
-                      body={<BasicFrom form={extraForm} readOnly={true} />}
+                      body={<BasicFrom form={extraForm("Experiencia Académica", "academicExperience")} readOnly={true} />}
                     />
                   </Box>
                   <BasicModal
@@ -418,7 +316,7 @@ function VolunteerDetails() {
                       variant={VARIANTES_BUTTON.ORANGE}
                       text={"Experiencia Laboral"}
                       title={"Experiencia Laboral"}
-                      body={<BasicFrom form={extraForm} readOnly={true} />}
+                      body={<BasicFrom form={extraForm("Experiencia Laboral", "workingExperience")} readOnly={true} />}
                     />
                   </Box>
                     <BasicModal
@@ -436,7 +334,7 @@ function VolunteerDetails() {
                       variant={VARIANTES_BUTTON.ORANGE}
                       text={"Formación Complementaria"}
                       title={"Formación Complementaria"}
-                      body={<BasicFrom form={extraForm} readOnly={true} />}
+                      body={<BasicFrom form={extraForm("Formacion Complementaria", "extraEducation")} readOnly={true} />}
                     />
                   </Box>
                   <BasicModal

@@ -40,15 +40,12 @@ const DetailsComponent = ({details, open}) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Description
-              </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                   {details.header.map((e, i)=>{
                       return (
-                        <TableCell  key={i} >{e}</TableCell>
+                        <TableCell sx={{fontWeight: 600}} key={i} >{e}</TableCell>
                       )
                     })}
                   </TableRow>
@@ -124,10 +121,10 @@ export default function BasicTable({
       <Table aria-label="able">
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell  />
             {objetoTabla.header.map((e, i)=>{
               return (
-                <TableCell key={i}>{e}</TableCell>
+                <TableCell sx={{fontWeight: 600}} key={i}>{e}</TableCell>
               )
             })}
           </TableRow>

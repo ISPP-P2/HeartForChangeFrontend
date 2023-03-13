@@ -40,7 +40,7 @@ function Dashboard() {
                 iconD={<SavingsIcon  htmlColor='#0055FF'/>}
                 totalNumber="100 €"/>
              <CustomCard
-                title='Registrar una beneficiario'
+                title='Registrar un beneficiario'
                 iconD={<PeopleOutlineIcon color='disabled' />}
                 buttonSidebar={
                 <CustomLink to={'beneficiario/añadir'}>
