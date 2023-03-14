@@ -16,7 +16,7 @@ import BasicModal from '../../../components/BasicModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { beneficiarios } from './forms';
 import { useAuthUser } from 'react-auth-kit';
-import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/subvenciones/api';
+import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/beneficiario/api';
 import { useQuery } from 'react-query';
 import { Typography} from '@mui/material';
 import { useMemo } from 'react';
@@ -63,6 +63,7 @@ export default Beneficiaries;
 const ToolList = ({beneficiarie, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <CustomLink to={`/beneficiarios/${beneficiarie.id}`}><SearchIcon /></CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El Beneficiario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />

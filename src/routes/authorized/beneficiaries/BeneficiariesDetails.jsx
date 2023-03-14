@@ -15,7 +15,7 @@ import ComplementaryFormationForm from "../volunteers/ComplementaryFormationForm
 import WorkExperienceForm from "..//volunteers/WorkExperienceForm";
 import { useMediaQuery } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { beneficiarioBasicFormValue, voluntarios } from "./forms";
+import { beneficiarioBasicFormValue, beneficiarios } from "./forms";
 
 
 
@@ -29,7 +29,10 @@ const extraForm = (title, variable) => [
 ];
 
 function BeneficiariesDetails() {
+  const user = useAuthUser();
+  const beneficiario = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiarieAPI(user().token,3));
   const mobile = useMediaQuery("(min-width: 850px)");
+  console.log(beneficiario)
 
 
   return (
@@ -43,9 +46,6 @@ function BeneficiariesDetails() {
             flexDirection: "column",
           }}
         >
-          <Box sw={{ innerHeight: "10px", gridColumn: "1/1", gridRow: "1/1", width:"200px" }}>
-            <img src={voluntarios.avatar} width={260}></img>
-          </Box>
           <Box>
             <Box sx={{ marginTop: "1rem" }}>
               <CustomFlex direction={"row"}>
