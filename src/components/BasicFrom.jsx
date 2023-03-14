@@ -60,7 +60,7 @@ function BasicFrom({
                     justifyContent: "flex-end",
                 
                 }}
-                key={i}
+                key={props.name}
                 fullWidth
               >
                 <CustomInput
