@@ -39,7 +39,6 @@ function BeneficiariesDetails() {
   const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiarieAPI(user().token,3));
   const mobile = useMediaQuery("(min-width: 850px)");
 
-
   if(query.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...
@@ -51,18 +50,7 @@ function BeneficiariesDetails() {
            {query.error}
         </Typography>
   }
-  const beneficiarios = React.useMemo(()=>{
-    if(query.data.length === 0 || query.data === undefined){
-      return []
-    }
-
-    return beneficiarioBasicFormValue.map((e)=>(
-      {
-      ...e,
-      value: query.data[e.name]
-      }
-    ))},[query.data])
-
+  
 
   return (
     <BodyWrapper title={"Beneficiario 1"}>
@@ -144,8 +132,8 @@ function BeneficiariesDetails() {
             </Box>
           </Box>
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
-            {query.data.length === 0 ? <Typography>No hay datos  </Typography> : <BasicFrom
-              form={beneficiarios}
+            {!query.isLoading && query.isSuccess && beneficiarios === 0 ? <Typography>No hay datos</Typography> : <BasicFrom
+              form={beneficiarioBasicFormValue.map((item) => {return {...item, value: query.data[item.name]}})}
               readOnly={true}
               width={"100%"}
               handleSubmitForm={(values) => console.log(values)}
