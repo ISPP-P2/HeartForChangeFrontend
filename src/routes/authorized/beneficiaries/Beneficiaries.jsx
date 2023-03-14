@@ -1,0 +1,115 @@
+import * as React from 'react';
+import { Avatar, Grid, Paper, useMediaQuery } from '@mui/material';
+import CustomCard from '../../../components/CustomCard';
+import BasicTable from '../../../components/BasicTable';
+import CustomFlex from '../../../components/CustomFlex';
+import { CustomList } from '../../../static/user';
+import FormBeneficiaries from './FormBeneficiaries';
+import { Box } from '@mui/system';
+import CustomCardMini from '../../../components/CustomCardMini';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import CustomLink from '../../../components/CustomLink';
+import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import BasicModal from '../../../components/BasicModal';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useAuthUser } from 'react-auth-kit';
+import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/beneficiario/api';
+import { useQuery } from 'react-query';
+import { Typography} from '@mui/material';
+
+
+
+
+
+
+function Beneficiaries() {
+
+  const user = useAuthUser();
+  const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token));
+
+  if(query.isLoading){
+    return <Typography variant="h4" component="div" gutterBottom>
+            Cargando...
+        </Typography>
+  }
+
+  if(query.isError){
+    return <Typography variant="h4" component="div" gutterBottom>
+           {query.error}
+        </Typography>
+  }
+
+  console.info(query)
+  return (
+      <CustomFlex direction={"column"}>
+          <CustomFlex direction={"row"}>
+            <CustomCardMini 
+                  title='Nº de beneficiarios'
+                  iconD={<CustomLink to="/beneficiario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
+                  totalNumber={query.data.length}/>
+          </CustomFlex>
+          <Listado data={query.data} />
+      </CustomFlex>
+    );
+}
+
+export default Beneficiaries;
+
+
+
+const Listado = ({data}) => { 
+
+  const user = useAuthUser();
+
+  const handleDelete = (id) => {
+    deleteBeneficiariesAPI(user().token, id).then((res) => {
+      location.reload()
+    })
+
+  }
+
+  if(data.length === 0){
+    return <Typography variant="h4" component="div" gutterBottom>
+            No hay Beneficiarios
+        </Typography>
+  }
+
+
+  const BeneficiarieList = new CustomList(ParseBenficiario(data, handleDelete))
+  let objetoTabla = BeneficiarieList.parseToTable(
+    ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
+    ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
+    ["Fecha de nacimiento","Trabaja","correo","Dirección"],
+    ["birthday","working","email","address"]
+    )
+    return (
+        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+    )
+
+}
+
+
+
+const ToolList = ({beneficiarie, handleDelete, id}) => {
+  return (
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <CustomLink to={`/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
+      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+        <Typography>El Beneficiario se eliminará permanentemente</Typography>
+        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+    </CustomFlex>
+  )
+}
+
+
+const ParseBenficiario = (data, handleDelete) => {
+  return data.map((beneficiarie) => {
+    return {
+      ...beneficiarie,
+      button: <ToolList beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
+    };
+  });
+}
