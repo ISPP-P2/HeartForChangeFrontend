@@ -63,7 +63,6 @@ function Volunteers() {
   const user = useAuthUser();
   const query = useQuery(["QUERY_VOLUNTEERS"],() => getVolunteersAPI(user().token));
   
-  console.log(query)
 
   if(query.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
@@ -97,10 +96,16 @@ export default Volunteers;
 const ToolList = ({usuario, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <CustomLink  to={`/voluntario/${id}`}>
+        <SearchIcon />
+      </CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
+        
+        />
+        
     </CustomFlex>
   )
 

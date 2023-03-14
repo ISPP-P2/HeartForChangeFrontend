@@ -11,6 +11,10 @@ export const saveVolunteerAPI = async (token, values) => {
 
 export const deleteVolunteerAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).post(`/api/volunteers/delete/${id}`)
-    console.log(data)
+    return data
+}
+
+export const getVolunteerAPI = async (token,id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/volunteers/${id}`)
     return data
 }

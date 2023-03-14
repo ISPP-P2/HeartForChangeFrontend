@@ -12,7 +12,6 @@ export const saveBeneficiariesAPI = async (token, values) => {
 
 export const deleteBeneficiariesAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).post(`/api/beneficiaries/delete/${id}`)
-    console.log(data)
     return data
 }
 

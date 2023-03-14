@@ -19,6 +19,11 @@ const form = [
     label: "Contraseña",
   },
   {
+    name: "email",
+    type: FORM_TYPES.TEXT,
+    label: "Correo electrónico",
+  },
+  {
     name: "name",
     type: FORM_TYPES.TEXT,
     label: "Nombre",
@@ -156,12 +161,12 @@ function FormVolunteers() {
   const user = useAuthUser();
   const navigate = useNavigate();
 
-    const saveVolunteer = (values) => {
-        console.log(values)
-        saveVolunteerAPI(user().token, values)
-        //navigate("/voluntarios")
-        
-    }
+  const saveVolunteer = (values) => {
+      console.log(values)
+      saveVolunteerAPI(user().token, values)
+      navigate("/voluntarios")
+      
+  }
 
   return (
     <BodyWrapper>

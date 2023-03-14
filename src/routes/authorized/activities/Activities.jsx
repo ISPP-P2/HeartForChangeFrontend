@@ -14,6 +14,9 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Typography } from '@mui/material';
 import ActivityForm from './ActivityForm';
+import { useAuthUser } from 'react-auth-kit';
+import { useQuery } from 'react-query';
+import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/api';
 
 export const actividades = [
     {
@@ -74,22 +77,44 @@ export const actividades = [
 
 function Activities() {
 
+  const user = useAuthUser();
+  const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token));
+
+  if(query.isLoading){
+    return <Typography variant="h4" component="div" gutterBottom>
+            Cargando...
+        </Typography>
+  }
+
+  if(query.isError){
+    return <Typography variant="h4" component="div" gutterBottom>
+           {query.error}
+        </Typography>
+  }
+
+  const handleDelete = (id) => {
+    deleteActivityAPI(user().token, id);
+    location.reload()
+  }
+
+  const data = query.data
+
   const actividadesConBoton = React.useMemo(() => {
-    return actividades.map((actividad) => {
+    return data.map((actividad) => {
       return {
         ...actividad,
-        button: <ToolList  actividad={actividad} />,
+        button: <ToolList  actividad={actividad} handleDelete={handleDelete} id={actividad.id} />,
       };
     });
-  }, [actividades]);
+  }, [data]);
 
 
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
-    ["Nombre de actividad", "Tipo","Lugar", "Capacidad","Fecha","Ver detalles"],
-    ["name", "type", "location","capacity","date", "button"],
-    ["Descripcion"],
-    ["description"]   
+    ["Nombre de actividad", "Tipo","Lugar","Coordinador","Fecha","Ver detalles"],
+    ["name", "type", "place","date","coordinator", "button"],
+    ["Observaciones"],
+    ["observations"]   
     )
 
   
@@ -109,12 +134,18 @@ function Activities() {
 export default Activities;
 
 
-
-const ToolList = ({actividad, handleEliminar}) => {
+const ToolList = ({actividad, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink to={`/actividad/${actividad.id}`}><SearchIcon /></CustomLink>
-      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box><Typography>La actividad se eliminará permanentemente</Typography><CustomButton text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} /></Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+      <CustomLink  to={`/actividad/${id}`}>
+        <SearchIcon />
+      </CustomLink>
+      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+        <Typography>El actividad se eliminará permanentemente</Typography>
+        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
+        />
+        
     </CustomFlex>
   )
 
