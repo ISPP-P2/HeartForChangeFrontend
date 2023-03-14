@@ -192,17 +192,6 @@ function VolunteerDetails({ match }) {
         </Typography>
   }
   
-  const form2 = React.useMemo(()=>{
-    if(voluntario.data.length === 0 || voluntario.data === undefined){
-      return []
-    }
-    return voluntarioForm.map((e)=>(
-      {
-      ...e,
-      value: voluntario.data[e.name]
-      }
-    ))},[voluntario.data])
-  
   
 
   return (
@@ -290,7 +279,7 @@ function VolunteerDetails({ match }) {
           </Box>
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
             <BasicFrom
-              form={form2}
+              form={voluntarioForm.map((item) => {return {...item, value: voluntario.data[item.name]}})}
               readOnly={true}
               width={"100%"}
               handleSubmitForm={(values) => console.log(values)}
