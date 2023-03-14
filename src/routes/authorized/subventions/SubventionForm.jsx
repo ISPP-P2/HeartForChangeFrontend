@@ -98,8 +98,12 @@ function SubventionForm({handleClose}) {
     const saveSubvention = (values) => {
         console.log(values)
         if(!(values.privateGrant === "" || values.gubernamental === "" || values.state === "" || values.justification === "" || values.amount === "")){
-            saveSubventionAPI(user().token, values)
-            location.reload()
+            saveSubventionAPI(user().token, values).then(
+                (res) => {
+                    location.reload()
+                }
+            )
+      
         }
         
     }

@@ -33,17 +33,8 @@ const Listado = ({data}) => {
         </Typography>
   }
 
-  const voluntariosConBoton = useMemo(() => {
-    return data.map((usuario) => {
-      return {
-        ...usuario,
-        rolAccount: RolAccountParser(usuario.rolAccount),
-        button:<ToolList usuario={usuario} handleDelete={handleDelete} id={usuario.id}/>,
-      };
-    });
-  }, [data])
 
-  const VolunteersList = new CustomList(voluntariosConBoton)
+  const VolunteersList = new CustomList(VoluntarioParser(data, handleDelete))
   let objetoTabla = VolunteersList.parseToTable(
     ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Rol","Herramientas"], 
     ["username", "name", "firstSurname","secondSurname", "email","gender","rolAccount", "button"],
@@ -123,4 +114,15 @@ const RolAccountParser = (rolAccount) => {
     return "Beneficiario"
   } 
   return "Error"
+}
+
+
+const VoluntarioParser = (data, handleDelete) => {
+  return data.map((usuario) => {
+    return {
+      ...usuario,
+      rolAccount: RolAccountParser(usuario.rolAccount),
+      button:<ToolList usuario={usuario} handleDelete={handleDelete} id={usuario.id}/>,
+    };
+  });
 }

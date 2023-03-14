@@ -19,8 +19,15 @@ import { beneficiarioBasicFormValue, beneficiarios } from "./forms";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { getBeneficiarieAPI } from "../../../api/beneficiario/api";
+import { useParams } from "react-router-dom";
 
 
+
+const parseBenfeiciario = (beneficiario) => {
+  return beneficiarioBasicFormValue.map((item) => {
+    return { ...item, value: beneficiario[item.name] };
+  });
+}
 
 const extraForm = (title, variable) => [
   {
@@ -32,11 +39,9 @@ const extraForm = (title, variable) => [
 ];
 
 function BeneficiariesDetails() {
-  
-
-
   const user = useAuthUser();
-  const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiarieAPI(user().token,3));
+  const { id } = useParams();
+  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS", id],() => getBeneficiarieAPI(user().token,id));
   const mobile = useMediaQuery("(min-width: 850px)");
 
   if(query.isLoading){
@@ -50,10 +55,9 @@ function BeneficiariesDetails() {
            {query.error}
         </Typography>
   }
-  
 
   return (
-    <BodyWrapper title={"Beneficiario 1"}>
+    <BodyWrapper title={`Beneficiario ${id}`}>
       <CustomFlex direction={"column"}>
         <Box
           sx={{
@@ -121,8 +125,7 @@ function BeneficiariesDetails() {
                     />
                   </Box>
                   <BasicModal
-                      variant={VARIANTES_BUTTON.GREEN2}
-
+                    variant={VARIANTES_BUTTON.GREEN2}
                     text={<AddIcon />}
                     title={"Formación Complementaria"}
                     body={<ComplementaryFormationForm />}
@@ -132,14 +135,13 @@ function BeneficiariesDetails() {
             </Box>
           </Box>
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
-            {!query.isLoading && query.isSuccess && beneficiarios === 0 ? <Typography>No hay datos</Typography> : <BasicFrom
-              form={beneficiarioBasicFormValue.map((item) => {return {...item, value: query.data[item.name]}})}
-              readOnly={true}
-              width={"100%"}
-              handleSubmitForm={(values) => console.log(values)}
-            />}
+            {!query.isError && query.isSuccess ? <BasicFrom
+                form={parseBenfeiciario(query.data)}
+                readOnly={true}
+                width={"100%"}
+                handleSubmitForm={(values) => console.log(values)}
+              /> : null}
           </Box>
-        
         </Box>
 
         <CustomFlex direction={"column"}></CustomFlex>
@@ -149,3 +151,4 @@ function BeneficiariesDetails() {
 }
 
 export default BeneficiariesDetails;
+

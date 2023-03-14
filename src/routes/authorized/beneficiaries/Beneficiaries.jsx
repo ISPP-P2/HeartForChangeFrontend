@@ -14,12 +14,10 @@ import CustomLink from '../../../components/CustomLink';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import BasicModal from '../../../components/BasicModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { beneficiarios } from './forms';
 import { useAuthUser } from 'react-auth-kit';
 import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/beneficiario/api';
 import { useQuery } from 'react-query';
 import { Typography} from '@mui/material';
-import { useMemo } from 'react';
 
 
 
@@ -30,7 +28,7 @@ function Beneficiaries() {
 
   const user = useAuthUser();
   const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token));
-  const mobile = useMediaQuery('(min-width:600px)');
+
   if(query.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...
@@ -42,6 +40,8 @@ function Beneficiaries() {
            {query.error}
         </Typography>
   }
+
+  console.info(query)
   return (
       <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
@@ -59,6 +59,39 @@ export default Beneficiaries;
 
 
 
+const Listado = ({data}) => { 
+
+  const user = useAuthUser();
+
+  const handleDelete = (id) => {
+    deleteBeneficiariesAPI(user().token, id).then((res) => {
+      location.reload()
+    })
+
+  }
+
+  if(data.length === 0){
+    return <Typography variant="h4" component="div" gutterBottom>
+            No hay Beneficiarios
+        </Typography>
+  }
+
+
+  const BeneficiarieList = new CustomList(ParseBenficiario(data, handleDelete))
+  let objetoTabla = BeneficiarieList.parseToTable(
+    ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
+    ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
+    ["Fecha de nacimiento","Trabaja","correo","Dirección"],
+    ["birthday","working","email","address"]
+    )
+    return (
+        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+    )
+
+}
+
+
+
 const ToolList = ({beneficiarie, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
@@ -69,52 +102,14 @@ const ToolList = ({beneficiarie, handleDelete, id}) => {
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
-
 }
 
 
-const Listado = ({data}) => {
-
-  const user = useAuthUser();
-
-  const handleDelete = (id) => {
-    deleteBeneficiariesAPI(user().token, id)
-    location.reload()
-  }
-
-  if(data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay Beneficiarios
-        </Typography>
-  }
-
-  const beneficiariosConBoton = useMemo(() => {
-    return data.map((beneficiarie) => {
-      return {
-        ...beneficiarie,
-        doublenationality: beneficiarie.doublenationality ? "Sí" : "No",
-        european_citizen_authorization: beneficiarie.european_citizen_authorization ? "Sí" : "No",
-        tourist_visa: beneficiarie.tourist_visa ? "Sí" : "No",
-        health_card: beneficiarie.health_card ? "Sí" : "No",
-        savings_possesion: beneficiarie.savings_possesion ? "Sí" : "No",
-        sae_inscription: beneficiarie.sae_inscription ? "Sí" : "No",
-        working: beneficiarie.working ? "Sí" : "No",
-        computer_knowledge: beneficiarie.computer_knowledge ? "Sí" : "No",
-        button: <ToolList beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
-      };
-    });
-  }, [data])
-
-  const BeneficiarieList = new CustomList(beneficiariosConBoton)
-  let objetoTabla = BeneficiarieList.parseToTable(
-    ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
-    ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
-    ["Fecha de nacimiento","Trabaja","correo","Dirección"],
-    ["birthday","working","email","address"]
-    )
-
-    return (
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
-    )
-
+const ParseBenficiario = (data, handleDelete) => {
+  return data.map((beneficiarie) => {
+    return {
+      ...beneficiarie,
+      button: <ToolList beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
+    };
+  });
 }

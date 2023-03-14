@@ -13,6 +13,7 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { saveActivityAPI } from '../../../api/actividades/api';
 import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
+import moment from 'moment/moment';
 
 const form = [
     {
@@ -54,7 +55,7 @@ const form = [
         icon: <PlaceIcon />,
     },
     {
-        name: "certificates",
+        name: "certificate",
         type: FORM_TYPES.SELECT,
         label: "Certificados",
         list: [
@@ -91,6 +92,11 @@ const form = [
         type: FORM_TYPES.TEXT,
         label: "Incidencias",
         validation: Yup.string("Deber ser una cadena de caracteres"),
+    },{
+        name: "numParticipants",
+        type: FORM_TYPES.NUMBER,
+        label: "Numero de participantes",
+        validation: Yup.number("Deber ser una cadena de caracteres"),
     },
 ]
 
@@ -100,10 +106,12 @@ function ActivityForm() {
 
     const user = useAuthUser();
     const saveActivity = (values) => {
-        let values2 = {...values, date:"2017-01-01 14:55:08"}
-        console.log(values2)
-        saveActivityAPI(user().token, values2)
-       // location.reload()
+        let parse = "YYYY-MM-DD HH:mm:ss"
+        var responseDate = moment(values.date).format(parse);
+        const values2 = {...values, date: responseDate}
+        saveActivityAPI(user().token, values2).then((response) => {
+            location.reload();
+        })
   }
 
   return (

@@ -71,8 +71,9 @@ const Listado = ({data}) => {
 
   const user = useAuthUser();
   const handleDelete = (id) => {
-    deleteSubvencioAPI(user().token, id)
-    location.reload()
+    deleteSubvencioAPI(user().token, id).then(() => {
+      window.location.reload()
+    })
   }
 
 

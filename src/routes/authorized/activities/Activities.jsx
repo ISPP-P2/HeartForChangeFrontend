@@ -18,8 +18,9 @@ import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/api';
 
-function Activities() {
 
+
+function Activities() {
   const user = useAuthUser();
   const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token));
 
@@ -36,13 +37,12 @@ function Activities() {
   }
 
   const handleDelete = (id) => {
-    deleteActivityAPI(user().token, id);
-    location.reload()
+    deleteActivityAPI(user().token, id).then((res) => {
+      location.reload()
+    });
+
   }
-
-  const data = query.data
-
-  const ActivityList = new CustomList(data.map((actividad) => {return {...actividad, button: <ToolList  actividad={actividad} handleDelete={handleDelete} id={actividad.id} />,}}))
+  const ActivityList = new CustomList(ParseActivity(query.data, handleDelete));
   let objetoTabla = ActivityList.parseToTable(
     ["Nombre de actividad", "Tipo","Lugar","Coordinador","Fecha","Ver detalles"],
     ["name", "type", "place","date","coordinator", "button"],
@@ -57,9 +57,9 @@ function Activities() {
             <CustomCardMini
                    title='Nº de actividades'
                   iconD={<BasicModal title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm/>}/>}
-                  totalNumber={data.length}/>
+                  totalNumber={query.data.length}/>
           </CustomFlex>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+       <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
     );
 }
@@ -78,8 +78,17 @@ const ToolList = ({actividad, handleDelete, id}) => {
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
         />
-        
     </CustomFlex>
   )
 
+}
+
+
+const ParseActivity = (data, handleDelete) => {
+  return data.map((actividad) => {
+    return {
+      ...actividad,
+      button: <ToolList  actividad={actividad} handleDelete={handleDelete} id={actividad.id} />,
+    };
+  });
 }

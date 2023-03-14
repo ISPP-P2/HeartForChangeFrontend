@@ -165,6 +165,15 @@ let voluntarioForm = [
   }
 ];
 
+
+
+
+const VolunteerDetailsParser = (voluntario) => {
+  return voluntarioForm.map((item) => {
+    return { ...item, value: voluntario[item.name] };
+  });
+}
+
 const extraForm = (title, variable,voluntario) => [
   {
     name: "academicExperience",
@@ -176,10 +185,9 @@ const extraForm = (title, variable,voluntario) => [
 
 function VolunteerDetails({ match }) {
   const mobile = useMediaQuery("(min-width: 850px)");
-  console.log(match);
   const { id } = useParams();
   const user = useAuthUser();
-  const voluntario = useQuery(["QUERY_VOLUNTEER"],() => getVolunteerAPI(user().token,id));
+  const voluntario = useQuery(["QUERY_VOLUNTEER", id],() => getVolunteerAPI(user().token,id));
   if(voluntario.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...
@@ -278,12 +286,12 @@ function VolunteerDetails({ match }) {
             </Box>
           </Box>
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
-            <BasicFrom
-              form={voluntarioForm.map((item) => {return {...item, value: voluntario.data[item.name]}})}
+          {voluntario.isSuccess && !voluntario.isError ?   <BasicFrom
+              form={VolunteerDetailsParser(voluntario.data)}
               readOnly={true}
               width={"100%"}
               handleSubmitForm={(values) => console.log(values)}
-            />
+            /> : null}
           </Box>
         
         </Box>
