@@ -31,7 +31,6 @@ function Beneficiaries() {
   const user = useAuthUser();
   const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token));
   const mobile = useMediaQuery('(min-width:600px)');
-  
   if(query.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...
@@ -63,7 +62,7 @@ export default Beneficiaries;
 const ToolList = ({beneficiarie, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink to={`/beneficiarios/${beneficiarie.id}`}><SearchIcon /></CustomLink>
+      <CustomLink to={`/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El Beneficiario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />

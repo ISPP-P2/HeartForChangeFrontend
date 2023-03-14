@@ -64,37 +64,36 @@ export const beneficiarios = [
       }, 
     
 ];
-export const beneficiarioBasicFormValue = [
+export let beneficiarioBasicFormValue = [
   {
     name: "name",
     type: FORM_TYPES.TEXT,
     label: "Nombre",
+    value: "name"
   },
   {
     name: "cif",
     type: FORM_TYPES.TEXT,
     label: "Documento de Identificación",
+    value: "cif"
   },
   {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Email",
+    value: "email"
   },
   {
     name: "description",
     type: FORM_TYPES.TEXTEAREA,
     label: "Descripción",
+    value: "description"
   },
   {
     name: "username",
     type: FORM_TYPES.TEXT,
     label: "Nombre de usuario",
-  },
-  {
-    name: "password",
-    type: FORM_TYPES.TEXT,
-    label: "Contraseña",
-  
+    value: "username"
   },
   {
     name: "rolAccount",
@@ -105,16 +104,19 @@ export const beneficiarioBasicFormValue = [
       { label: "Voluntario", value: "VOLUNTEER" },
       { label: "Beneficiario", value: "BENEFICIARY" },
     ],
+    value: "rolAccount"
   },
   {
     name: "address",
     type: FORM_TYPES.TEXT,
     label: "Dirección",
+    value: "address"
   },
   {
     name: "birthday",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de nacimiento",
+    value: "birthday"
   },
  
   {
@@ -127,11 +129,13 @@ export const beneficiarioBasicFormValue = [
       { label: "Viudo", value: "WIDOWED" },
       { label: "Divorciado", value: "DIVORCED" },
     ],
+    value: "civilStatus"
   },
   {
     name: "documentNumber",
     type: FORM_TYPES.TEXT,
     label: "Número de Documentación",
+    value: "documentNumber"
   },
   {
     name: "documentType",
@@ -142,26 +146,31 @@ export const beneficiarioBasicFormValue = [
       { label: "NIE", value: "NIE" },
       { label: "Pasaporte", value: "PASSPORT" },
     ],
+    value: "documentType"
   },
   {
     name: "driveLicenses",
     type: FORM_TYPES.TEXT,
     label: "Carnet de conducir",
+    value: "driveLicenses"
   },
   {
     name: "entryDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de Inicio",
+    value: "entryDate"
   },
   {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
     label: "Primer apellido",
+    value: "firstSurname"
   },
   {
     name: "secondSurname",
     type: FORM_TYPES.TEXT,
     label: "Segundo apellido",
+    value: "secondSurname"
   },
   {
     name: "gender",
@@ -171,51 +180,61 @@ export const beneficiarioBasicFormValue = [
       { label: "Hombre", value: "MALE" },
       { label: "Mujer", value: "FEMALE" },
     ],
+    value: "gender"
   },
   {
     name: "hourOfAvailability",
     type: FORM_TYPES.TEXT,
     label: "Horas de disponibilidad",
+    value: "hourOfAvailability"
   },
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de Finalización",
+    value: "leavingDate"
   },
   {
     name: "numberOfChildren",
     type: FORM_TYPES.NUMBER,
     label: "Número de hijos",
+    value: "numberOfChildren"
   },
   {
     name: "otherSkills",
     type: FORM_TYPES.TEXTEAREA,
     label: "Otras habilidades",
+    value: "otherSkills"
   },
   {
     name: "postalCode",
     type: FORM_TYPES.NUMBER,
     label: "Código Postal",
+    value: "postalCode"
   },
   {
     name: "registrationAddress",
     type: FORM_TYPES.TEXT,
-    label: "Código Postal",
+    label: "Dirección de registro",
+    value: "registrationAddress"
   },
   {
     name: "telephone",
     type: FORM_TYPES.NUMBER,
     label: "Teléfono",
+    value: "telephone"
   },
   {
     name: "town",
     type: FORM_TYPES.TEXT,
     label: "Ciudad",
+    value: "town"
   },
   {
     name: "nationality",
     type: FORM_TYPES.TEXT,
     label: "Nacionalidad",
+    value: "nationality"
   },
   {
     name: "doubleNationality",
@@ -225,11 +244,13 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "doubleNationality"
   },
   {
     name: "arrivedDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de llegada",
+    value: "arrivedDate"
   },
   {
     name: "europeanCitizenAuthorization",
@@ -239,6 +260,7 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "europeanCitizenAuthorization"
   },
   {
     name: "touristVisa",
@@ -248,11 +270,13 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "touristVisa"
   },
   {
     name: "dateTouristVisa",
     type: FORM_TYPES.ONLYDATE,
     label: "fecha de visado turista",
+    value: "dateTouristVisa"
   },
   {
     name: "healthCard",
@@ -262,16 +286,19 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "healthCard"
   },
   {
     name: "employmentSector",
     type: FORM_TYPES.TEXT,
     label: "Sector de empleo",
+    value: "employmentSector"
   },
   {
     name: "perceptionAid",
     type: FORM_TYPES.TEXT,
     label: "perceptionAid",
+    value: "perceptionAid"
   },
   {
     name: "savingsPossesion",
@@ -281,6 +308,7 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "savingsPossesion"
   },
   {
     name: "working",
@@ -290,6 +318,7 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "working"
   },
   {
     name: "computerKnowledge",
@@ -299,15 +328,18 @@ export const beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
+    value: "computerKnowledge"
   },
   {
     name: "ownedDevices",
     type: FORM_TYPES.TEXTEAREA,
     label: "Dispositivos propios",
+    value: "ownedDevices"
   },
   {
     name: "languages",
     type: FORM_TYPES.TEXT,
     label: "Idioma",
+    value: "languages"
   },
 ];

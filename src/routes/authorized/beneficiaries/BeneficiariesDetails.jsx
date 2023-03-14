@@ -13,9 +13,12 @@ import BasicModal from "../../../components/BasicModal";
 import AcademicExperienceForm from "../volunteers/AcademicExperienceForm";
 import ComplementaryFormationForm from "../volunteers/ComplementaryFormationForm";
 import WorkExperienceForm from "..//volunteers/WorkExperienceForm";
-import { useMediaQuery } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { beneficiarioBasicFormValue, beneficiarios } from "./forms";
+import { useAuthUser } from "react-auth-kit";
+import { useQuery } from "react-query";
+import { getBeneficiarieAPI } from "../../../api/beneficiario/api";
 
 
 
@@ -29,10 +32,36 @@ const extraForm = (title, variable) => [
 ];
 
 function BeneficiariesDetails() {
+  
+
+
   const user = useAuthUser();
-  const beneficiario = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiarieAPI(user().token,3));
+  const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiarieAPI(user().token,3));
   const mobile = useMediaQuery("(min-width: 850px)");
-  console.log(beneficiario)
+
+
+  if(query.isLoading){
+    return <Typography variant="h4" component="div" gutterBottom>
+            Cargando...
+        </Typography>
+  }
+
+  if(query.isError){
+    return <Typography variant="h4" component="div" gutterBottom>
+           {query.error}
+        </Typography>
+  }
+  const beneficiarios = React.useMemo(()=>{
+    if(query.data.length === 0 || query.data === undefined){
+      return []
+    }
+
+    return beneficiarioBasicFormValue.map((e)=>(
+      {
+      ...e,
+      value: query.data[e.name]
+      }
+    ))},[query.data])
 
 
   return (
@@ -115,12 +144,12 @@ function BeneficiariesDetails() {
             </Box>
           </Box>
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
-            <BasicFrom
-              form={beneficiarioBasicFormValue}
+            {query.data.length === 0 ? <Typography>No hay datos  </Typography> : <BasicFrom
+              form={beneficiarios}
               readOnly={true}
               width={"100%"}
               handleSubmitForm={(values) => console.log(values)}
-            />
+            />}
           </Box>
         
         </Box>
