@@ -42,6 +42,7 @@ function Activities() {
     });
 
   }
+  
   const ActivityList = new CustomList(ParseActivity(query.data, handleDelete));
   let objetoTabla = ActivityList.parseToTable(
     ["Nombre de actividad", "Tipo","Lugar","Coordinador","Fecha","Ver detalles"],
@@ -59,7 +60,7 @@ function Activities() {
                   iconD={<BasicModal title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm/>}/>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
-       <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+       {query.data.length ===0 ?<Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
       </CustomFlex>
     );
 }
