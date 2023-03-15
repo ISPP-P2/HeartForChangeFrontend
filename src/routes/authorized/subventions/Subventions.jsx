@@ -25,28 +25,18 @@ function Subventions() {
   
   console.log(query)
 
-  if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
-  }
 
-  if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
-  }
-
-
+  const [handleDelete, setHandleDelete] = React.useState({});
+  console.log(handleDelete)
   return (
     <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
               <CustomCardMini
                     title='Nº de subvenciones'
-                    iconD={<BasicModal  title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm   />}/>}
-                    totalNumber={query.data.length}/>
+                    iconD={<BasicModal setHandleCloseButton={setHandleDelete}  title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm  handleClose={handleDelete} query={query} />}/>}
+                    totalNumber={query.isSuccess ? query.data.length : 0}/>
           </CustomFlex>
-        <Listado data={query.data} />
+        <Listado query={query} />
     </CustomFlex>
     );
 }
@@ -67,7 +57,7 @@ const ToolList = ({subvencion, handleDelete, id}) => {
   )
 }
 
-const Listado = ({data}) => {
+const Listado = ({query}) => {
 
   const user = useAuthUser();
   const handleDelete = (id) => {
@@ -75,16 +65,26 @@ const Listado = ({data}) => {
       window.location.reload()
     })
   }
+  if(query.isLoading){
+    return <Typography variant="h4" component="div" gutterBottom>
+            Cargando...
+        </Typography>
+  }
 
+  if(query.isError){
+    return <Typography variant="h4" component="div" gutterBottom>
+           {query.error}
+        </Typography>
+  }
 
-  if(data.length === 0){
+  if(query.data.length === 0){
     return <Typography variant="h4" component="div" gutterBottom>
             No hay subvenciones
         </Typography>
   }
 
   const subvencionesConBoton = useMemo(() => {
-    return data.map((subvencion) => {
+    return query.data.map((subvencion) => {
       return {
         ...subvencion,
         gubernamental: subvencion.gubernamental ? "Sí" : "No",
@@ -93,7 +93,7 @@ const Listado = ({data}) => {
         button: <ToolList subvencion={subvencion} handleDelete={handleDelete} id={subvencion.id}/>,
       };
     });
-  }, [data])
+  }, [query.data])
 
   const SubventionList = new CustomList(subvencionesConBoton)
   let objetoTabla = SubventionList.parseToTable(
