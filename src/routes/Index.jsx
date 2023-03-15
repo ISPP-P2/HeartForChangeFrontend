@@ -6,7 +6,7 @@ import { TopBar } from '../components/TopBar';
 import Sidebar from '../components/Sidebar';
 import AutorizedRoutes from './authorized/AuthorizedRoutes';
 import LogoNavBar from '../components/LogoNavBar';
-
+import { CustomSignOut }  from './login/CustomSignOut';
 
 const drawerWidth = 200;
 
@@ -19,10 +19,14 @@ export function Index({ window } ) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleClose = () => {
+    setMobileOpen(false);
+  };
+
   const drawer = (
     <div>
       <Toolbar />
-      <Sidebar />
+      <Sidebar handleClose={handleClose}/>
     </div>
   );
 
@@ -55,6 +59,7 @@ export function Index({ window } ) {
           }}>
           <LogoNavBar />
           {drawer}
+          <CustomSignOut />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -69,16 +74,16 @@ export function Index({ window } ) {
           open>
           <LogoNavBar height={"3rem"}/>
           {drawer}
+          <CustomSignOut />
         </Drawer>
       </Box>
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
         <Toolbar />
         <AutorizedRoutes />
       </Box>
-      
     </Box>
-
-
     
     );
 }
+
+

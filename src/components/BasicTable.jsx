@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import users from '../static/user';
 import { useState } from 'react';
+import { margin } from '@mui/system';
 
 
 
@@ -39,15 +40,12 @@ const DetailsComponent = ({details, open}) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Description
-              </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
                   {details.header.map((e, i)=>{
                       return (
-                        <TableCell  key={i} >{e}</TableCell>
+                        <TableCell sx={{fontWeight: 600}} key={i} >{e}</TableCell>
                       )
                     })}
                   </TableRow>
@@ -106,7 +104,8 @@ export default function BasicTable({
   maxHeight = null,
   objetoTabla = null, 
   maxWidth = null,
-  filter = null
+  filter = null,
+  margin = "0"
 }){
 
   if(objetoTabla == null){
@@ -116,15 +115,16 @@ export default function BasicTable({
   return (
     <TableContainer sx={{
       maxHeight: maxHeight === null ? null : maxHeight,
-      maxWidth: maxWidth === null ? null : maxWidth
+      maxWidth: maxWidth === null ? null : maxWidth,
+      margin: margin
     }} component={Paper}>
       <Table aria-label="able">
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell  />
             {objetoTabla.header.map((e, i)=>{
               return (
-                <TableCell key={i}>{e}</TableCell>
+                <TableCell sx={{fontWeight: 600}} key={i}>{e}</TableCell>
               )
             })}
           </TableRow>

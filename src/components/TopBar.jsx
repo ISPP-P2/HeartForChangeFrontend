@@ -3,10 +3,12 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import users from "../static/user";
+import { useAuthUser } from "react-auth-kit";
 
 const drawerWidth = 200;
 export const TopBar = ({ handleDrawerToggle }) => {
 
+  const user = useAuthUser();
   return (
     <AppBar
       position="fixed"
@@ -28,7 +30,7 @@ export const TopBar = ({ handleDrawerToggle }) => {
         </IconButton>
         <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1, color: "white", fontWeight: 600, marginRight: "1rem" }}>
           <Typography variant="h6" noWrap component="div" alignItems="right">
-            Bienvenido, {users[0].name}
+            Bienvenido, {user().username}
           </Typography>
         </div>
         <Avatar

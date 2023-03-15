@@ -10,15 +10,14 @@ function CustomButton({
     iconD,
     type = 'button', 
     text, 
+    widthButton = "100%",
+    heightButton = "100%",
     outline = false}) {
-
     return (
-        <Box sx={{
-            margin: "2px",
-
-        }}>
+        <Box >
             <Button type={'button'} sx={{
-                margin: "1sw",
+                 width: widthButton,
+                 height: heightButton,
                 backgroundColor: variantButton + "!important",
                 "&:hover": {
                     opacity: 0.85
@@ -46,6 +45,8 @@ export const VARIANTES_BUTTON = {
     LIGHTBLUE: "#88b0d6",
     BLUE: "#495bfc",
     PURPLE: "#ba81e7",
-    ORANGE: "#ff862f"
+    ORANGE: "#ff862f",
+    GREEN2: "#04AA6D"
+
 
 }

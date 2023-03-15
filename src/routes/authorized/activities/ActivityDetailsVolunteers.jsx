@@ -4,18 +4,16 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link, useParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { useState } from 'react';
-import { Grid, Typography } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
-import BodyWrapper from '../../../components/BodyWrapper';
 import CustomLink from '../../../components/CustomLink';
+import { Grid, Typography } from '@mui/material';
+import BodyWrapper from '../../../components/BodyWrapper';
   
 
 
@@ -100,72 +98,62 @@ const actividadesConBoton = actividades.map((actividad) => {
   };
 });
 
-function ActivityDetails() {
-
-  const {id} = useParams()
-
+function ActivityVolunteerDetails() {
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
     ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
     ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]);
-    
-  const [finalizada, setFinalizada] = useState(false);
 
-  const mobile = useMediaQuery('(min-width:1200px)');
   
   return (
-    <BodyWrapper title={`Detalles de la actividad ${id}`} >
+  
+  <BodyWrapper title={"Actividad: Parque de la Fuensanta"}>
+    
     <CustomFlex direction={"column"}>
-      <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
-      <CustomFlex direction={mobile ? "column" : "row"}>
-        <Grid
-        display={"grid"}
-        gap={"1rem"}
-        gridTemplateColumns={mobile ? "1fr 1fr":"1fr"}
-        gridTemplateRows={mobile ? "100%":"1fr"}> 
+    <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
+      <CustomFlex direction={"column"}>
+        <Box>
+          <Grid
+          display={"grid"}
+          gap={"1rem"}
+          gridTemplateColumns={"1fr 1fr"}
+          gridTemplateRows={"100%"}>
         <BasicFrom 
-        form={form}
+        form={form} 
+        width={"-webkit-fill-available"} 
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
-        />     
+        /> 
           <Grid
               display={"grid"}
-              gap={"1rem"}
-              gridTemplateColumns={mobile ? "1fr 1fr":"100%"}
-              gridTemplateRows={mobile ? "1fr 1fr":"1fr 1fr 1fr 1fr" }>  
+              justifyContent={"center"}
+              marginLeft={"2rem"}
+              gridTemplateColumns={"1fr 1fr"}>    
                 <CustomCard
-                  title='Editar actividad'
+                  title='Solicitud para apuntarse'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Editar"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
-                  <CustomCard
-                  title='Añadir'
-                  iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<CustomLink to={`/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.GREEN}/> </CustomLink>}/>  
+                  buttonSidebar={<CustomButton text={"Apuntarse"}  
+                  iconD={<ArrowForwardIcon sx={{marginLeft: "0rem"}}/>} 
+                  variantButton={VARIANTES_BUTTON.GREEN}/>}/> 
                 <CustomCard
-                  title='Finalizar'
+                  title='Salir de la actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton onClick={() => {setFinalizada(!finalizada)}} text={"Finalizar"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                  buttonSidebar={<CustomButton text={"Salir"}  
+                  iconD={<ArrowForwardIcon sx={{marginLeft: "1rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
-                <CustomCard
-                  title='Solicitudes'
-                  iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Ver"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.PURPLE}/>}/>
           </Grid> 
         </Grid> 
+        </Box>
+        
       </CustomFlex>
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+        <Box sx={{marginTop:"5rem"}}>
+          <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
+        </Box>
       </CustomFlex>
       </BodyWrapper>
     );
 }
 
-export default ActivityDetails;
+export default ActivityVolunteerDetails;

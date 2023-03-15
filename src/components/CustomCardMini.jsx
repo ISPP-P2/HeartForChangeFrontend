@@ -12,8 +12,8 @@ function CustomCardMini({
 
   return (  
     <Card sx={{
-      width: "22em",
-      height: "10em",
+      width: "20em",
+      height: "min-content",
       filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.3))",
     }}>
       <Box sx={{ 
@@ -35,9 +35,8 @@ function CustomCardMini({
               display: "flex",
               alignItems: "flex-start",
               flexDirection: "column",
-              gap: "0.75rem"
             }}>
-            <Typography component="div" fontSize={"1rem"} fontWeight={220} color={"#C6C6CD"} >
+            <Typography component="div" fontSize={"1rem"} fontWeight={550} color={"#5C5C5C"} >
               {title}
             </Typography>
             <Typography component="div" fontSize={"1.75rem"} fontWeight={550}>
