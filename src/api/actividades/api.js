@@ -15,6 +15,6 @@ export const deleteActivityAPI = async (token, id) => {
 }
 
 export const getActivityAPI = async (token, id) => {
-    const {data} =  await axiosWithToken(token).post(`/api/tasks/${id}`)
+    const {data} =  await axiosWithToken(token).get(`/api/tasks/${id}`)
     return data
 }
