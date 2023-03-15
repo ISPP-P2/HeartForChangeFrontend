@@ -15,6 +15,7 @@ import FormBeneficiaries from '../beneficiaries/FormBeneficiaries';
 import WorkExperienceForm from '../volunteers/WorkExperienceForm';
 import ComplementaryFormationForm from '../volunteers/ComplementaryFormationForm';
 import CustomLink from '../../../components/CustomLink';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 function Dashboard() {
     
@@ -22,6 +23,7 @@ function Dashboard() {
    
 
     return (
+        <BodyWrapper title={"Panel de control (Beta)"}>
         <Grid display={mobile ? "grid" : "flex"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
             <CustomCardMini 
                 title='Beneficiarios registrados'
@@ -78,7 +80,7 @@ function Dashboard() {
                     variantButton={VARIANTES_BUTTON.GREEN}/>
                 </CustomLink>}/>
             </Grid>
-            
+        </BodyWrapper>
     );
 }
 

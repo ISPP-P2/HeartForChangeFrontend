@@ -17,6 +17,7 @@ import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { Typography, useMediaQuery } from '@mui/material';
 import { deleteVolunteerAPI, getVolunteersAPI } from '../../../api/voluntarios/api';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 const Listado = ({data}) => {
 
@@ -68,6 +69,7 @@ function Volunteers() {
   }
   
   return (
+    <BodyWrapper title={"Lista de voluntarios"}>
       <CustomFlex direction={"column"}>
          <CustomFlex  direction={"row"}>
             <CustomCardMini 
@@ -77,6 +79,7 @@ function Volunteers() {
           </CustomFlex>
           <Listado data={query.data} />
       </CustomFlex>
+    </BodyWrapper>
     );
 }
 

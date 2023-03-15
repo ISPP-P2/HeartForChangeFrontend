@@ -54,7 +54,7 @@ const participants = [
 
 
 
-function AssignVolunteers() {
+function AssignParticipants() {
   const {id} = useParams("id");
 
   const ActivityList = new CustomList(participants)
@@ -77,4 +77,4 @@ function AssignVolunteers() {
     );
 }
 
-export default AssignVolunteers;
+export default AssignParticipants;

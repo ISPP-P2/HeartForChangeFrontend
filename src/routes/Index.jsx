@@ -12,7 +12,7 @@ const drawerWidth = 200;
 
 
 
-export function Index({ window } ) {
+export default function Index({ window } ) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {

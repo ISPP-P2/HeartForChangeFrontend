@@ -16,7 +16,11 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <SnackbarProvider>
+    <SnackbarProvider 
+      maxSnack={3}
+      autoHideDuration={1000}
+      transitionDuration={400}
+    >
     <CustomNotistackProvider>
       <QueryClientProvider client={queryClient}>
               <AuthProvider

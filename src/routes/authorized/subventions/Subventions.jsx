@@ -16,6 +16,7 @@ import { deleteSubvencioAPI, getSubventions } from '../../../api/subvenciones/ap
 import { useAuthUser } from 'react-auth-kit';
 import { useContext, useMemo, useState } from 'react';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 
 function Subventions() {
@@ -29,6 +30,7 @@ function Subventions() {
   const [handleDelete, setHandleDelete] = useState({});
   console.log(handleDelete)
   return (
+    <BodyWrapper title={"Lista de subvenciones"}>
     <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
               <CustomCardMini
@@ -38,6 +40,7 @@ function Subventions() {
           </CustomFlex>
         <Listado query={query} />
     </CustomFlex>
+    </BodyWrapper>
     );
 }
 
@@ -59,7 +62,7 @@ const Listado = ({query}) => {
     })
   }
 
-  
+
   if(query.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...

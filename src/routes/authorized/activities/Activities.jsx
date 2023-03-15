@@ -17,6 +17,7 @@ import ActivityForm from './ActivityForm';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/api';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 
 
@@ -53,6 +54,7 @@ function Activities() {
 
   
   return (
+    <BodyWrapper title={"Lista de actividades"}>
     <CustomFlex direction={"column"}>
         <CustomFlex direction={"row"}>
             <CustomCardMini
@@ -62,6 +64,7 @@ function Activities() {
           </CustomFlex>
        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
       </CustomFlex>
+      </BodyWrapper>
     );
 }
 
