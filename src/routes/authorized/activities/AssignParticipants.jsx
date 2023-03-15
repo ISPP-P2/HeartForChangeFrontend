@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomLink from '../../../components/CustomLink';

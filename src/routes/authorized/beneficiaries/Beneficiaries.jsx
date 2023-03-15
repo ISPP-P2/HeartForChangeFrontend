@@ -60,7 +60,6 @@ export default Beneficiaries;
 
 
 const Listado = ({data}) => { 
-
   const user = useAuthUser();
 
   const handleDelete = (id) => {

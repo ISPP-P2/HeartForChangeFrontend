@@ -46,8 +46,7 @@ const form = [
       label: "Grupo/Individual",
       value: 'Individual'
   }
-]
-
+];
 
 const actividades = [
   {
@@ -91,7 +90,7 @@ const actividades = [
     description: "Hola" 
   }, 
 
-]
+];
 
 const actividadesConBoton = actividades.map((actividad) => {
   return {

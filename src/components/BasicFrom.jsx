@@ -113,7 +113,6 @@ const CustomInput = (props) => {
     );
   }
   if (props.type === FORM_TYPES.SELECT) {
-    <InputLabel id="test-select-label">Prueba</InputLabel>
     return (
       <TextField
         disabled={props.readOnly}
@@ -124,11 +123,11 @@ const CustomInput = (props) => {
         select
       >
         {props.list === null || props.list === undefined ? (
-          <MenuItem>Cargando lista</MenuItem>
+          null
         ) : (
-          props.list.map((e) => {
+          props.list.map((e, i) => {
             return (
-              <MenuItem value={e.value}>
+              <MenuItem key={i} value={e.value}>
                 <em>{e.label}</em>
               </MenuItem>
             );

@@ -1,4 +1,4 @@
-import { useSnackbar } from "notistack"
+import { SnackbarProvider, useSnackbar } from "notistack"
 import { createContext } from "react"
 
 
@@ -19,10 +19,9 @@ function CustomNotistackProvider({children}) {
 
 
   return (
-    <CustomNotistackContext.Provider value={{
-        setSuccessMsg,
-        setErrorMsg
-    }}>{children}</CustomNotistackContext.Provider>
+    <CustomNotistackContext.Provider value={{setSuccessMsg,setErrorMsg}}>
+      {children}
+    </CustomNotistackContext.Provider>
   )
 }
 

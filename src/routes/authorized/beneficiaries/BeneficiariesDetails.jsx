@@ -151,4 +151,3 @@ function BeneficiariesDetails() {
 }
 
 export default BeneficiariesDetails;
-

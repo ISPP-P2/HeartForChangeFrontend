@@ -110,7 +110,6 @@ function ActivityVolunteerDetails() {
   return (
   
   <BodyWrapper title={"Actividad: Parque de la Fuensanta"}>
-    
     <CustomFlex direction={"column"}>
     <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
       <CustomFlex direction={"column"}>

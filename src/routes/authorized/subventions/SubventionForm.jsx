@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import { FORM_TYPES } from '../../../components/utils/utilsForms'
 import * as Yup from 'yup';
@@ -14,6 +14,7 @@ import { useAuthUser } from 'react-auth-kit';
 import { getSubventions, saveSubventionAPI } from '../../../api/subvenciones/api';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 const form = [
     {
         name: "privateGrant",
@@ -94,25 +95,24 @@ const form = [
 
 function SubventionForm({handleClose, query}) {
     const user = useAuthUser();
+    const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
     
     const saveSubvention = (values) => {
-        console.log(values)
-        if(!(values.privateGrant === "" || values.gubernamental === "" || values.state === "" || values.justification === "" || values.amount === "")){
-            saveSubventionAPI(user().token, values).then(
-                (res) => {
-                    handleClose.handleClose()
-                    query.refetch()
-                }
-            )
-        }
+        saveSubventionAPI(user().token, values).then(
+            (res) => {
+                handleClose.handleClose()
+                query.refetch()
+                setSuccessMsg("Subvención añadida correctamente")
+            }
+        ).catch(
+            (err) => {
+                setErrorMsg("Ha ocurrido un error")
+            }
+        )
     }
 
     return (
-        <BasicFrom 
-            form={form} 
-            buttonText={"añadir"}
-            handleSubmitForm={saveSubvention}
-        />
+        <BasicFrom form={form} buttonText={"añadir"} handleSubmitForm={saveSubvention} />
     )
 }
 

@@ -58,9 +58,9 @@ export default function BasicModal({text,title,body,variant,widthButton,heightBu
             <Typography id="modal-modal-title" variant="h4" component="h2">
               {title}
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Box id="modal-modal-description" sx={{ mt: 2 }}>
               {body}
-            </Typography>
+            </Box>
           </CustomFlex>
          
         </Box>
