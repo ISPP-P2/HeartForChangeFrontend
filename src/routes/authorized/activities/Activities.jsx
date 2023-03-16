@@ -59,7 +59,7 @@ function Activities() {
         <CustomFlex direction={"row"}>
             <CustomCardMini
                    title='Nº de actividades'
-                  iconD={<BasicModal setHandleCloseButton={setHandleCloseFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleCloseFunc}/>}/>}
+                  iconD={<BasicModal setHandleCloseButton={setHandleCloseFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleCloseFunc} query={query}/>}/>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}

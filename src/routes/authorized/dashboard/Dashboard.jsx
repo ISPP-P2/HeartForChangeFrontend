@@ -38,7 +38,7 @@ function Dashboard() {
                 iconD={<VolunteerActivismIcon htmlColor='#0055FF'/>}
                 totalNumber="100"/>
             <CustomCardMini 
-                title='Subvenciones último mes'
+                title='Total recaudado  '
                 iconD={<SavingsIcon  htmlColor='#0055FF'/>}
                 totalNumber="100 €"/>
              <CustomCard

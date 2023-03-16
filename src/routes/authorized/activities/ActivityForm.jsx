@@ -98,7 +98,7 @@ const form = [
 
 
 
-function ActivityForm({handleClose}) {
+function ActivityForm({query,handleClose}) {
     const user = useAuthUser();
     const saveActivity = (values) => {
         let parse = "YYYY-MM-DD HH:mm:ss"
@@ -106,7 +106,12 @@ function ActivityForm({handleClose}) {
         const values2 = {...values, date: responseDate}
         saveActivityAPI(user().token, values2).then((response) => {
             handleClose.handleClose();
-        })
+            query.refetch()
+        }).catch(
+            (err) => {
+                setErrorMsg("Ha ocurrido un error")
+            }
+        )
   }
 
   return (

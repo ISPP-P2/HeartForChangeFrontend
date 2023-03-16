@@ -259,11 +259,14 @@ function FormBeneficiaries() {
 
   const user = useAuthUser();
   const navigate = useNavigate();
+  
 
     const saveBeneficiarie = (values) => {
         console.log(values)
-        saveBeneficiariesAPI(user().token, values)
-        navigate("/beneficiarios")
+        saveBeneficiariesAPI(user().token, values).then((res) => {
+          navigate('/beneficiarios')
+        });
+        
         
     }
 

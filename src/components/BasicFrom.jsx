@@ -169,6 +169,11 @@ const CustomInput = (props) => {
             onChange={props.handleChange(`${props.name}`)}
             onBlur={props.handleBlur(`${props.name}`)}
             value={props.values[`${props.name}`]}
+            sx={{
+              "& .css-1onucoh-JoyTextarea-textarea": {
+                WebkitTextFillColor: "#000000",
+              },
+            }}
              />
     
     </FormControl2>
