@@ -36,6 +36,8 @@ function Activities() {
         </Typography>
   }
 
+  console.log(query)
+
   const handleDelete = (id) => {
     deleteActivityAPI(user().token, id).then((res) => {
       location.reload()

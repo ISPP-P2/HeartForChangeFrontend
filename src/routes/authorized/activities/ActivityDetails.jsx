@@ -34,7 +34,6 @@ const form = [
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
-
     }, 
     {
         name: "type",
@@ -164,6 +163,7 @@ const actividadesConBoton = actividades.map((actividad) => {
 function ActivityDetails() {
   const { id } = useParams()
   const user = useAuthUser();
+  const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
   
 
@@ -185,9 +185,6 @@ function ActivityDetails() {
     ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]);
-    
-
-  const mobile = useMediaQuery('(min-width:1200px)');
   
   return (
     <BodyWrapper title={`Detalles de la actividad ${id}`} >
@@ -200,7 +197,7 @@ function ActivityDetails() {
         gridTemplateColumns={mobile ? "1fr 1fr":"1fr"}
         gridTemplateRows={mobile ? "100%":"1fr"}> 
         <BasicFrom 
-        form={parseActividad(query)}
+        form={parseActividad(query.data)}
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         />     

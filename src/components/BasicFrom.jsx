@@ -113,13 +113,15 @@ const CustomInput = (props) => {
   }
   if (props.type === FORM_TYPES.SELECT) {
     return (
-      <Select
+      <TextField
         disabled={props.readOnly}
         value={props.values[`${props.name}`]}
         onChange={(event, value) => {props.setFieldValue(`${props.name}`, value.props.value);}}
         variant="standard"
+
         
         label={props.label}
+        select
       >
         {props.list === null || props.list === undefined ? (
           <MenuItem>Cargando lista</MenuItem>
@@ -132,7 +134,7 @@ const CustomInput = (props) => {
             );
           })
         )}
-      </Select>
+      </TextField>
     );
   }
 
