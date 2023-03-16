@@ -112,6 +112,14 @@ const CustomInput = (props) => {
         InputProps={{
           endAdornment: props.icon,
         }}
+        sx={{
+          "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+          "& .MuiInputLabel-root.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+        }}
       />
     );
   }
@@ -124,6 +132,14 @@ const CustomInput = (props) => {
         variant="standard"
         label={props.label}
         select
+        sx={{
+          "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+          "& .MuiInputLabel-root.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+        }}
       >
         {props.list === null || props.list === undefined ? (
           null
