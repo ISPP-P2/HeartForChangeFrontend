@@ -18,6 +18,7 @@ import { useAuthUser } from 'react-auth-kit';
 import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/beneficiario/api';
 import { useQuery } from 'react-query';
 import { Typography} from '@mui/material';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 
 
@@ -43,6 +44,7 @@ function Beneficiaries() {
 
   console.info(query)
   return (
+    <BodyWrapper title={"Lista de beneficiarios"}>
       <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
             <CustomCardMini 
@@ -52,6 +54,7 @@ function Beneficiaries() {
           </CustomFlex>
           <Listado data={query.data} />
       </CustomFlex>
+    </BodyWrapper>
     );
 }
 
@@ -60,7 +63,6 @@ export default Beneficiaries;
 
 
 const Listado = ({data}) => { 
-
   const user = useAuthUser();
 
   const handleDelete = (id) => {

@@ -151,7 +151,7 @@ const actividades = [
     description: "Hola" 
   }, 
 
-]
+];
 
 const actividadesConBoton = actividades.map((actividad) => {
   return {

@@ -5,6 +5,7 @@ import {
   Select,
   TextareaAutosize,
   TextField,
+  InputLabel,
 } from "@mui/material";
 
 import { Formik } from "formik";
@@ -17,7 +18,10 @@ import {
 } from "./utils/utilsForms";
 import CustomButton from "./CustomButton";
 import { useId } from "react";
-
+import FormControl2 from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import FormHelperText from '@mui/joy/FormHelperText';
+import Textarea from '@mui/joy/Textarea';
 function BasicFrom({
   form = null,
   handleSubmitForm = null,
@@ -118,17 +122,15 @@ const CustomInput = (props) => {
         value={props.values[`${props.name}`]}
         onChange={(event, value) => {props.setFieldValue(`${props.name}`, value.props.value);}}
         variant="standard"
-
-        
         label={props.label}
         select
       >
         {props.list === null || props.list === undefined ? (
-          <MenuItem>Cargando lista</MenuItem>
+          null
         ) : (
-          props.list.map((e) => {
+          props.list.map((e, i) => {
             return (
-              <MenuItem value={e.value}>
+              <MenuItem key={i} value={e.value}>
                 <em>{e.label}</em>
               </MenuItem>
             );
@@ -140,16 +142,20 @@ const CustomInput = (props) => {
 
   if (props.type === FORM_TYPES.TEXTEAREA) {
     return (
-      <TextareaAutosize
-        disabled={props.readOnly}
-        minRows={4}
-        name={props.name}
-        onChange={props.handleChange(`${props.name}`)}
-        onBlur={props.handleBlur(`${props.name}`)}
-        value={props.values[`${props.name}`]}
-        type={props.type}
-        placeholder={props.label}
-      />
+  
+
+      <FormControl2>
+      <FormLabel sx={{color:"grey", fontFamily:"Arial",fontWeight: 400, fontSize: "0.75rem"}}>{props.label}</FormLabel>
+      <Textarea  minRows={2} disabled={props.readOnly}
+    
+
+            name={props.name}
+            onChange={props.handleChange(`${props.name}`)}
+            onBlur={props.handleBlur(`${props.name}`)}
+            value={props.values[`${props.name}`]}
+             />
+    
+    </FormControl2>
     );
   }
 

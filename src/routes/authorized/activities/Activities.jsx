@@ -17,13 +17,14 @@ import ActivityForm from './ActivityForm';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/api';
+import BodyWrapper from '../../../components/BodyWrapper';
 
 
 
 function Activities() {
   const user = useAuthUser();
   const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token));
-
+  const [handleCloseFunc, setHandleCloseFunc] = React.useState(null);
   if(query.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...
@@ -36,11 +37,9 @@ function Activities() {
         </Typography>
   }
 
-  console.log(query)
-
-  const handleDelete = (id) => {
+  const handleDelete = (id, handleCloseFunc) => {
     deleteActivityAPI(user().token, id).then((res) => {
-      location.reload()
+      handleCloseFunc()
     });
 
   }
@@ -55,15 +54,17 @@ function Activities() {
 
   
   return (
+    <BodyWrapper title={"Lista de actividades"}>
     <CustomFlex direction={"column"}>
         <CustomFlex direction={"row"}>
             <CustomCardMini
                    title='Nº de actividades'
-                  iconD={<BasicModal title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm/>}/>}
+                  iconD={<BasicModal setHandleCloseButton={setHandleCloseFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleCloseFunc}/>}/>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
-       {query.data.length ===0 ?<Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
+       {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
       </CustomFlex>
+      </BodyWrapper>
     );
 }
 

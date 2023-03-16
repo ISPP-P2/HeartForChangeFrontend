@@ -26,12 +26,16 @@ const style = (mobile) => {
   }
 };
 
-export default function BasicModal({text,title,body,variant,widthButton,heightButton}) {
+export default function BasicModal({text,title,body,variant,widthButton,heightButton,setHandleCloseButton}) {
   
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
+  React.useEffect(() => {
+    if(setHandleCloseButton===undefined) return;
+    setHandleCloseButton({handleClose})
+  }, [setHandleCloseButton])
 
   const mobile = useMediaQuery('(min-width:600px)')
 
@@ -54,9 +58,9 @@ export default function BasicModal({text,title,body,variant,widthButton,heightBu
             <Typography id="modal-modal-title" variant="h4" component="h2">
               {title}
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Box id="modal-modal-description" sx={{ mt: 2 }}>
               {body}
-            </Typography>
+            </Box>
           </CustomFlex>
          
         </Box>

@@ -2,16 +2,11 @@ import React from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import { FORM_TYPES } from '../../../components/utils/utilsForms'
 import * as Yup from 'yup';
-import TimelapseIcon from '@mui/icons-material/Timelapse';
 import PlaceIcon from '@mui/icons-material/Place';
 import BadgeIcon from '@mui/icons-material/Badge';
-import DescriptionIcon from '@mui/icons-material/Description';
 import CelebrationIcon from '@mui/icons-material/Celebration';
-import GroupIcon from '@mui/icons-material/Group';
-import EventIcon from '@mui/icons-material/Event';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { saveActivityAPI } from '../../../api/actividades/api';
-import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import moment from 'moment/moment';
 
@@ -103,15 +98,14 @@ const form = [
 
 
 
-function ActivityForm() {
-
+function ActivityForm({handleClose}) {
     const user = useAuthUser();
     const saveActivity = (values) => {
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
         const values2 = {...values, date: responseDate}
         saveActivityAPI(user().token, values2).then((response) => {
-            location.reload();
+            handleClose.handleClose();
         })
   }
 
