@@ -10,6 +10,7 @@ import { saveActivityAPI } from '../../../api/actividades/api';
 import { useAuthUser } from 'react-auth-kit';
 import moment from 'moment/moment';
 
+
 const form = [
     {
         name: "name",
