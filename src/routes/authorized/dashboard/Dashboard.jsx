@@ -9,11 +9,6 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SavingsIcon from '@mui/icons-material/Savings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import BasicModal from '../../../components/BasicModal'
-import AcademicExperienceForm from '../volunteers/AcademicExperienceForm';
-import FormBeneficiaries from '../beneficiaries/FormBeneficiaries';
-import WorkExperienceForm from '../volunteers/WorkExperienceForm';
-import ComplementaryFormationForm from '../volunteers/ComplementaryFormationForm';
 import CustomLink from '../../../components/CustomLink';
 import BodyWrapper from '../../../components/BodyWrapper';
 
@@ -59,8 +54,7 @@ function Dashboard() {
                     <CustomButton widthButton='10rem' text={"Crear"}  
                     iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                     variantButton={VARIANTES_BUTTON.GREEN}/>
-                </CustomLink>
-            }/>
+                </CustomLink>}/>
             <CustomCard 
                 title='Registrar un voluntario'
                 iconD={<PeopleOutlineIcon color='disabled'/>}

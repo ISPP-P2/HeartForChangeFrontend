@@ -12,12 +12,16 @@ const SignIn = lazy(() => import('./routes/login/SignIn'))
 function App() {
   return (
       <Routes>
-         <Route  element={<LoadingWrapper />}>
-            <Route path={'*'} element={
-                <CustomSecurePath login={'/login'}>
-                    <Index  />
-                </CustomSecurePath>}/>		
-            <Route path={'/login'} element={<SignIn  />} />
+         <Route element={<LoadingWrapper />}>
+                <Route path={'/ong/*'} element={
+                    <CustomSecurePath login={'/'} authorizedRol={"ONG"} mainPath={"/vol"}>
+                        <Index  />
+                    </CustomSecurePath>}/>		
+                <Route path={'/vol/*'} element={
+                    <CustomSecurePath login={'/'} authorizedRol={"VOLUNTEER"} mainPath={"/ong"}>
+                        <Index  />
+                    </CustomSecurePath>}/>	
+                <Route path={'/'} element={<SignIn  />} />
           </Route>
       </Routes>
   )

@@ -33,12 +33,7 @@ export const TopBar = ({ handleDrawerToggle }) => {
             Bienvenido, {user().username}
           </Typography>
         </div>
-        <Avatar
-          alt="Remy Sharp"
-          src={users[0].avatarImage}
-          sx={{ width: 56, height: 56 }}>
-        
-        </Avatar>
+       
 
       </Toolbar>
 

@@ -1,20 +1,17 @@
 import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard'
 import { CustomList } from '../../../static/activity'
 import CustomCardMini from '../../../components/CustomCardMini';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomFlex from '../../../components/CustomFlex';
 import BasicModal from '../../../components/BasicModal';
-import { Typography, useMediaQuery } from '@mui/material';
+import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import SubventionForm from './SubventionForm';
-import { axiosWithToken } from '../../../api/auth/axios';
 import { useQuery } from 'react-query';
 import { deleteSubvencioAPI, getSubventions } from '../../../api/subvenciones/api';
 import { useAuthUser } from 'react-auth-kit';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useState } from 'react';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import BodyWrapper from '../../../components/BodyWrapper';
 
@@ -22,6 +19,7 @@ import BodyWrapper from '../../../components/BodyWrapper';
 function Subventions() {
 
   const user = useAuthUser();
+
   const query = useQuery(["QUERY_SUBVENTIONS"],() => getSubventions(user().token));
   
   console.log(query)

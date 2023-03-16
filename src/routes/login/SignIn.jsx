@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import CustomButton, { VARIANTES_BUTTON } from '../../components/CustomButton';
 import { parseTokens } from '../../api/auth/tokenUtils';
-import { useIsAuthenticated, useSignIn } from 'react-auth-kit';
+import { useAuthUser, useIsAuthenticated, useSignIn } from 'react-auth-kit';
 import axios from '../../api/auth/axios';
 import { CustomNotistackContext } from '../../context/CustomNotistack';
 import { useContext, useEffect, useState } from 'react';
@@ -35,19 +35,21 @@ export default function SignIn() {
   });
   const isLogged = useIsAuthenticated()
   const [isLoading, setIsLoading] = useState(true)
-
+  const auth = useAuthUser()
   const navigate = useNavigate()
   
   const SignIn = useSignIn()
   const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
 
-
   useEffect(() => {
-    if(isLogged()){
-      setIsLoading(false)
-      navigate("/")
-  }
-  setIsLoading(false)
+    if(isLogged() ){
+      if(auth().rol == "ONG"){
+        navigate("/ong")
+      }else{
+        navigate("/vol")
+      }
+    }
+    setIsLoading(false)
   }, [isLogged, navigate])
 
 
@@ -70,7 +72,6 @@ export default function SignIn() {
       password: credentials.password
     }).then((response) => {
       const tokens = parseTokens(response)
-      console.log(response)
       if(SignIn(
         {
             token: tokens.token,
@@ -81,8 +82,12 @@ export default function SignIn() {
             refreshTokenExpireIn: tokens.refreshTokenExpireIn   
         }
       )){
+          if(tokens.authState.rol == "ONG"){
+            navigate("/ong")
+          }else{
+            navigate("/vol")
+          }
           setSuccessMsg("Sesion iniciada");
-          navigate('/');
       }else {
           setErrorMsg("Error al iniciar sesión");
       }

@@ -19,7 +19,7 @@ export const CustomSignOut = () => {
         }
           }} disablePadding>
           <ListItemButton onClick={()=> {
-                navigate("/login")
+                navigate("/")
                 signOut()
             }}>
               <ListItemIcon sx={{

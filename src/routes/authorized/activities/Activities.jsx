@@ -1,13 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomCardMini from '../../../components/CustomCardMini';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomLink from '../../../components/CustomLink';
 import BasicModal from '../../../components/BasicModal';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';

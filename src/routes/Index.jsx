@@ -3,10 +3,12 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import { TopBar } from '../components/TopBar';
-import Sidebar from '../components/Sidebar';
+import Sidebar, { SidebarVoluntario } from '../components/Sidebar';
 import AutorizedRoutes from './authorized/AuthorizedRoutes';
 import LogoNavBar from '../components/LogoNavBar';
 import { CustomSignOut }  from './login/CustomSignOut';
+import IndexRoutes from './authorizedVolunteer/IndexRoutes';
+import { useAuthUser } from 'react-auth-kit';
 
 const drawerWidth = 200;
 
@@ -14,7 +16,7 @@ const drawerWidth = 200;
 
 export default function Index({ window } ) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const auth = useAuthUser()
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -26,7 +28,7 @@ export default function Index({ window } ) {
   const drawer = (
     <div>
       <Toolbar />
-      <Sidebar handleClose={handleClose}/>
+      {auth().rol === "ONG" ? <Sidebar handleClose={handleClose}/> : <SidebarVoluntario handleClose={handleClose}/> }
     </div>
   );
 
@@ -79,7 +81,7 @@ export default function Index({ window } ) {
       </Box>
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
         <Toolbar />
-        <AutorizedRoutes />
+        {auth().rol === "ONG" ?  <AutorizedRoutes /> : <IndexRoutes/>}
       </Box>
     </Box>
     

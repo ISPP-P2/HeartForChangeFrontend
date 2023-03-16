@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
@@ -51,8 +50,6 @@ const participants = [
       description: "Hola" 
     },     
 ]
-
-
 
 function AssignParticipants() {
   const {id} = useParams("id");

@@ -1,14 +1,9 @@
 import * as React from 'react';
-import { Avatar, Grid, Paper, useMediaQuery } from '@mui/material';
-import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import FormBeneficiaries from './FormBeneficiaries';
 import { Box } from '@mui/system';
 import CustomCardMini from '../../../components/CustomCardMini';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomLink from '../../../components/CustomLink';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';

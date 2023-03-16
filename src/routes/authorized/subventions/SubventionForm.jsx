@@ -2,18 +2,11 @@ import React, { useContext } from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import { FORM_TYPES } from '../../../components/utils/utilsForms'
 import * as Yup from 'yup';
-import SchoolIcon from '@mui/icons-material/School';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import FilterFramesIcon from '@mui/icons-material/FilterFrames';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import SubjectIcon from '@mui/icons-material/Subject';
-import { Co2Sharp } from '@mui/icons-material';
-import { axiosWithToken } from '../../../api/auth/axios';
 import { useAuthUser } from 'react-auth-kit';
-import { getSubventions, saveSubventionAPI } from '../../../api/subvenciones/api';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { saveSubventionAPI } from '../../../api/subvenciones/api';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 const form = [
     {

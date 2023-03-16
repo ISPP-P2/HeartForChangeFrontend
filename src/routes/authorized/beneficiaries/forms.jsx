@@ -297,7 +297,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "perceptionAid",
     type: FORM_TYPES.TEXT,
-    label: "perceptionAid",
+    label: "Ayuda percibi",
     value: "perceptionAid"
   },
   {
@@ -323,7 +323,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "computerKnowledge",
     type: FORM_TYPES.SELECT,
-    label: "Trabajando",
+    label: "Conocimiento informático",
     list: [
       { label: "Si", value: true },
       { label: "No", value: false },

@@ -16,7 +16,6 @@ import LoadingWrapper from "../../components/LoadingWrapper";
 const Subventions = lazy(() => import('./subventions/Subventions'))
 
 
-
 export default function AutorizedRoutes() {
   return (
     <Routes element={<LoadingWrapper />}>
@@ -47,8 +46,7 @@ export default function AutorizedRoutes() {
         <Route path={"añadir"} element={<FormBeneficiaries />} />
       </Route>
       <Route path={"/subvenciones"} element={<Subventions />} />
-    <Route path={'/actividadVol'} element={<ActivityVolunteerDetails  />}/>
-    
+   
     </Routes>
     
   );

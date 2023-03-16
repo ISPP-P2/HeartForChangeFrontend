@@ -16,8 +16,10 @@ const style = (mobile) => {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
+  border: "none",
   p: 4,
-  paddingTop: "0",
+  borderRadius: "1rem",
+  paddingTop: "0",  
   width: mobile ? "max-content" : "80vw",
   height:"max-content",
   maxHeight: "80vh",
@@ -49,13 +51,13 @@ export default function BasicModal({text,title,body,variant,widthButton,heightBu
         aria-describedby="modal-modal-description"
       >
         <Box sx={style(mobile)}  >
-          <CustomFlex  margin='1rem' direction={"column"}>
+          <CustomFlex margin='1rem' direction={"column"}>
             {mobile ? null : <Box display={"flex"} justifyContent={'end'}>
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>
             </Box>}
-            <Typography id="modal-modal-title" variant="h4" component="h2">
+            <Typography id="modal-modal-title" variant="h4" sx={{padding:"1rem"}} component="h2">
               {title}
             </Typography>
             <Box id="modal-modal-description" sx={{ mt: 2 }}>

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useIsAuthenticated } from 'react-auth-kit'
+import { useAuthUser, useIsAuthenticated } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom'
 
-function CustomSecurePath({children, login}) {
+function CustomSecurePath({children, login, authorizedRol, mainPath}) {
 
     const navigate = useNavigate()
     const isLogged = useIsAuthenticated()
-
+    const auth = useAuthUser()
     const [isLoading, setIsLoading] = useState(true)
-     
     useEffect(() => {
         if(!isLogged()){
             setIsLoading(false)
             navigate(login)
+        }else{
+            if(auth().rol !== authorizedRol){
+                navigate(mainPath)
+            }
+            setIsLoading(false)
         }
         setIsLoading(false)
     }, [isLogged, navigate, login])
