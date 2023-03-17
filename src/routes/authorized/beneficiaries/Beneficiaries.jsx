@@ -106,6 +106,7 @@ const ParseBenficiario = (data, handleDelete) => {
   return data.map((beneficiarie) => {
     return {
       ...beneficiarie,
+      gender: beneficiarie.gender === "MALE" ? "Hombre" : "Mujer",
       button: <ToolList beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
     };
   });

@@ -37,8 +37,8 @@ const Listado = ({data}) => {
 
   const VolunteersList = new CustomList(VoluntarioParser(data, handleDelete))
   let objetoTabla = VolunteersList.parseToTable(
-    ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Rol","Herramientas"], 
-    ["username", "name", "firstSurname","secondSurname", "email","gender","rolAccount", "button"],
+    ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Herramientas"], 
+    ["username", "name", "firstSurname","secondSurname", "gender","email", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
   )
@@ -96,10 +96,7 @@ const ToolList = ({usuario, handleDelete, id}) => {
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
-        
-        />
-        
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 
@@ -122,8 +119,10 @@ const RolAccountParser = (rolAccount) => {
 
 const VoluntarioParser = (data, handleDelete) => {
   return data.map((usuario) => {
+    console.log(usuario)
     return {
       ...usuario,
+      gender: usuario.gender === "MALE" ? "Hombre" : "Mujer",
       rolAccount: RolAccountParser(usuario.rolAccount),
       button:<ToolList usuario={usuario} handleDelete={handleDelete} id={usuario.id}/>,
     };

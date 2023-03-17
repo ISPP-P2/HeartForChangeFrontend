@@ -11,6 +11,5 @@ export const saveSubventionAPI = async (token, values) => {
 
 export const deleteSubvencioAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).post(`/api/grants/delete/${id}`)
-    console.log(data)
     return data
 }

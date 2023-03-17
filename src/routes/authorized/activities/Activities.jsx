@@ -43,8 +43,8 @@ function Activities() {
   
   const ActivityList = new CustomList(ParseActivity(query.data, handleDelete));
   let objetoTabla = ActivityList.parseToTable(
-    ["Nombre de actividad", "Tipo","Lugar","Coordinador","Fecha","Ver detalles"],
-    ["name", "type", "place","date","coordinator", "button"],
+    ["Nombre de actividad","Lugar","Coordinador","Fecha","Ver detalles"],
+    ["name", "place","date","coordinator", "button"],
     ["Observaciones"],
     ["observations"]   
     )
