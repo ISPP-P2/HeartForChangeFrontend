@@ -66,7 +66,7 @@ function AssignParticipants() {
     <BodyWrapper title={`Asignar voluntarios a la actividad ${id}`}>
       <CustomFlex direction={"column"}>
         <CustomFlex direction={"row"}> 
-            <CustomLink to={`/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></CustomLink>
+            <CustomLink to={`/ong/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></CustomLink>
         </CustomFlex>
           <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>

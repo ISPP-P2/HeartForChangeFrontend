@@ -215,7 +215,7 @@ function ActivityDetails() {
                   <CustomCard
                   title='Añadir'
                   iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<CustomLink to={`/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
+                  buttonSidebar={<CustomLink to={`/ong/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.GREEN}/> </CustomLink>}/>  
                 <CustomCard

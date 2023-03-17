@@ -44,7 +44,7 @@ function Beneficiaries() {
           <CustomFlex direction={"row"}>
             <CustomCardMini 
                   title='Nº de beneficiarios'
-                  iconD={<CustomLink to="/beneficiario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
+                  iconD={<CustomLink to="/ong/beneficiario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
           <Listado data={query.data} />
@@ -92,7 +92,7 @@ const Listado = ({data}) => {
 const ToolList = ({beneficiarie, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink to={`/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
+      <CustomLink to={`/ong/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El Beneficiario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />

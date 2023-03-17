@@ -71,7 +71,7 @@ export default Activities;
 const ToolList = ({actividad, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink  to={`/actividad/${id}`}>
+      <CustomLink  to={`/ong/actividad/${id}`}>
         <SearchIcon />
       </CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>

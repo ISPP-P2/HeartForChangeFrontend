@@ -40,7 +40,7 @@ function Dashboard() {
                 title='Registrar un beneficiario'
                 iconD={<PeopleOutlineIcon color='disabled' />}
                 buttonSidebar={
-                <CustomLink to={'beneficiario/añadir'}>
+                <CustomLink to={'/ong/beneficiario/añadir'}>
                 <CustomButton widthButton='10rem' text={"Registar"}  
                 iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                 variantButton={VARIANTES_BUTTON.GREEN}/>
@@ -50,7 +50,7 @@ function Dashboard() {
                 title='Crear una actividad'
                 iconD={<PeopleOutlineIcon color='disabled' />}
                 buttonSidebar={
-                <CustomLink to={"/actividades"}>
+                <CustomLink to={"/ong/actividades"}>
                     <CustomButton widthButton='10rem' text={"Crear"}  
                     iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                     variantButton={VARIANTES_BUTTON.GREEN}/>
@@ -59,7 +59,7 @@ function Dashboard() {
                 title='Registrar un voluntario'
                 iconD={<PeopleOutlineIcon color='disabled'/>}
                 buttonSidebar={
-                <CustomLink to={"voluntario/añadir"}>
+                <CustomLink to={"/ong/voluntario/añadir"}>
                     <CustomButton widthButton='10rem' text={"Registrar"}  
                     iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                     variantButton={VARIANTES_BUTTON.GREEN}/>
@@ -68,7 +68,7 @@ function Dashboard() {
                 title='Registrar una subvención'
                 iconD={<PeopleOutlineIcon color='disabled' />}
                 buttonSidebar={
-                <CustomLink to={'subvenciones'}>
+                <CustomLink to={'/ong/subvenciones'}>
                     <CustomButton widthButton='10rem' text={"Registrar"}  
                     iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                     variantButton={VARIANTES_BUTTON.GREEN}/>
