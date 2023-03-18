@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { useLocation } from "react-router-dom";
-import { getVolunteerAPI } from '../../../api/voluntarios/api';
+import { getVolunteerAPI,getAcademicExpByUsernameAPI } from '../../../api/voluntarios/api';
 import { useParams } from 'react-router-dom';
 
 
@@ -173,7 +173,11 @@ const VolunteerDetailsParser = (voluntario) => {
     return { ...item, value: voluntario[item.name] };
   });
 }
-
+const AcademicExpParser = (academicExp) => {
+  return AcademicExperienceForm.map((item) => {
+    return { ...item, value: academicExp[item.name] };
+  });
+}
 const extraForm = (title, variable,voluntario) => [
   {
     name: "academicExperience",
@@ -187,7 +191,12 @@ function VolunteerDetails({ match }) {
   const mobile = useMediaQuery("(min-width: 850px)");
   const { id } = useParams();
   const user = useAuthUser();
+
   const voluntario = useQuery(["QUERY_VOLUNTEER", id],() => getVolunteerAPI(user().token,id));
+
+  academicExp = useQuery(["QUERY_VOLUNTEER", id],() => getAcademicExpByUsernameAPI(user().token,id));
+ 
+
   if(voluntario.isLoading){
     return <Typography variant="h4" component="div" gutterBottom>
             Cargando...
@@ -199,7 +208,11 @@ function VolunteerDetails({ match }) {
            {query.error}
         </Typography>
   }
-  
+
+
+ 
+
+
   
 
   return (
@@ -234,7 +247,7 @@ function VolunteerDetails({ match }) {
                       variant={VARIANTES_BUTTON.ORANGE}
                       text={"Experiencia Académica"}
                       title={"Experiencia Académica"}
-                      body={<BasicFrom form={extraForm("Experiencia Académica", "academicExperience",voluntario)} readOnly={true} />}
+                      body={<BasicFrom form={AcademicExpParser(academicExp.data)} readOnly={true} />}
                     />
                   </Box>
                   <BasicModal
@@ -242,7 +255,7 @@ function VolunteerDetails({ match }) {
 
                     text={<AddIcon />}
                     title={"Experiencia Académica"}
-                    body={<AcademicExperienceForm />}
+                    body={<AcademicExperienceForm id={id} />}
                   />
                   
                 </CustomFlex>

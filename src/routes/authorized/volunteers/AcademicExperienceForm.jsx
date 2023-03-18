@@ -7,6 +7,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 
 
+
 const form = [
     {
         name: "speciality",
@@ -37,11 +38,15 @@ const form = [
 
     {
         name: "satisfaction",
-        type: FORM_TYPES.TEXTEAREA,
+        type: FORM_TYPES.SELECT,
         label: "Satisfacción",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacio"),
+        list: [
+            { label: "1", value: 1 },
+            { label: "2", value: 2 },
+            { label: "3", value: 3 },
+            { label: "4", value: 4 },
+            { label: "5", value: 5 },
+          ],
                        
         
     }
@@ -50,15 +55,21 @@ const form = [
 
 
 
-function AcademicExperienceForm() {
+function AcademicExperienceForm(id) {
 
-    
+    const saveAcademicExperience = (values) => {
+        console.log(values)
+        console.log(id)
+        saveAcademicExpAPI(user().token, values,  id)
+      
+       
+    }
 
   return (
         <BasicFrom 
         form={form} 
         buttonText={"añadir"}
-        handleSubmitForm={(values) => console.log(values)}
+        handleSubmitForm={saveAcademicExperience}
     />
   )
 }

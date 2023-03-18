@@ -18,3 +18,13 @@ export const getVolunteerAPI = async (token,id) => {
     const {data} =  await axiosWithToken(token).get(`/api/volunteers/${id}`)
     return data
 }
+
+export const saveAcademicExpAPI = async (token, values,id) => {
+    const {data} =  await axiosWithToken(token).post(`/api/academicExps/save/${id}`, values)
+    return data
+}
+export const getAcademicExpByUsernameAPI = async (token,id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/academicExps/get/volunteer/${id}`)
+    return data
+}
+
