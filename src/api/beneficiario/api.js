@@ -10,6 +10,11 @@ export const saveBeneficiariesAPI = async (token, values) => {
     return data
 }
 
+export const updateBeneficiariesAPI = async (token, values, id) => {
+    const {data} =  await axiosWithToken(token).put(`/api/beneficiaries/update/${id}`, values)
+    return data
+}
+
 export const deleteBeneficiariesAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).post(`/api/beneficiaries/delete/${id}`)
     return data
