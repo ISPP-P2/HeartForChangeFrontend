@@ -74,7 +74,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "cif",
     type: FORM_TYPES.TEXT,
-    label: "Documento de Identificación",
+    label: "Código de identificación fiscal",
     value: "cif"
   },
   {
@@ -95,17 +95,7 @@ export let beneficiarioBasicFormValue = [
     label: "Nombre de usuario",
     value: "username"
   },
-  {
-    name: "rolAccount",
-    type: FORM_TYPES.SELECT,
-    label: "Rol",
-    list: [
-      { label: "ONG", value: "ONG" },
-      { label: "Voluntario", value: "VOLUNTEER" },
-      { label: "Beneficiario", value: "BENEFICIARY" },
-    ],
-    value: "rolAccount"
-  },
+
   {
     name: "address",
     type: FORM_TYPES.TEXT,
@@ -157,7 +147,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "entryDate",
     type: FORM_TYPES.ONLYDATE,
-    label: "Fecha de Inicio",
+    label: "Fecha de entrada",
     value: "entryDate"
   },
   {
@@ -191,7 +181,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
-    label: "Fecha de Finalización",
+    label: "Fecha de salida",
     value: "leavingDate"
   },
   {
@@ -297,7 +287,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "perceptionAid",
     type: FORM_TYPES.TEXT,
-    label: "Ayuda percibi",
+    label: "Ayuda percibida",
     value: "perceptionAid"
   },
   {
