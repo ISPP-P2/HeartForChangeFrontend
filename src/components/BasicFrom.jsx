@@ -81,7 +81,7 @@ function BasicFrom({
               </FormControl>
             ))}
             {buttonText === null ?  null : 
-            <Box gridColumn={"-2/-1"}>
+            <Box gridColumn={"-2/-1"} display={"flex"} alignItems={"flex-end"} justifyContent={"center"}>
                 <CustomButton 
                 onClick={handleSubmit} 
                 text={buttonText} 
