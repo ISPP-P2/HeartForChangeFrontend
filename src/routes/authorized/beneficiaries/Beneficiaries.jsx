@@ -78,8 +78,8 @@ const Listado = ({data}) => {
   let objetoTabla = BeneficiarieList.parseToTable(
     ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
     ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
-    ["Fecha de nacimiento","Trabaja","correo","Dirección"],
-    ["birthday","working","email","address"]
+    ["Fecha de nacimiento","correo","Dirección"],
+    ["birthday","email","address"]
     )
     return (
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
