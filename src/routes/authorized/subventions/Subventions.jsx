@@ -86,7 +86,7 @@ const Listado = ({query}) => {
   let objetoTabla = SubventionList.parseToTable(
     ["Nombre", "Gubernamental","Estado","Privada/Pública","Eliminar"], 
     ["justification", "gubernamental", "state","privateGrant","button"],
-    ["Cantidad"],
+    ["Cantidad (€)"],
     ["amount"]
     )
 

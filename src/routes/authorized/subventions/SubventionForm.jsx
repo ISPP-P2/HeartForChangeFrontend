@@ -76,9 +76,10 @@ const form = [
     },
     {
         name: "amount",
-        type: FORM_TYPES.TEXT,
-        label: "Cantidad",
-        validation: Yup.number("Deber ser un numero"),
+        type: FORM_TYPES.NUMBER,
+        label: "Cantidad(€)",
+        validation: Yup.number().moreThan(0).positive("La cantidad debe ser mayor que cero").required("Este campo es requerido"),
+
                       
         icon: <SubjectIcon />,
     }
