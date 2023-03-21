@@ -17,6 +17,7 @@ import { Typography} from '@mui/material';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 
 
@@ -60,12 +61,15 @@ export default Beneficiaries;
 
 const Listado = ({data}) => { 
   const user = useAuthUser();
-
-  const handleDelete = (id) => {
-    deleteBeneficiariesAPI(user().token, id).then((res) => {
-      location.reload()
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const handleDelete = (id, handleClose) => {
+    deleteBeneficiariesAPI(user().token, id).then(() => {
+      handleClose.handleClose()
+      query.refetch()
+      setSuccessMsg("Subvención eliminada correctamente")
+    }).catch((err) => {
+      setErrorMsg("Error al eliminar la subvención")
     })
-
   }
 
   if(data.length === 0){
@@ -91,12 +95,15 @@ const Listado = ({data}) => {
 
 
 const ToolList = ({beneficiarie, handleDelete, id}) => {
+
+  const [handleCloseFunc, setHandleCloseFunc] = React.useState({});
+
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink to={`/ong/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
-      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+      <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El Beneficiario se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleDelete)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )

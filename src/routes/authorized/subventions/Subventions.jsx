@@ -21,14 +21,21 @@ import CustomError from '../../../components/CustomError';
 function Subventions() {
 
   const user = useAuthUser();
+  const [handleDelete, setHandleDelete] = useState({});
 
   const query = useQuery(["QUERY_SUBVENTIONS"],() => getSubventions(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
   
+  if(query.isLoading){
+    return <CustomReloading />
+  }
 
-  const [handleDelete, setHandleDelete] = useState({});
+  if(query.isError){
+    return <CustomError onClick={()=> query.refetch()}/>
+  }
+
 
   return (
     <BodyWrapper title={"Lista de subvenciones"}>
@@ -37,7 +44,7 @@ function Subventions() {
               <CustomCardMini
                     title='Nº de subvenciones'
                     iconD={<BasicModal setHandleCloseButton={setHandleDelete}  title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm  handleClose={handleDelete} query={query} />}/>}
-                    totalNumber={query.isSuccess ? query.data.length : 0}/>
+                    totalNumber={query.isError ? 0 : query.data.length}/>
           </CustomFlex>
         <Listado query={query} />
     </CustomFlex>
@@ -52,14 +59,7 @@ const Listado = ({query}) => {
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
-  if(query.isLoading){
-    return <CustomReloading />
-  }
-
-  if(query.isError){
-    return <CustomError onClick={()=> query.refetch()}/>
-  }
-
+ 
   const handleDelete = (id, handleClose) => {
     deleteSubvencioAPI(user().token, id).then(() => {
       handleClose.handleClose()

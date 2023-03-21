@@ -24,6 +24,8 @@ import * as Yup from 'yup';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { getActivityAPI } from "../../../api/actividades/api";
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 const form = [
     {
@@ -168,16 +170,13 @@ function ActivityDetails() {
   
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
+
 
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(

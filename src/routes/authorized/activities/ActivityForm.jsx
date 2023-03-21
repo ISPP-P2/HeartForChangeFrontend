@@ -21,24 +21,6 @@ const form = [
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
 
-    }, 
-    {
-        name: "type",
-        type: FORM_TYPES.SELECT,
-        label: "Tipo",
-        list: [
-            {
-                label: "Curso",
-                value: "CURSO"
-            }, {
-                label: "Actividad",
-                value: "ACTIVIDAD"
-            }, {
-                label: "Taller",
-                value: "TALLER"
-            },
-        ],
-        icon: <CelebrationIcon />,
     },
 
     {
@@ -103,7 +85,7 @@ function ActivityForm({query,handleClose}) {
     const saveActivity = (values) => {
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
-        const values2 = {...values, date: responseDate}
+        const values2 = {...values, date: responseDate, type: "ACTIVIDAD"}
         saveActivityAPI(user().token, values2).then((response) => {
             handleClose.handleClose();
             query.refetch()
@@ -113,7 +95,6 @@ function ActivityForm({query,handleClose}) {
             }
         )
   }
-
   return (
         <BasicFrom 
         form={form}

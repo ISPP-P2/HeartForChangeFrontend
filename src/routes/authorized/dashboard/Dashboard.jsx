@@ -36,7 +36,7 @@ function Dashboard() {
         retry: 2,
         refetchOnWindowFocus: false,
         });
-    const querySubventionsTotal = useQuery(["QUERY_SUBVENTIONS_TOTAL_NUM"],() => getTOTALSubventionAPI(user().token, user().id),{
+    const querySubventionsTotal = useQuery(["QUERY_SUBVENTIONS_TOTAL_NUM"],() => getTOTALSubventionAPI(user().token),{
         retry: 2,
         refetchOnWindowFocus: false,
         });

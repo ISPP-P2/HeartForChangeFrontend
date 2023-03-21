@@ -1,7 +1,7 @@
 import { axiosWithToken } from "../auth/axios"
 
 export const getActivitiesAPI = async (token) => {
-    const {data} =  await axiosWithToken(token).get("/api/tasks")
+    const {data} =  await axiosWithToken(token).get("/api/tasks/ong/get")
     return data
 }
 export const saveActivityAPI = async (token, values) => {
@@ -15,7 +15,7 @@ export const deleteActivityAPI = async (token, id) => {
 }
 
 export const getActivityAPI = async (token, id) => {
-    const {data} =  await axiosWithToken(token).get(`/api/tasks/${id}`)
+    const {data} =  await axiosWithToken(token).get(`/api/tasks/get/${id}`)
     return data
 }
 

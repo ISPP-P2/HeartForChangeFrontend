@@ -22,6 +22,8 @@ import { getBeneficiarieAPI } from "../../../api/beneficiario/api";
 import { useParams } from "react-router-dom";
 import { useState } from 'react'
 import { updateBeneficiariesAPI } from '../../../api/beneficiario/api';
+import CustomReloading from "../../../components/CustomReloading";
+import CustomError from "../../../components/CustomError";
 
 
 
@@ -51,16 +53,11 @@ function BeneficiariesDetails() {
   const mobile = useMediaQuery("(min-width: 850px)");
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
 
   const updateBeneficiarie = (values) => {

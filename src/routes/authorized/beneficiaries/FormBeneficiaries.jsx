@@ -209,16 +209,6 @@ const form = [
     label: "Ayuda percibida",
   },
   {
-    name: "rolAccount",
-    type: FORM_TYPES.SELECT,
-    label: "Rol",
-    list: [
-      { label: "ONG", value: "ONG" },
-      { label: "Voluntario", value: "VOLUNTEER" },
-      { label: "Beneficiario", value: "BENEFICIARY" },
-    ],
-  },
-  {
     name: "savingsPossesion",
     type: FORM_TYPES.SELECT,
     label: "Posesión de ahorro",
