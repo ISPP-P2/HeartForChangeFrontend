@@ -14,19 +14,22 @@ import { useAuthUser } from 'react-auth-kit';
 import { useContext, useState } from 'react';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import BodyWrapper from '../../../components/BodyWrapper';
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 
 function Subventions() {
 
   const user = useAuthUser();
 
-  const query = useQuery(["QUERY_SUBVENTIONS"],() => getSubventions(user().token));
+  const query = useQuery(["QUERY_SUBVENTIONS"],() => getSubventions(user().token),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
   
-  console.log(query)
-
 
   const [handleDelete, setHandleDelete] = useState({});
-  console.log(handleDelete)
+
   return (
     <BodyWrapper title={"Lista de subvenciones"}>
     <CustomFlex direction={"column"}>
@@ -49,6 +52,13 @@ const Listado = ({query}) => {
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
+  if(query.isLoading){
+    return <CustomReloading />
+  }
+
+  if(query.isError){
+    return <CustomError onClick={()=> query.refetch()}/>
+  }
 
   const handleDelete = (id, handleClose) => {
     deleteSubvencioAPI(user().token, id).then(() => {
@@ -61,17 +71,7 @@ const Listado = ({query}) => {
   }
 
 
-  if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
-  }
-
-  if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
-  }
+  
 
   if(query.data.length === 0){
     return <Typography variant="h4" component="div" gutterBottom>

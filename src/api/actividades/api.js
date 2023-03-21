@@ -18,3 +18,8 @@ export const getActivityAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).get(`/api/tasks/${id}`)
     return data
 }
+
+export const getTotalActivitiesAPI = async (token) => {
+    const {data} =  await axiosWithToken(token).get(`/api/tasks/count`)
+    return data
+}

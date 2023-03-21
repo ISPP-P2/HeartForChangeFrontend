@@ -15,23 +15,24 @@ import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/api';
 import BodyWrapper from '../../../components/BodyWrapper';
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 
 
 function Activities() {
   const user = useAuthUser();
-  const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token));
+  const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
   const [handleCloseFunc, setHandleCloseFunc] = React.useState(null);
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
 
   const handleDelete = (id, handleCloseFunc) => {

@@ -13,3 +13,7 @@ export const deleteSubvencioAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).post(`/api/grants/delete/${id}`)
     return data
 }
+export const getTOTALSubventionAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/grants/${id}/amount`)
+    return data
+}

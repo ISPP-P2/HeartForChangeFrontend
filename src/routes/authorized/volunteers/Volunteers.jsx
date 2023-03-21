@@ -18,6 +18,8 @@ import { useQuery } from 'react-query';
 import { Typography, useMediaQuery } from '@mui/material';
 import { deleteVolunteerAPI, getVolunteersAPI } from '../../../api/voluntarios/api';
 import BodyWrapper from '../../../components/BodyWrapper';
+import CustomError from '../../../components/CustomError';
+import CustomReloading from '../../../components/CustomReloading';
 
 const Listado = ({data}) => {
 
@@ -53,19 +55,18 @@ const Listado = ({data}) => {
 function Volunteers() {
 
   const user = useAuthUser();
-  const query = useQuery(["QUERY_VOLUNTEERS"],() => getVolunteersAPI(user().token));
+  const query = useQuery(["QUERY_VOLUNTEERS"],() => getVolunteersAPI(user().token),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
   
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
   
   return (

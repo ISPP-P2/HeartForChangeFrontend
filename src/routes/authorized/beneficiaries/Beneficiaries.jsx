@@ -3,6 +3,7 @@ import BasicTable from '../../../components/BasicTable';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
 import { Box } from '@mui/system';
+import CircularProgress from '@mui/material/CircularProgress';
 import CustomCardMini from '../../../components/CustomCardMini';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomLink from '../../../components/CustomLink';
@@ -14,6 +15,8 @@ import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/benefi
 import { useQuery } from 'react-query';
 import { Typography} from '@mui/material';
 import BodyWrapper from '../../../components/BodyWrapper';
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 
 
@@ -23,21 +26,19 @@ import BodyWrapper from '../../../components/BodyWrapper';
 function Beneficiaries() {
 
   const user = useAuthUser();
-  const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token));
+  const query = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
 
-  console.info(query)
   return (
     <BodyWrapper title={"Lista de beneficiarios"}>
       <CustomFlex direction={"column"}>

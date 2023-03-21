@@ -1,4 +1,4 @@
-import { Grid, useMediaQuery } from '@mui/material';
+import { CircularProgress, Grid, useMediaQuery } from '@mui/material';
 import React from 'react';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import CustomCard from '../../../components/CustomCard';
@@ -11,11 +11,38 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomLink from '../../../components/CustomLink';
 import BodyWrapper from '../../../components/BodyWrapper';
+import { useAuthUser } from 'react-auth-kit';
+import { getTotalActivitiesAPI } from '../../../api/actividades/api';
+import { getTotalVolunteersAPI } from '../../../api/voluntarios/api';
+import { getTotalBeneficiariesAPI } from '../../../api/beneficiario/api';
+import { useQuery } from 'react-query';
+import { getTOTALSubventionAPI } from '../../../api/subvenciones/api';
 
 function Dashboard() {
     
+    const user = useAuthUser();
+
     const mobile = useMediaQuery('(min-width:600px)')
    
+    const queryBeneficiariesTotal = useQuery(["QUERY_BENEFICIARIES_TOTAL_NUM"],() => getTotalBeneficiariesAPI(user().token),{
+        retry: 2,
+        refetchOnWindowFocus: false,
+        });
+    const queryTaskTotal = useQuery(["QUERY_TASK_TOTAL_NUM"],() => getTotalActivitiesAPI(user().token),{
+        retry: 2,
+        refetchOnWindowFocus: false,
+        });
+    const queryVolunteersTotal = useQuery(["QUERY_VOLUNTEERS_TOTAL_NUM"],() => getTotalVolunteersAPI(user().token),{
+        retry: 2,
+        refetchOnWindowFocus: false,
+        });
+    const querySubventionsTotal = useQuery(["QUERY_SUBVENTIONS_TOTAL_NUM"],() => getTOTALSubventionAPI(user().token, user().id),{
+        retry: 2,
+        refetchOnWindowFocus: false,
+        });
+    
+                    
+
 
     return (
         <BodyWrapper title={"Panel de control (Beta)"}>
@@ -23,19 +50,19 @@ function Dashboard() {
             <CustomCardMini 
                 title='Beneficiarios registrados'
                 iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
-                totalNumber="100"/>
+                totalNumber={!queryBeneficiariesTotal.isError && !queryBeneficiariesTotal.isLoading ? queryBeneficiariesTotal.data : <CircularProgress />}/>
             <CustomCardMini 
                 title='Actividades'
                 iconD={<AssignmentIcon htmlColor='#0055FF'/>}
-                totalNumber="100"/>
+                totalNumber={!queryTaskTotal.isError && !queryTaskTotal.isLoading ? queryTaskTotal.data : <CircularProgress />}/>
             <CustomCardMini 
                 title='Voluntarios'
                 iconD={<VolunteerActivismIcon htmlColor='#0055FF'/>}
-                totalNumber="100"/>
+                totalNumber={!queryVolunteersTotal.isError && !queryVolunteersTotal.isLoading ? queryVolunteersTotal.data : <CircularProgress />}/>
             <CustomCardMini 
-                title='Total recaudado  '
+                title='Total recaudado'
                 iconD={<SavingsIcon  htmlColor='#0055FF'/>}
-                totalNumber="100 €"/>
+                totalNumber={!querySubventionsTotal.isError && !querySubventionsTotal.isLoading ? querySubventionsTotal.data + "€" : <CircularProgress />}/>
              <CustomCard
                 title='Registrar un beneficiario'
                 iconD={<PeopleOutlineIcon color='disabled' />}
