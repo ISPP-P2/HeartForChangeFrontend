@@ -8,7 +8,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
-import { useState } from 'react';
 import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import CustomLink from '../../../components/CustomLink';
@@ -110,7 +109,6 @@ function ActivityVolunteerDetails() {
   return (
   
   <BodyWrapper title={"Actividad: Parque de la Fuensanta"}>
-    
     <CustomFlex direction={"column"}>
     <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
       <CustomFlex direction={"column"}>

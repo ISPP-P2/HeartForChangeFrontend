@@ -15,6 +15,8 @@ function CustomCardMini({
       width: "20em",
       height: "min-content",
       filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.3))",
+     
+    
     }}>
       <Box sx={{ 
         padding: "0.75rem",

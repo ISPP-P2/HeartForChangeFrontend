@@ -15,7 +15,7 @@ const form = [
   {
     name: "cif",
     type: FORM_TYPES.TEXT,
-    label: "Documento de Identificación",
+    label: "Código de identificación fiscal",
   },
   {
     name: "email",
@@ -38,16 +38,7 @@ const form = [
     label: "Contraseña",
   
   },
-  {
-    name: "rolAccount",
-    type: FORM_TYPES.SELECT,
-    label: "Rol",
-    list: [
-      { label: "ONG", value: "ONG" },
-      { label: "Voluntario", value: "VOLUNTEER" },
-      { label: "Beneficiario", value: "BENEFICIARY" },
-    ],
-  },
+  
   {
     name: "address",
     type: FORM_TYPES.TEXT,
@@ -91,10 +82,11 @@ const form = [
     label: "Carnet de conducir",
   },
   {
-    name: "entryDate",
-    type: FORM_TYPES.ONLYDATE,
-    label: "Fecha de Inicio",
+    name: "hourOfAvailability",
+    type: FORM_TYPES.TEXT,
+    label: "Horas de disponibilidad",
   },
+
   {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
@@ -115,14 +107,15 @@ const form = [
     ],
   },
   {
-    name: "hourOfAvailability",
-    type: FORM_TYPES.TEXT,
-    label: "Horas de disponibilidad",
+    name: "entryDate",
+    type: FORM_TYPES.ONLYDATE,
+    label: "Fecha de Entrada",
   },
+ 
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
-    label: "Fecha de Finalización",
+    label: "Fecha de salida",
   },
   {
     name: "numberOfChildren",
@@ -142,7 +135,7 @@ const form = [
   {
     name: "registrationAddress",
     type: FORM_TYPES.TEXT,
-    label: "Código Postal",
+    label: "Dirección de registro",
   },
   {
     name: "telephone",
@@ -213,7 +206,7 @@ const form = [
   {
     name: "perceptionAid",
     type: FORM_TYPES.TEXT,
-    label: "perceptionAid",
+    label: "Ayuda percibida",
   },
   {
     name: "savingsPossesion",
@@ -236,7 +229,7 @@ const form = [
   {
     name: "computerKnowledge",
     type: FORM_TYPES.SELECT,
-    label: "Trabajando",
+    label: "Conocimientos informáticos",
     list: [
       { label: "Si", value: true },
       { label: "No", value: false },
@@ -259,11 +252,14 @@ function FormBeneficiaries() {
 
   const user = useAuthUser();
   const navigate = useNavigate();
+  
 
     const saveBeneficiarie = (values) => {
         console.log(values)
-        saveBeneficiariesAPI(user().token, values)
-        navigate("/beneficiarios")
+        saveBeneficiariesAPI(user().token, values).then((res) => {
+          navigate('/ong/beneficiarios')
+        });
+        
         
     }
 

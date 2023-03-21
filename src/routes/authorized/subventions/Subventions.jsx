@@ -1,105 +1,92 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard'
 import { CustomList } from '../../../static/activity'
 import CustomCardMini from '../../../components/CustomCardMini';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomFlex from '../../../components/CustomFlex';
 import BasicModal from '../../../components/BasicModal';
-import { Typography, useMediaQuery } from '@mui/material';
+import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import SubventionForm from './SubventionForm';
-import { axiosWithToken } from '../../../api/auth/axios';
 import { useQuery } from 'react-query';
 import { deleteSubvencioAPI, getSubventions } from '../../../api/subvenciones/api';
 import { useAuthUser } from 'react-auth-kit';
-import { useMemo } from 'react';
+import { useContext, useState } from 'react';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import BodyWrapper from '../../../components/BodyWrapper';
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 
 function Subventions() {
 
   const user = useAuthUser();
-  const query = useQuery(["QUERY_SUBVENTIONS"],() => getSubventions(user().token));
-  
-  console.log(query)
+  const [handleDelete, setHandleDelete] = useState({});
 
+  const query = useQuery(["QUERY_SUBVENTIONS"],() => getSubventions(user().token),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
+  
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
 
 
   return (
+    <BodyWrapper title={"Lista de subvenciones"}>
     <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
               <CustomCardMini
                     title='Nº de subvenciones'
-                    iconD={<BasicModal  title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm   />}/>}
-                    totalNumber={query.data.length}/>
+                    iconD={<BasicModal setHandleCloseButton={setHandleDelete}  title={"Añadir subvención"} text={"Añadir"} body={<SubventionForm  handleClose={handleDelete} query={query} />}/>}
+                    totalNumber={query.isError ? 0 : query.data.length}/>
           </CustomFlex>
-        <Listado data={query.data} />
+        <Listado query={query} />
     </CustomFlex>
+    </BodyWrapper>
     );
 }
 
 
 export default Subventions;
 
-
-
-const ToolList = ({subvencion, handleDelete, id}) => {
-  return (
-    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
-        <Typography>La subvención se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
-    </CustomFlex>
-  )
-}
-
-const Listado = ({data}) => {
+const Listado = ({query}) => {
 
   const user = useAuthUser();
-  const handleDelete = (id) => {
+  const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
+ 
+  const handleDelete = (id, handleClose) => {
     deleteSubvencioAPI(user().token, id).then(() => {
-      window.location.reload()
+      handleClose.handleClose()
+      query.refetch()
+      setSuccessMsg("Subvención eliminada correctamente")
+    }).catch((err) => {
+      setErrorMsg("Error al eliminar la subvención")
     })
   }
 
 
-  if(data.length === 0){
+  
+
+  if(query.data.length === 0){
     return <Typography variant="h4" component="div" gutterBottom>
             No hay subvenciones
         </Typography>
   }
 
-  const subvencionesConBoton = useMemo(() => {
-    return data.map((subvencion) => {
-      return {
-        ...subvencion,
-        gubernamental: subvencion.gubernamental ? "Sí" : "No",
-        state: StateParser(subvencion.state),
-        privateGrant: subvencion.privateGrant ? "Privada" : "Pública",
-        button: <ToolList subvencion={subvencion} handleDelete={handleDelete} id={subvencion.id}/>,
-      };
-    });
-  }, [data])
 
-  const SubventionList = new CustomList(subvencionesConBoton)
+
+
+  const SubventionList = new CustomList(ParseSubvention(query.data, handleDelete))
   let objetoTabla = SubventionList.parseToTable(
     ["Nombre", "Gubernamental","Estado","Privada/Pública","Eliminar"], 
     ["justification", "gubernamental", "state","privateGrant","button"],
-    ["Cantidad"],
+    ["Cantidad (€)"],
     ["amount"]
     )
 
@@ -109,6 +96,17 @@ const Listado = ({data}) => {
 
 }
 
+const ParseSubvention = (subvencions, handleDelete) => {
+  return subvencions.map((subvencion) => {
+    return {
+      ...subvencion,
+      gubernamental: subvencion.gubernamental ? "Sí" : "No",
+      state: StateParser(subvencion.state),
+      privateGrant: subvencion.privateGrant ? "Privada" : "Pública",
+      button: <ToolList subvencion={subvencion} handleDelete={handleDelete} id={subvencion.id}/>,
+    };
+  });
+}
 
 const StateParser = (state) => {
     if(state == "REQUESTED"){
@@ -124,4 +122,18 @@ const StateParser = (state) => {
       return "Reformulada"
     } 
     return "Error"
+}
+
+
+const ToolList = ({subvencion, handleDelete, id}) => {
+  const [handleCloseFunc, setHandleCloseFunc] = useState({});
+
+  return (
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+        <Typography>La subvención se eliminará permanentemente</Typography>
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+    </CustomFlex>
+  )
 }

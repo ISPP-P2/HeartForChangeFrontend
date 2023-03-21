@@ -17,6 +17,9 @@ import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { Typography, useMediaQuery } from '@mui/material';
 import { deleteVolunteerAPI, getVolunteersAPI } from '../../../api/voluntarios/api';
+import BodyWrapper from '../../../components/BodyWrapper';
+import CustomError from '../../../components/CustomError';
+import CustomReloading from '../../../components/CustomReloading';
 
 const Listado = ({data}) => {
 
@@ -36,8 +39,8 @@ const Listado = ({data}) => {
 
   const VolunteersList = new CustomList(VoluntarioParser(data, handleDelete))
   let objetoTabla = VolunteersList.parseToTable(
-    ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Rol","Herramientas"], 
-    ["username", "name", "firstSurname","secondSurname", "email","gender","rolAccount", "button"],
+    ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Herramientas"], 
+    ["username", "name", "firstSurname","secondSurname", "gender","email", "button"],
     ["Actividades Realizadas", "Fecha"],
     ["nombreActividad", "fechaActividad"]
   )
@@ -52,31 +55,32 @@ const Listado = ({data}) => {
 function Volunteers() {
 
   const user = useAuthUser();
-  const query = useQuery(["QUERY_VOLUNTEERS"],() => getVolunteersAPI(user().token));
+  const query = useQuery(["QUERY_VOLUNTEERS"],() => getVolunteersAPI(user().token),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
   
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
   
   return (
+    <BodyWrapper title={"Lista de voluntarios"}>
       <CustomFlex direction={"column"}>
          <CustomFlex  direction={"row"}>
             <CustomCardMini 
                   title='Nº de voluntarios'
-                  iconD={<CustomLink to="/voluntario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
+                  iconD={<CustomLink to="/ong/voluntario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
           <Listado data={query.data} />
       </CustomFlex>
+    </BodyWrapper>
     );
 }
 
@@ -87,16 +91,13 @@ export default Volunteers;
 const ToolList = ({usuario, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink  to={`/voluntario/${id}`}>
+      <CustomLink  to={`/ong/voluntario/${id}`}>
         <SearchIcon />
       </CustomLink>
       <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
-        
-        />
-        
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 
@@ -119,8 +120,10 @@ const RolAccountParser = (rolAccount) => {
 
 const VoluntarioParser = (data, handleDelete) => {
   return data.map((usuario) => {
+    console.log(usuario)
     return {
       ...usuario,
+      gender: usuario.gender === "MALE" ? "Hombre" : "Mujer",
       rolAccount: RolAccountParser(usuario.rolAccount),
       button:<ToolList usuario={usuario} handleDelete={handleDelete} id={usuario.id}/>,
     };

@@ -5,6 +5,7 @@ import {
   Select,
   TextareaAutosize,
   TextField,
+  InputLabel,
 } from "@mui/material";
 
 import { Formik } from "formik";
@@ -17,7 +18,10 @@ import {
 } from "./utils/utilsForms";
 import CustomButton from "./CustomButton";
 import { useId } from "react";
-
+import FormControl2 from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import FormHelperText from '@mui/joy/FormHelperText';
+import Textarea from '@mui/joy/Textarea';
 function BasicFrom({
   form = null,
   handleSubmitForm = null,
@@ -77,7 +81,7 @@ function BasicFrom({
               </FormControl>
             ))}
             {buttonText === null ?  null : 
-            <Box gridColumn={"-2/-1"}>
+            <Box gridColumn={"-2/-1"} display={"flex"} alignItems={"flex-end"} justifyContent={"center"}>
                 <CustomButton 
                 onClick={handleSubmit} 
                 text={buttonText} 
@@ -108,46 +112,71 @@ const CustomInput = (props) => {
         InputProps={{
           endAdornment: props.icon,
         }}
+        sx={{
+          "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+          "& .MuiInputLabel-root.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+        }}
       />
     );
   }
   if (props.type === FORM_TYPES.SELECT) {
     return (
-      <Select
+      <TextField
         disabled={props.readOnly}
         value={props.values[`${props.name}`]}
         onChange={(event, value) => {props.setFieldValue(`${props.name}`, value.props.value);}}
         variant="standard"
-        
         label={props.label}
+        select
+        sx={{
+          "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+          "& .MuiInputLabel-root.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+          },
+        }}
       >
         {props.list === null || props.list === undefined ? (
-          <MenuItem>Cargando lista</MenuItem>
+          null
         ) : (
-          props.list.map((e) => {
+          props.list.map((e, i) => {
             return (
-              <MenuItem value={e.value}>
+              <MenuItem key={i} value={e.value}>
                 <em>{e.label}</em>
               </MenuItem>
             );
           })
         )}
-      </Select>
+      </TextField>
     );
   }
 
   if (props.type === FORM_TYPES.TEXTEAREA) {
     return (
-      <TextareaAutosize
-        disabled={props.readOnly}
-        minRows={4}
-        name={props.name}
-        onChange={props.handleChange(`${props.name}`)}
-        onBlur={props.handleBlur(`${props.name}`)}
-        value={props.values[`${props.name}`]}
-        type={props.type}
-        placeholder={props.label}
-      />
+  
+
+      <FormControl2>
+      <FormLabel sx={{color:"grey", fontFamily:"Arial",fontWeight: 400, fontSize: "0.75rem"}}>{props.label}</FormLabel>
+      <Textarea  minRows={2} disabled={props.readOnly}
+    
+
+            name={props.name}
+            onChange={props.handleChange(`${props.name}`)}
+            onBlur={props.handleBlur(`${props.name}`)}
+            value={props.values[`${props.name}`]}
+            sx={{
+              "& .css-1onucoh-JoyTextarea-textarea": {
+                WebkitTextFillColor: "#000000",
+              },
+            }}
+             />
+    
+    </FormControl2>
     );
   }
 

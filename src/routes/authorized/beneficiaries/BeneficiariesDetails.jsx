@@ -20,6 +20,11 @@ import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { getBeneficiarieAPI } from "../../../api/beneficiario/api";
 import { useParams } from "react-router-dom";
+import { useState } from 'react'
+import { updateBeneficiariesAPI } from '../../../api/beneficiario/api';
+import CustomReloading from "../../../components/CustomReloading";
+import CustomError from "../../../components/CustomError";
+
 
 
 
@@ -28,6 +33,8 @@ const parseBenfeiciario = (beneficiario) => {
     return { ...item, value: beneficiario[item.name] };
   });
 }
+
+
 
 const extraForm = (title, variable) => [
   {
@@ -39,24 +46,28 @@ const extraForm = (title, variable) => [
 ];
 
 function BeneficiariesDetails() {
+  const [readOnlyValue, toggleReadOnly] = useState(true)
   const user = useAuthUser();
   const { id } = useParams();
   const query = useQuery(["QUERY_BENEFICIARIES_DETAILS", id],() => getBeneficiarieAPI(user().token,id));
   const mobile = useMediaQuery("(min-width: 850px)");
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
 
+  const updateBeneficiarie = (values) => {
+    console.log(values)
+    updateBeneficiariesAPI(user().token, values, id)
+    
+}
+
   return (
+    
     <BodyWrapper title={`Beneficiario ${id}`}>
       <CustomFlex direction={"column"}>
         <Box
@@ -73,7 +84,7 @@ function BeneficiariesDetails() {
               <Box flexBasis={"fit-content"}>
                 <CustomButton  widthButton="10rem" variantButton={VARIANTES_BUTTON.ORANGE} text="ACTIVIDADES"></CustomButton>
               </Box>
-                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2}  text="EDITAR DATOS"></CustomButton>
+                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }} text="EDITAR DATOS"></CustomButton>
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>
@@ -137,11 +148,14 @@ function BeneficiariesDetails() {
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
             {!query.isError && query.isSuccess ? <BasicFrom
                 form={parseBenfeiciario(query.data)}
-                readOnly={true}
+                readOnly={readOnlyValue}
+                buttonText={"Añadir"}
                 width={"100%"}
-                handleSubmitForm={(values) => console.log(values)}
+                handleSubmitForm={updateBeneficiarie}
               /> : null}
+              
           </Box>
+          
         </Box>
 
         <CustomFlex direction={"column"}></CustomFlex>
@@ -151,4 +165,3 @@ function BeneficiariesDetails() {
 }
 
 export default BeneficiariesDetails;
-

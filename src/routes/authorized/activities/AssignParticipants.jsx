@@ -1,10 +1,8 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
-import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CustomButton from '../../../components/CustomButton';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomLink from '../../../components/CustomLink';
@@ -53,9 +51,7 @@ const participants = [
     },     
 ]
 
-
-
-function AssignVolunteers() {
+function AssignParticipants() {
   const {id} = useParams("id");
 
   const ActivityList = new CustomList(participants)
@@ -70,7 +66,7 @@ function AssignVolunteers() {
     <BodyWrapper title={`Asignar voluntarios a la actividad ${id}`}>
       <CustomFlex direction={"column"}>
         <CustomFlex direction={"row"}> 
-            <CustomLink to={`/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></CustomLink>
+            <CustomLink to={`/ong/actividad/${id}/`}><CustomButton onClick={()=> {console.log()}} text={"Asignar voluntario"}/></CustomLink>
         </CustomFlex>
           <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
       </CustomFlex>
@@ -78,4 +74,4 @@ function AssignVolunteers() {
     );
 }
 
-export default AssignVolunteers;
+export default AssignParticipants;

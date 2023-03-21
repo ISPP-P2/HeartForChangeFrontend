@@ -16,38 +16,100 @@ import BasicFrom from '../../../components/BasicFrom';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomLink from '../../../components/CustomLink';
-  
-
+import PlaceIcon from '@mui/icons-material/Place';
+import BadgeIcon from '@mui/icons-material/Badge';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import * as Yup from 'yup';
+import { useAuthUser } from 'react-auth-kit';
+import { useQuery } from 'react-query';
+import { getActivityAPI } from "../../../api/actividades/api";
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 const form = [
-  {
-      name: "place",
-      type: FORM_TYPES.TEXT,
-      label: "Lugar",
-      value: 'Parque de la Fuensanta'
-  }, {
-      name: "coordinator",
-      type: FORM_TYPES.TEXT,
-      label: "Coordinador",
-      value: 'Francisco Fernández'
-  }, {
-      name: "state",
-      type: FORM_TYPES.TEXT,
-      label: "Finalizada",
-      value: "No"
-  }, {
-      name: "date",
-      type: FORM_TYPES.TEXT,
-      label: "Fecha de realización",
-      value: "22-03-2023"
-  }, {
-      name: "group",
-      type: FORM_TYPES.TEXT,
-      label: "Grupo/Individual",
-      value: 'Individual'
-  }
-]
+    {
+        name: "name",
+        type: FORM_TYPES.TEXT,
+        label: "Nombre de la actividad",
+        icon: <BadgeIcon />,
+        validation: Yup.string("Deber ser una cadena de caracteres")
+                        .min(2, "Tiene haber al menos dos caractere")
+                        .required("No puede estar vacido"),
+    }, 
+    {
+        name: "type",
+        type: FORM_TYPES.SELECT,
+        label: "Tipo",
+        list: [
+            {
+                label: "Curso",
+                value: "CURSO"
+            }, {
+                label: "Actividad",
+                value: "ACTIVIDAD"
+            }, {
+                label: "Taller",
+                value: "TALLER"
+            },
+        ],
+        icon: <CelebrationIcon />,
+    },
 
+    {
+        name: "place",
+        type: FORM_TYPES.TEXT,
+        label: "Lugar",
+        validation: Yup.string("Deber ser una cadena de caracteres")
+                        .min(2, "Tiene haber al menos dos caractere")
+                        .required("No puede estar vacido"),
+        icon: <PlaceIcon />,
+    },
+    {
+        name: "certificate",
+        type: FORM_TYPES.SELECT,
+        label: "Certificados",
+        list: [
+            {
+                label: "No",
+                value: false
+            }, {
+                label: "Sí",
+                value: true
+            },
+        ],
+    },
+    {
+        name: "date",
+        type: FORM_TYPES.DATE,
+        label: "Fecha",
+        validation: Yup.date("Deber ser una fecha"),
+    },
+    {
+        name: "coordinator",
+        type: FORM_TYPES.TEXT,
+        label: "Coordinador",
+        validation: Yup.string("Deber ser una cadena de caracteres")
+                        .min(2, "Tiene haber al menos dos caractere"),
+        icon: <EmojiPeopleIcon />,
+    },
+    {
+        name: "teacher",
+        type: FORM_TYPES.TEXT,
+        label: "Profesor",
+        validation: Yup.string("Deber ser una cadena de caracteres"),
+    },{
+        name: "incidences",
+        type: FORM_TYPES.TEXT,
+        label: "Incidencias",
+        validation: Yup.string("Deber ser una cadena de caracteres"),
+    },{
+        name: "numParticipants",
+        type: FORM_TYPES.NUMBER,
+        label: "Numero de participantes",
+        validation: Yup.number("Deber ser una cadena de caracteres"),
+    },
+]
 
 const actividades = [
   {
@@ -91,7 +153,7 @@ const actividades = [
     description: "Hola" 
   }, 
 
-]
+];
 
 const actividadesConBoton = actividades.map((actividad) => {
   return {
@@ -101,8 +163,20 @@ const actividadesConBoton = actividades.map((actividad) => {
 });
 
 function ActivityDetails() {
+  const { id } = useParams()
+  const user = useAuthUser();
+  const mobile = useMediaQuery('(min-width:1200px)');
+  const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
+  
 
-  const {id} = useParams()
+  if(query.isLoading){
+    return <CustomReloading />
+  }
+
+  if(query.isError){
+    return <CustomError onClick={()=> query.refetch()}/>
+  }
+
 
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
@@ -110,10 +184,6 @@ function ActivityDetails() {
     ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
     ["Descripcion"],
     ["description"]);
-    
-  const [finalizada, setFinalizada] = useState(false);
-
-  const mobile = useMediaQuery('(min-width:1200px)');
   
   return (
     <BodyWrapper title={`Detalles de la actividad ${id}`} >
@@ -126,7 +196,7 @@ function ActivityDetails() {
         gridTemplateColumns={mobile ? "1fr 1fr":"1fr"}
         gridTemplateRows={mobile ? "100%":"1fr"}> 
         <BasicFrom 
-        form={form}
+        form={parseActividad(query.data)}
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         />     
@@ -144,13 +214,13 @@ function ActivityDetails() {
                   <CustomCard
                   title='Añadir'
                   iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<CustomLink to={`/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
+                  buttonSidebar={<CustomLink to={`/ong/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.GREEN}/> </CustomLink>}/>  
                 <CustomCard
                   title='Finalizar'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton onClick={() => {setFinalizada(!finalizada)}} text={"Finalizar"}  
+                  buttonSidebar={<CustomButton onClick={() => {}} text={"Finalizar"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
                 <CustomCard
@@ -167,5 +237,12 @@ function ActivityDetails() {
       </BodyWrapper>
     );
 }
+
+const parseActividad = (actividad) => {
+  return form.map((item) => {
+    return { ...item, value: actividad[item.name] };
+  });
+}
+
 
 export default ActivityDetails;

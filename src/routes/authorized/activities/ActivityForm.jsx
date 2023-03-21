@@ -2,18 +2,14 @@ import React from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import { FORM_TYPES } from '../../../components/utils/utilsForms'
 import * as Yup from 'yup';
-import TimelapseIcon from '@mui/icons-material/Timelapse';
 import PlaceIcon from '@mui/icons-material/Place';
 import BadgeIcon from '@mui/icons-material/Badge';
-import DescriptionIcon from '@mui/icons-material/Description';
 import CelebrationIcon from '@mui/icons-material/Celebration';
-import GroupIcon from '@mui/icons-material/Group';
-import EventIcon from '@mui/icons-material/Event';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { saveActivityAPI } from '../../../api/actividades/api';
-import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import moment from 'moment/moment';
+
 
 const form = [
     {
@@ -25,24 +21,6 @@ const form = [
                         .min(2, "Tiene haber al menos dos caractere")
                         .required("No puede estar vacido"),
 
-    }, 
-    {
-        name: "type",
-        type: FORM_TYPES.SELECT,
-        label: "Tipo",
-        list: [
-            {
-                label: "Curso",
-                value: "CURSO"
-            }, {
-                label: "Actividad",
-                value: "ACTIVIDAD"
-            }, {
-                label: "Taller",
-                value: "TALLER"
-            },
-        ],
-        icon: <CelebrationIcon />,
     },
 
     {
@@ -102,18 +80,21 @@ const form = [
 
 
 
-function ActivityForm() {
-
+function ActivityForm({query,handleClose}) {
     const user = useAuthUser();
     const saveActivity = (values) => {
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
-        const values2 = {...values, date: responseDate}
+        const values2 = {...values, date: responseDate, type: "ACTIVIDAD"}
         saveActivityAPI(user().token, values2).then((response) => {
-            location.reload();
-        })
+            handleClose.handleClose();
+            query.refetch()
+        }).catch(
+            (err) => {
+                setErrorMsg("Ha ocurrido un error")
+            }
+        )
   }
-
   return (
         <BasicFrom 
         form={form}

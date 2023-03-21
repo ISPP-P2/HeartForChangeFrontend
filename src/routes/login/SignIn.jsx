@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -9,8 +8,10 @@ import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import CustomButton, { VARIANTES_BUTTON } from '../../components/CustomButton';
 import { parseTokens } from '../../api/auth/tokenUtils';
-import { useSignIn } from 'react-auth-kit';
+import { useAuthUser, useIsAuthenticated, useSignIn } from 'react-auth-kit';
 import axios from '../../api/auth/axios';
+import { CustomNotistackContext } from '../../context/CustomNotistack';
+import { useContext, useEffect, useState } from 'react';
 
 function Copyright(props) {
 return (
@@ -28,10 +29,32 @@ return (
 
 export default function SignIn() {
 
-  const [credentials, setCredentials] = React.useState({
+  const [credentials, setCredentials] = useState({
     username: '',
     password: '',
   });
+  const isLogged = useIsAuthenticated()
+  const [isLoading, setIsLoading] = useState(true)
+  const auth = useAuthUser()
+  const navigate = useNavigate()
+  
+  const SignIn = useSignIn()
+  const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
+
+  useEffect(() => {
+    if(isLogged() ){
+      if(auth().rol == "ONG"){
+        navigate("/ong")
+      }else{
+        navigate("/vol")
+      }
+    }
+    setIsLoading(false)
+  }, [isLogged, navigate])
+
+
+
+
 
   const onChangePassword = (event) => {
     setCredentials({ ...credentials, password: event.target.value });
@@ -41,15 +64,14 @@ export default function SignIn() {
     setCredentials({ ...credentials, username: event.target.value });
   };
 
-  const SignIn = useSignIn()
-  const navigate = useNavigate()
+  
+
   const onSubmitDev = () => {
     axios.post("/api/accounts/signin", {
       username: credentials.username,
       password: credentials.password
     }).then((response) => {
       const tokens = parseTokens(response)
-      console.log(response)
       if(SignIn(
         {
             token: tokens.token,
@@ -60,11 +82,18 @@ export default function SignIn() {
             refreshTokenExpireIn: tokens.refreshTokenExpireIn   
         }
       )){
-          console.log("Sesion iniciada");
-          navigate('/');
+          if(tokens.authState.rol == "ONG"){
+            navigate("/ong")
+          }else{
+            navigate("/vol")
+          }
+          setSuccessMsg("Sesion iniciada");
       }else {
-          console.log("error");
+          setErrorMsg("Error al iniciar sesión");
       }
+    }).catch((error) => {
+      console.log(error)
+      setErrorMsg("Error al iniciar sesión");
     })
   }
   

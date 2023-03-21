@@ -164,7 +164,7 @@ function FormVolunteers() {
   const saveVolunteer = (values) => {
       console.log(values)
       saveVolunteerAPI(user().token, values)
-      navigate("/voluntarios")
+      navigate("/ong/voluntarios")
       
   }
 
