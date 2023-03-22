@@ -85,10 +85,10 @@ const ToolList = ({actividad, handleDelete, id}) => {
       <CustomLink  to={`/ong/actividad/${id}`}>
         <SearchIcon />
       </CustomLink>
-      <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+      <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El actividad se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
+        </Box>} variant={VARIANTES_BUTTON.RED}  text={<DeleteForeverIcon />}
         />
     </CustomFlex>
   )

@@ -13,7 +13,9 @@ function CustomButton({
     widthButton = "100%",
     heightButton = "100%",
     outline = false,
-    show = true
+    show = true,
+    height="auto",
+    float="auto",
     }) {
     return (
         <Box >
@@ -24,7 +26,8 @@ function CustomButton({
                 "&:hover": {
                     opacity: 0.85
                 },
-                display: show ? 'block':'none'
+                display: show ? 'block':'none',
+                float:float
             }}
             onClick={onClick} 
             variant="contained"

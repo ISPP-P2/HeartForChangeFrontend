@@ -130,7 +130,7 @@ const ToolList = ({subvencion, handleDelete, id}) => {
 
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+      <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>La subvención se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>

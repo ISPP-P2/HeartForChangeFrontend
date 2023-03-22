@@ -102,7 +102,7 @@ const ToolList = ({beneficiarie, handleDelete, id}) => {
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink to={`/ong/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
-      <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+      <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El Beneficiario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>

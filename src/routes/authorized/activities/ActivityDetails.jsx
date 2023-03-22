@@ -229,7 +229,7 @@ function ActivityDetails() {
                 <CustomCard
                   title='Finalizar'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton onClick={() => {}} text={"Finalizar"}  
+                  buttonSidebar={<CustomButton onClick={() => {}} text={"Fin"}  float={"right"} 
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
                 <CustomCard
