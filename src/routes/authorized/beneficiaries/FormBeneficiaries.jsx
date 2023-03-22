@@ -28,18 +28,6 @@ const form = [
     label: "Descripción",
   },
   {
-    name: "username",
-    type: FORM_TYPES.TEXT,
-    label: "Nombre de usuario",
-  },
-  {
-    name: "password",
-    type: FORM_TYPES.TEXT,
-    label: "Contraseña",
-  
-  },
-  
-  {
     name: "address",
     type: FORM_TYPES.TEXT,
     label: "Dirección",
@@ -81,12 +69,6 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Carnet de conducir",
   },
-  {
-    name: "hourOfAvailability",
-    type: FORM_TYPES.TEXT,
-    label: "Horas de disponibilidad",
-  },
-
   {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,

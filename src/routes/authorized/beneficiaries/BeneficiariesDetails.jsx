@@ -63,8 +63,8 @@ function BeneficiariesDetails() {
   const updateBeneficiarie = (values) => {
     console.log(values)
     updateBeneficiariesAPI(user().token, values, id)
-    
-}
+    toggleReadOnly(!readOnlyValue);
+  }
 
   return (
     
@@ -149,9 +149,10 @@ function BeneficiariesDetails() {
             {!query.isError && query.isSuccess ? <BasicFrom
                 form={parseBenfeiciario(query.data)}
                 readOnly={readOnlyValue}
-                buttonText={"Añadir"}
+                buttonText={"Confirmar"}
                 width={"100%"}
                 handleSubmitForm={updateBeneficiarie}
+                showButton = {!readOnlyValue}
               /> : null}
               
           </Box>

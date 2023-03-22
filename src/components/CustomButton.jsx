@@ -12,7 +12,9 @@ function CustomButton({
     text, 
     widthButton = "100%",
     heightButton = "100%",
-    outline = false}) {
+    outline = false,
+    show = true
+    }) {
     return (
         <Box >
             <Button type={'button'} sx={{
@@ -21,7 +23,8 @@ function CustomButton({
                 backgroundColor: variantButton + "!important",
                 "&:hover": {
                     opacity: 0.85
-                }
+                },
+                display: show ? 'block':'none'
             }}
             onClick={onClick} 
             variant="contained"

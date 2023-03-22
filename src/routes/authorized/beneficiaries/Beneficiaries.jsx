@@ -69,6 +69,7 @@ const Listado = ({data}) => {
       setSuccessMsg("Subvención eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la subvención")
+      
     })
   }
 

@@ -27,7 +27,8 @@ function BasicFrom({
   handleSubmitForm = null,
   width = "-webkit-fill-available",
   buttonText = null,
-  readOnly = false
+  readOnly = false,
+  showButton = true
 }) {
   if (form == null || handleSubmitForm == null) {
     <div>Loading form...</div>;
@@ -85,6 +86,7 @@ function BasicFrom({
                 <CustomButton 
                 onClick={handleSubmit} 
                 text={buttonText} 
+                show={showButton}
                 />
             </Box>
             }

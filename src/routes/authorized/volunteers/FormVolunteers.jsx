@@ -9,16 +9,6 @@ import { useAuthUser } from 'react-auth-kit';
 
 const form = [
   {
-    name: "username",
-    type: FORM_TYPES.TEXT,
-    label: "Nombre de usuario",
-  },
-  {
-    name: "password",
-    type: FORM_TYPES.TEXT,
-    label: "Contraseña",
-  },
-  {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Correo electrónico",
@@ -66,16 +56,6 @@ const form = [
     name: "birthday",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de cumpleaños",
-  },
-  {
-    name: "rolAccount",
-    type: FORM_TYPES.SELECT,
-    label: "Rol",
-    list: [
-      { label: "ONG", value: "ONG" },
-      { label: "Voluntario", value: "VOLUNTEER" },
-      { label: "Beneficiario", value: "BENEFICIARY" },
-    ],
   },
   {
     name: "civilStatus",
