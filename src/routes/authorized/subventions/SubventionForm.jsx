@@ -23,7 +23,7 @@ const form = [
                 label: "Privada"
             }
         ],
-        validation: Yup.boolean()
+        validation: Yup.boolean().required("Este campo es requerido"),
 
     },
     {
@@ -40,7 +40,7 @@ const form = [
                 label: "No"
             }
         ],
-        validation: Yup.boolean()
+        validation: Yup.boolean().required("Este campo es requerido"),
 
     }, {
         name: "state",
@@ -62,7 +62,7 @@ const form = [
                 value: "REFORMULATION"
             },
         ],
-        validation: Yup.string()
+        validation: Yup.string().required("Este campo es requerido"),
 
 
     },
@@ -70,7 +70,7 @@ const form = [
         name: "justification",
         type: FORM_TYPES.TEXTEAREA,
         label: "Justificación",
-        validation: Yup.string("Deber ser una cadena de caracteres").nonNullable("No puede estar vacio"),
+        validation: Yup.string("Deber ser una cadena de caracteres").max(1000, "La dirección no puede tener más de 1000 caracteres").required("Este campo es requerido"),
                       
         icon: <SubjectIcon />,
     },

@@ -91,15 +91,7 @@ const form = [
     validation: Yup.string().required("Este campo es obligatorio"),
   },
    
-  {
-    name: "documentNumber",
-    type: FORM_TYPES.TEXT,
-    label: "Número de Documentación",
-    validation: Yup.string()
-    .required("Este campo es obligatorio")
-      .min(9, "El número de documentación debe tener 9 caracteres")
-      .max(9, "El número de documentacióndebe tener 9 caracteres"),
-  },
+  
    
   {
     name: "documentType",
@@ -112,7 +104,15 @@ const form = [
     ],
     validation: Yup.string().required("Este campo es obligatorio"),
   },
-   
+  {
+    name: "documentNumber",
+    type: FORM_TYPES.TEXT,
+    label: "Número de Documentación",
+    validation: Yup.string()
+    .required("Este campo es obligatorio")
+      .min(9, "El número de documentación debe tener 9 caracteres")
+      .max(9, "El número de documentacióndebe tener 9 caracteres"),
+  },
   {
     name: "driveLicenses",
     type: FORM_TYPES.TEXT,
@@ -161,14 +161,14 @@ const form = [
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de salida",
     validation: Yup.date()
-    .required("Este campo es obligatorio"),
+
   },
   {
     name: "numberOfChildren",
     type: FORM_TYPES.NUMBER,
     label: "Número de hijos",
     validation: Yup.number()
-    .required("Este campo es obligatorio")
+    .required("Este campo es obligatorio (0 en caso de no tener)")
     .min(0, "El número de hijos debe ser mayor o igual a 0")
   
 
