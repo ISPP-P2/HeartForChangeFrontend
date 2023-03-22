@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { useLocation } from "react-router-dom";
-import { getVolunteerAPI } from '../../../api/voluntarios/api';
+import { getVolunteerAPI, updateVolunteersAPI } from '../../../api/voluntarios/api';
 import { useParams } from 'react-router-dom';
 
 
@@ -184,6 +184,7 @@ const extraForm = (title, variable,voluntario) => [
 ];
 
 function VolunteerDetails({ match }) {
+  const [readOnlyValue, toggleReadOnly] = React.useState(true)
   const mobile = useMediaQuery("(min-width: 850px)");
   const { id } = useParams();
   const user = useAuthUser();
@@ -200,7 +201,13 @@ function VolunteerDetails({ match }) {
         </Typography>
   }
   
-  
+  const updateVolunteer = (values) => {
+    console.log(values)
+    console.log(id)
+    updateVolunteersAPI(user().token, values, id)
+    toggleReadOnly(!readOnlyValue);
+  }
+
 
   return (
     <BodyWrapper title={"Voluntario 1"}>
@@ -222,7 +229,7 @@ function VolunteerDetails({ match }) {
               <Box flexBasis={"fit-content"}>
                 <CustomButton  widthButton="10rem" variantButton={VARIANTES_BUTTON.ORANGE} text="ACTIVIDADES"></CustomButton>
               </Box>
-                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2}  text="EDITAR DATOS"></CustomButton>
+                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  text="EDITAR DATOS"></CustomButton>
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>
@@ -288,9 +295,11 @@ function VolunteerDetails({ match }) {
           <Box sx={{ gridColumn: "2/3", gridRow: "1/3" }}>
           {voluntario.isSuccess && !voluntario.isError ?   <BasicFrom
               form={VolunteerDetailsParser(voluntario.data)}
-              readOnly={true}
+              readOnly={readOnlyValue}
+              buttonText={"Confirmar"}
               width={"100%"}
-              handleSubmitForm={(values) => console.log(values)}
+              handleSubmitForm={updateVolunteer}
+              showButton = {!readOnlyValue}
             /> : null}
           </Box>
         
