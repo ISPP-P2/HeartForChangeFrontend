@@ -77,16 +77,7 @@ let voluntarioForm = [
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de cumpleaños",
   },
-  {
-    name: "rolAccount",
-    type: FORM_TYPES.SELECT,
-    label: "Rol",
-    list: [
-      { label: "ONG", value: "ONG" },
-      { label: "Voluntario", value: "VOLUNTEER" },
-      { label: "Beneficiario", value: "BENEFICIARY" },
-    ],
-  },
+
   {
     name: "civilStatus",
     type: FORM_TYPES.SELECT,
@@ -147,7 +138,7 @@ let voluntarioForm = [
   {
     name: "hourOfAvailability",
     type: FORM_TYPES.TEXT,
-    label: "Horas de disponibilidad",
+    label: "Horario de disponibilidad",
   },
   {
     name: "sexCrimes",

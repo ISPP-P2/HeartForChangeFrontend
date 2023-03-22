@@ -6,27 +6,39 @@ import { saveVolunteerAPI } from '../../../api/voluntarios/api';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
-
+import * as Yup from 'yup';
 const form = [
   {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Correo electrónico",
+    validation: Yup.string()
+    .email("Debe ser un email válido")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "name",
     type: FORM_TYPES.TEXT,
     label: "Nombre",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
     label: "Primer apellido",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "secondSurname",
     type: FORM_TYPES.TEXT,
     label: "Segundo apellido",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "documentType",
@@ -37,11 +49,16 @@ const form = [
       { label: "NIE", value: "NIE" },
       { label: "Pasaporte", value: "PASSPORT" },
     ],
+    validation: Yup.string().required("Este campo es obligatorio"),
   },
   {
     name: "documentNumber",
     type: FORM_TYPES.TEXT,
     label: "Número de Documentación",
+    validation: Yup.string()
+    .required("Este campo es obligatorio")
+      .min(9, "El número de documentación debe tener 9 caracteres")
+      .max(9, "El número de documentacióndebe tener 9 caracteres"),
   },
   {
     name: "gender",
@@ -50,12 +67,17 @@ const form = [
     list: [
       { label: "Hombre", value: "MALE" },
       { label: "Mujer", value: "FEMALE" },
+      
     ],
+    validation: Yup.string().required("Este campo es obligatorio"),
   },
   {
     name: "birthday",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de cumpleaños",
+    validation: Yup.date()
+    .max(new Date(), "La fecha de nacimiento no puede ser en el futuro")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "civilStatus",
@@ -67,57 +89,90 @@ const form = [
       { label: "Viudo", value: "WIDOWED" },
       { label: "Divorciado", value: "DIVORCED" },
     ],
+    validation: Yup.string().required("Este campo es obligatorio"),
   },
   {
     name: "numberOfChildren",
     type: FORM_TYPES.NUMBER,
     label: "Número de hijos",
+    validation: Yup.number()
+    .required("Este campo es obligatorio (0 en caso de no tener)")
+    .min(0, "El número de hijos debe ser mayor o igual a 0")
   },
 
   {
     name: "entryDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de Inicio",
+    validation: Yup.date()
+    .required("Este campo es obligatorio"),
   },
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de Finalización",
+    validation: Yup.date()
+   
   },
   {
     name: "address",
     type: FORM_TYPES.TEXT,
     label: "Dirección",
+    validation: Yup.string()
+    .required("Este campo es obligatorio")
+    .min(5, "La dirección debe tener al menos 5 caracteres")
+    .max(50, "La dirección no puede tener más de 50 caracteres"),
+
   },
   {
     name: "postalCode",
     type: FORM_TYPES.NUMBER,
     label: "Código Postal",
+    validation: Yup.number()
+    .required("Este campo es obligatorio")
+    .test(
+      "len",
+      "El código postal debe tener 5 cifras",
+      (val) => val.toString().length === 5
+    )
   },
   {
     name: "registrationAddres",
     type: FORM_TYPES.TEXT,
     label: "Dirección de registro",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(50, "debe tener menos de 50 caracteres")
   },
   {
     name: "town",
     type: FORM_TYPES.TEXT,
     label: "Ciudad",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "debe tener menos de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "otherSkills",
     type: FORM_TYPES.TEXTEAREA,
     label: "Otras habilidades",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(350, "debe tener menos de 350 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "driveLicenses",
     type: FORM_TYPES.TEXT,
     label: "Carnet de conducir",
+    validation: Yup.string()
+    .max(100, "No puede tener más de 100 caracteres"),
   },
   {
     name: "hourOfAvailability",
     type: FORM_TYPES.TEXT,
-    label: "Horas de disponibilidad",
+    label: "Horario de disponibilidad",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(50, "debe tener menos de 50 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "sexCrimes",
@@ -127,11 +182,15 @@ const form = [
       { label: "Sí", value: true },
       { label: "No", value: false },
     ],
+    validation: Yup.boolean().required("Este campo es obligatorio"),
   },
   {
     name: "telephone",
     type: FORM_TYPES.NUMBER,
     label: "Teléfono",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(15, "debe tener menos de 15 caracteres")
+    .required("Este campo es obligatorio"), 
   }
 ];
 
