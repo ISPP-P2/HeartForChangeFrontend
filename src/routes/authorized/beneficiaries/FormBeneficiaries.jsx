@@ -53,14 +53,6 @@ const form = [
     .required("Este campo es obligatorio"),
   },
   {
-    name: "password",
-    type: FORM_TYPES.TEXT,
-    label: "Contraseña",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  
-  {
     name: "address",
     type: FORM_TYPES.TEXT,
     label: "Dirección",
@@ -113,15 +105,6 @@ const form = [
       .min(9, "El número de documentación debe tener 9 caracteres")
       .max(9, "El número de documentacióndebe tener 9 caracteres"),
   },
-  {
-    name: "driveLicenses",
-    type: FORM_TYPES.TEXT,
-    label: "Carnet de conducir",
-    validation: Yup.string()
-    .max(100, "No puede tener más de 100 caracteres"),
-  },
-  
-
   {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
@@ -298,7 +281,6 @@ const form = [
     .max(150, "debe tener menos de 150 caracteres")
     .required("Este campo es obligatorio"),
   },
-  
   {
     name: "savingsPossesion",
     type: FORM_TYPES.SELECT,

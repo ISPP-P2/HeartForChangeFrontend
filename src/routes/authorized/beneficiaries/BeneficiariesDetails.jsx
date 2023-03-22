@@ -22,6 +22,8 @@ import { getBeneficiarieAPI } from "../../../api/beneficiario/api";
 import { useParams } from "react-router-dom";
 import { useState } from 'react'
 import { updateBeneficiariesAPI } from '../../../api/beneficiario/api';
+import CustomReloading from "../../../components/CustomReloading";
+import CustomError from "../../../components/CustomError";
 
 
 
@@ -51,23 +53,18 @@ function BeneficiariesDetails() {
   const mobile = useMediaQuery("(min-width: 850px)");
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
   }
 
   const updateBeneficiarie = (values) => {
     console.log(values)
     updateBeneficiariesAPI(user().token, values, id)
-    
-}
+    toggleReadOnly(!readOnlyValue);
+  }
 
   return (
     
@@ -152,9 +149,10 @@ function BeneficiariesDetails() {
             {!query.isError && query.isSuccess ? <BasicFrom
                 form={parseBenfeiciario(query.data)}
                 readOnly={readOnlyValue}
-                buttonText={"Añadir"}
+                buttonText={"Confirmar"}
                 width={"100%"}
                 handleSubmitForm={updateBeneficiarie}
+                showButton = {!readOnlyValue}
               /> : null}
               
           </Box>

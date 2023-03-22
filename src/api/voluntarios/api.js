@@ -19,6 +19,11 @@ export const getVolunteerAPI = async (token,id) => {
     return data
 }
 
+export const updateVolunteersAPI = async (token ,values,id) => {
+    const {data} =  await axiosWithToken(token).put(`/api/volunteers/update/${id}`,values)
+    return data
+}
+
 export const getTotalVolunteersAPI = async (token) => {
     const {data} =  await axiosWithToken(token).get(`/api/volunteers/total`)
     return data

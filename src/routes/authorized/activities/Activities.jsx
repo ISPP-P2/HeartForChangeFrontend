@@ -17,16 +17,19 @@ import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/ap
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 
 
 function Activities() {
   const user = useAuthUser();
+  const [handleDeleteFunc, setHandleDeleteFunc] = React.useState({});
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
-  const [handleCloseFunc, setHandleCloseFunc] = React.useState(null);
+ 
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -35,17 +38,21 @@ function Activities() {
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
-  const handleDelete = (id, handleCloseFunc) => {
-    deleteActivityAPI(user().token, id).then((res) => {
-      handleCloseFunc()
-    });
-
+  const handleDelete = (id, handleClose) => {
+    deleteActivityAPI(user().token, id).then(() => {
+      handleClose.handleClose()
+      query.refetch()
+      setSuccessMsg("Subvención eliminada correctamente")
+    }).catch((err) => {
+      setErrorMsg("Error al eliminar la subvención")
+    })
   }
+  
   
   const ActivityList = new CustomList(ParseActivity(query.data, handleDelete));
   let objetoTabla = ActivityList.parseToTable(
     ["Nombre de actividad","Lugar","Coordinador","Fecha","Ver detalles"],
-    ["name", "place","date","coordinator", "button"],
+    ["name", "place","coordinator","date", "button"],
     ["Observaciones"],
     ["observations"]   
     )
@@ -53,15 +60,15 @@ function Activities() {
   
   return (
     <BodyWrapper title={"Lista de actividades"}>
-    <CustomFlex direction={"column"}>
-        <CustomFlex direction={"row"}>
-            <CustomCardMini
-                   title='Nº de actividades'
-                  iconD={<BasicModal setHandleCloseButton={setHandleCloseFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleCloseFunc} query={query}/>}/>}
-                  totalNumber={query.data.length}/>
-          </CustomFlex>
-       {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
-      </CustomFlex>
+      <CustomFlex direction={"column"}>
+          <CustomFlex direction={"row"}>
+              <CustomCardMini
+                    title='Nº de actividades'
+                    iconD={<BasicModal setHandleCloseButton={setHandleDeleteFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleDeleteFunc} query={query}/>}/>}
+                    totalNumber={query.data.length}/>
+            </CustomFlex>
+        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
+        </CustomFlex> 
       </BodyWrapper>
     );
 }
@@ -70,14 +77,17 @@ export default Activities;
 
 
 const ToolList = ({actividad, handleDelete, id}) => {
+
+  const [handleCloseFunc, setHandleCloseFunc] = React.useState({});
+
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink  to={`/ong/actividad/${id}`}>
         <SearchIcon />
       </CustomLink>
-      <BasicModal title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
+      <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"1.5rem"} body={<Box>
         <Typography>El actividad se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}
         />
     </CustomFlex>
@@ -90,7 +100,7 @@ const ParseActivity = (data, handleDelete) => {
   return data.map((actividad) => {
     return {
       ...actividad,
-      button: <ToolList  actividad={actividad} handleDelete={handleDelete} id={actividad.id} />,
+      button: <ToolList  actividad={actividad} handleDelete={handleDelete}  id={actividad.id} />,
     };
   });
 }

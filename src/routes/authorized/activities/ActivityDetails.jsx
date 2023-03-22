@@ -23,7 +23,9 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import * as Yup from 'yup';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
-import { getActivityAPI } from "../../../api/actividades/api";
+import { getActivityAPI, updateActivityAPI } from "../../../api/actividades/api";
+import CustomReloading from '../../../components/CustomReloading';
+import CustomError from '../../../components/CustomError';
 
 const form = [
     {
@@ -161,6 +163,7 @@ const actividadesConBoton = actividades.map((actividad) => {
 });
 
 function ActivityDetails() {
+  const [readOnlyValue, toggleReadOnly] = useState(true)
   const { id } = useParams()
   const user = useAuthUser();
   const mobile = useMediaQuery('(min-width:1200px)');
@@ -168,15 +171,17 @@ function ActivityDetails() {
   
 
   if(query.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(query.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> query.refetch()}/>
+  }
+
+  const updateActivity = (values) => {
+    console.log(values)
+    updateActivityAPI(user().token, values, id)
+    toggleReadOnly(!readOnlyValue);
   }
 
   const ActivityList = new CustomList(actividadesConBoton)
@@ -198,8 +203,10 @@ function ActivityDetails() {
         gridTemplateRows={mobile ? "100%":"1fr"}> 
         <BasicFrom 
         form={parseActividad(query.data)}
-        readOnly={true}
-        handleSubmitForm={(values) => console.log(values)}
+        readOnly={readOnlyValue}
+        buttonText={"Confirmar"}
+        handleSubmitForm={updateActivity}
+        showButton = {!readOnlyValue}
         />     
           <Grid
               display={"grid"}
@@ -209,7 +216,8 @@ function ActivityDetails() {
                 <CustomCard
                   title='Editar actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Editar"}  
+                  buttonSidebar={<CustomButton text={"Editar"}
+                  onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
                   <CustomCard

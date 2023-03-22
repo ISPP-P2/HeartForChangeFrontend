@@ -9,23 +9,6 @@ import { useAuthUser } from 'react-auth-kit';
 import * as Yup from 'yup';
 const form = [
   {
-    name: "username",
-    type: FORM_TYPES.TEXT,
-    label: "Nombre de usuario",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  {
-    name: "password",
-    type: FORM_TYPES.TEXT,
-    label: "Contraseña",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(120, "La dirección no puede tener más de 120 caracteres")
-    .required("Este campo es obligatorio"),
-    
-  },
-  {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Correo electrónico",
@@ -96,7 +79,6 @@ const form = [
     .max(new Date(), "La fecha de nacimiento no puede ser en el futuro")
     .required("Este campo es obligatorio"),
   },
-
   {
     name: "civilStatus",
     type: FORM_TYPES.SELECT,
