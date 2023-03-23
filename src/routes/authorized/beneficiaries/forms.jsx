@@ -1,5 +1,6 @@
 import { Avatar} from '@mui/material';
 import { FORM_TYPES } from '../../../components/utils/utilsForms';
+import * as Yup from 'yup';
 
 export const beneficiarios = [
     {
@@ -69,44 +70,66 @@ export let beneficiarioBasicFormValue = [
     name: "name",
     type: FORM_TYPES.TEXT,
     label: "Nombre",
-    value: "name"
+    value: "name",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "cif",
     type: FORM_TYPES.TEXT,
     label: "Código de identificación fiscal",
-    value: "cif"
+    value: "cif",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra y 8 dígitos")
+    .min(9, "El CIF debe tener una longitud de 9 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Email",
-    value: "email"
+    value: "email",
+    validation: Yup.string()
+    .email("Debe ser un email válido")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "description",
     type: FORM_TYPES.TEXTEAREA,
     label: "Descripción",
-    value: "description"
+    value: "description",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "username",
     type: FORM_TYPES.TEXT,
     label: "Nombre de usuario",
-    value: "username"
+    value: "username",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
 
   {
     name: "address",
     type: FORM_TYPES.TEXT,
     label: "Dirección",
-    value: "address"
+    value: "address",
+    validation: Yup.string()
+    .required("Este campo es obligatorio")
+    .min(5, "La dirección debe tener al menos 5 caracteres")
+    .max(50, "La dirección no puede tener más de 100 caracteres"),
   },
   {
     name: "birthday",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de nacimiento",
-    value: "birthday"
+    value: "birthday",
+    validation: Yup.date()
+    .max(new Date(), "La fecha de nacimiento no puede ser en el futuro")
+    .required("Este campo es obligatorio"),
   },
  
   {
@@ -119,13 +142,18 @@ export let beneficiarioBasicFormValue = [
       { label: "Viudo", value: "WIDOWED" },
       { label: "Divorciado", value: "DIVORCED" },
     ],
-    value: "civilStatus"
+    value: "civilStatus",
+    validation: Yup.string().required("Este campo es obligatorio"),
   },
   {
     name: "documentNumber",
     type: FORM_TYPES.TEXT,
     label: "Número de Documentación",
-    value: "documentNumber"
+    value: "documentNumber",
+    validation: Yup.string()
+    .required("Este campo es obligatorio")
+      .min(9, "El número de documentación debe tener 9 caracteres")
+      .max(9, "El número de documentacióndebe tener 9 caracteres"),
   },
   {
     name: "documentType",
@@ -136,13 +164,16 @@ export let beneficiarioBasicFormValue = [
       { label: "NIE", value: "NIE" },
       { label: "Pasaporte", value: "PASSPORT" },
     ],
-    value: "documentType"
+    value: "documentType",
+    validation: Yup.string().required("Este campo es obligatorio"),
   },
   {
     name: "driveLicenses",
     type: FORM_TYPES.TEXT,
     label: "Carnet de conducir",
-    value: "driveLicenses"
+    value: "driveLicenses",
+    validation: Yup.string()
+    .max(100, "No puede tener más de 100 caracteres"),
   },
   {
     name: "entryDate",
@@ -154,13 +185,19 @@ export let beneficiarioBasicFormValue = [
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
     label: "Primer apellido",
-    value: "firstSurname"
+    value: "firstSurname",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "secondSurname",
     type: FORM_TYPES.TEXT,
     label: "Segundo apellido",
-    value: "secondSurname"
+    value: "secondSurname",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "gender",
@@ -170,61 +207,85 @@ export let beneficiarioBasicFormValue = [
       { label: "Hombre", value: "MALE" },
       { label: "Mujer", value: "FEMALE" },
     ],
-    value: "gender"
+    value: "gender",
+    validation: Yup.string().required("Este campo es obligatorio"),
   },
-  {
-    name: "hourOfAvailability",
-    type: FORM_TYPES.TEXT,
-    label: "Horas de disponibilidad",
-    value: "hourOfAvailability"
-  },
+
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de salida",
-    value: "leavingDate"
+    value: "leavingDate",
+    validation: Yup.date()
   },
   {
     name: "numberOfChildren",
     type: FORM_TYPES.NUMBER,
     label: "Número de hijos",
-    value: "numberOfChildren"
+    value: "numberOfChildren",
+    validation: Yup.number()
+    .required("Este campo es obligatorio (0 en caso de no tener)")
+    .min(0, "El número de hijos debe ser mayor o igual a 0")
   },
   {
     name: "otherSkills",
     type: FORM_TYPES.TEXTEAREA,
     label: "Otras habilidades",
-    value: "otherSkills"
+    value: "otherSkills",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(350, "debe tener menos de 350 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "postalCode",
     type: FORM_TYPES.NUMBER,
     label: "Código Postal",
-    value: "postalCode"
+    value: "postalCode",
+    validation: Yup.number()
+    .required("Este campo es obligatorio")
+    .test(
+      "len",
+      "El código postal debe tener 5 cifras",
+      (val) => val.toString().length === 5
+    )
+     
   },
   {
     name: "registrationAddress",
     type: FORM_TYPES.TEXT,
     label: "Dirección de registro",
-    value: "registrationAddress"
+    value: "registrationAddress",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(50, "debe tener menos de 50 caracteres")
+   
+   
   },
   {
     name: "telephone",
     type: FORM_TYPES.NUMBER,
     label: "Teléfono",
-    value: "telephone"
+    value: "telephone",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(15, "debe tener menos de 15 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "town",
     type: FORM_TYPES.TEXT,
     label: "Ciudad",
-    value: "town"
+    value: "town",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(20, "debe tener menos de 20 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "nationality",
     type: FORM_TYPES.TEXT,
     label: "Nacionalidad",
-    value: "nationality"
+    value: "nationality",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(50, "debe tener menos de 50 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "doubleNationality",
@@ -234,13 +295,16 @@ export let beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
-    value: "doubleNationality"
+    value: "doubleNationality",
+    validation: Yup.boolean().required("Este campo es obligatorio"),
   },
   {
     name: "arrivedDate",
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de llegada",
-    value: "arrivedDate"
+    value: "arrivedDate",
+    validation: Yup.date()
+    .required("Este campo es obligatorio"),
   },
   {
     name: "europeanCitizenAuthorization",
@@ -250,7 +314,8 @@ export let beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
-    value: "europeanCitizenAuthorization"
+    value: "europeanCitizenAuthorization",
+    validation: Yup.boolean(),
   },
   {
     name: "touristVisa",
@@ -260,13 +325,15 @@ export let beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
-    value: "touristVisa"
+    value: "touristVisa",
+    validation: Yup.boolean(),
   },
   {
     name: "dateTouristVisa",
     type: FORM_TYPES.ONLYDATE,
     label: "fecha de visado turista",
-    value: "dateTouristVisa"
+    value: "dateTouristVisa",
+    validation: Yup.date()
   },
   {
     name: "healthCard",
@@ -275,20 +342,29 @@ export let beneficiarioBasicFormValue = [
     list: [
       { label: "Si", value: true },
       { label: "No", value: false },
+      
     ],
-    value: "healthCard"
+
+    value: "healthCard",
+    validation: Yup.boolean(),
   },
   {
     name: "employmentSector",
     type: FORM_TYPES.TEXT,
     label: "Sector de empleo",
-    value: "employmentSector"
+    value: "employmentSector",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(150, "debe tener menos de 150 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "perceptionAid",
     type: FORM_TYPES.TEXT,
     label: "Ayuda percibida",
-    value: "perceptionAid"
+    value: "perceptionAid",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(150, "debe tener menos de 150 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "savingsPossesion",
@@ -298,7 +374,8 @@ export let beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
-    value: "savingsPossesion"
+    value: "savingsPossesion",
+    validation: Yup.boolean(),
   },
   {
     name: "working",
@@ -308,7 +385,8 @@ export let beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
-    value: "working"
+    value: "working",
+    validation: Yup.boolean(),
   },
   {
     name: "computerKnowledge",
@@ -318,18 +396,25 @@ export let beneficiarioBasicFormValue = [
       { label: "Si", value: true },
       { label: "No", value: false },
     ],
-    value: "computerKnowledge"
+    value: "computerKnowledge",
+    validation: Yup.boolean(),
   },
   {
     name: "ownedDevices",
     type: FORM_TYPES.TEXTEAREA,
     label: "Dispositivos propios",
-    value: "ownedDevices"
+    value: "ownedDevices",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(200, "debe tener menos de 200 caracteres")
+    .required("Este campo es obligatorio"),
   },
   {
     name: "languages",
     type: FORM_TYPES.TEXT,
     label: "Idioma",
-    value: "languages"
+    value: "languages",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(100, "debe tener menos de 100 caracteres")
+    .required("Este campo es obligatorio"),
   },
 ];

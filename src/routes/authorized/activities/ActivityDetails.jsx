@@ -34,35 +34,18 @@ const form = [
         label: "Nombre de la actividad",
         icon: <BadgeIcon />,
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido"),
-    }, 
-    {
-        name: "type",
-        type: FORM_TYPES.SELECT,
-        label: "Tipo",
-        list: [
-            {
-                label: "Curso",
-                value: "CURSO"
-            }, {
-                label: "Actividad",
-                value: "ACTIVIDAD"
-            }, {
-                label: "Taller",
-                value: "TALLER"
-            },
-        ],
-        icon: <CelebrationIcon />,
-    },
+        .min(2, "Tiene haber al menos dos caracteres")
+        .max(20, "No puede tener más de 20 caracteres")
+        .required("Este campo es obligatorio"),
 
+    }, 
+   
     {
         name: "place",
         type: FORM_TYPES.TEXT,
         label: "Lugar",
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido"),
+        .required("Este campo es obligatorio"),
         icon: <PlaceIcon />,
     },
     {
@@ -78,27 +61,26 @@ const form = [
                 value: true
             },
         ],
+        validation: Yup.boolean().required("Este campo es obligatorio"),
     },
     {
         name: "date",
         type: FORM_TYPES.DATE,
         label: "Fecha",
         validation: Yup.date("Deber ser una fecha"),
+        validation: Yup.date()
+        .required("Este campo es obligatorio"),
     },
     {
         name: "coordinator",
         type: FORM_TYPES.TEXT,
         label: "Coordinador",
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere"),
+        .required("Este campo es obligatorio"),
+                        
         icon: <EmojiPeopleIcon />,
     },
     {
-        name: "teacher",
-        type: FORM_TYPES.TEXT,
-        label: "Profesor",
-        validation: Yup.string("Deber ser una cadena de caracteres"),
-    },{
         name: "incidences",
         type: FORM_TYPES.TEXT,
         label: "Incidencias",
@@ -107,7 +89,7 @@ const form = [
         name: "numParticipants",
         type: FORM_TYPES.NUMBER,
         label: "Numero de participantes",
-        validation: Yup.number("Deber ser una cadena de caracteres"),
+        validation: Yup.number("Deber ser una cadena de caracteres").min(0, "El número de participantes debe ser mayor o igual a 0"),
     },
 ]
 
