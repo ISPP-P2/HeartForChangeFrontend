@@ -7,6 +7,7 @@ import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import * as Yup from 'yup';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 const form = [
   {
     name: "email",
@@ -199,12 +200,21 @@ function FormVolunteers() {
 
   const user = useAuthUser();
   const navigate = useNavigate();
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+
 
   const saveVolunteer = (values) => {
       console.log(values)
-      saveVolunteerAPI(user().token, values)
-      navigate("/ong/voluntarios")
-      
+      saveVolunteerAPI(user().token, values).then(
+          (response) => {
+              setSuccessMsg("Voluntario añadido correctamente")
+              navigate("/ong/voluntarios")
+          }
+      ).catch(
+          (error) => {
+              setErrorMsg("Error al añadir el voluntario")
+          }
+      )
   }
 
   return (

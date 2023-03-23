@@ -7,6 +7,10 @@ import TimelapseIcon from '@mui/icons-material/Timelapse';
 import SchoolIcon from '@mui/icons-material/School';
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
+import { PostAcademixExperience } from '../../../api/complementaryInformation/AcademixExperience';
+import { useAuthUser } from 'react-auth-kit';
+import { PostComplementaryInformation } from '../../../api/complementaryInformation/complementaryFormation';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 const form = [
     {
@@ -16,11 +20,10 @@ const form = [
         icon: <SchoolIcon />,
 
     }, {
-        name: "organism",
+        name: "organization",
         type: FORM_TYPES.TEXT,
         label: "Organismo",
         icon: <BusinessIcon />,
-
     },
     {
         name: "place",
@@ -33,8 +36,8 @@ const form = [
     },
 
     {
-        name: "year",
-        type: FORM_TYPES.TEXTEAREA,
+        name: "date",
+        type: "date",
         label: "Año",
         validation: Yup.string("Deber ser una cadena de caracteres")
                         .min(2, "Tiene haber al menos dos caractere")
@@ -46,12 +49,29 @@ const form = [
 
 
 
-function ComplementaryFormationForm() {
+function ComplementaryFormationForm({id, handleClose}) {
+    const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+    const auth = useAuthUser()
+
+    const handleSubmitForm = (values) => {
+        PostComplementaryInformation(auth().token, values, id).then(
+            (response) => {
+                setSuccessMsg("Se ha añadido correctamente")
+                handleClose.handleClose()
+            }
+        ).catch(
+            (error) => {
+                setErrorMsg("Ha ocurrido un error")
+            }
+        );
+    }
+
+
   return (
         <BasicFrom 
         form={form} 
         buttonText={"añadir"}
-        handleSubmitForm={(values) => console.log(values)}
+        handleSubmitForm={handleSubmitForm}
     />
   )
 }

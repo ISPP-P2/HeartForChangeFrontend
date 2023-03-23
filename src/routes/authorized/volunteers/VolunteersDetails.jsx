@@ -20,6 +20,9 @@ import { useQuery } from 'react-query';
 import { useLocation } from "react-router-dom";
 import { getVolunteerAPI, updateVolunteersAPI } from '../../../api/voluntarios/api';
 import { useParams } from 'react-router-dom';
+import VolunteerAcademicExperienceForm from "./VolunteerAcademicExperienceForm";
+import VolunteerComplementaryForm from "./VolunteerComplementaryForm";
+import VolunteerWorkForm from "./VolunteerWorkForm";
 
 
 let voluntarioForm = [
@@ -224,62 +227,10 @@ function VolunteerDetails({ match }) {
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>
-              <CustomFlex direction={"column"}>
-                <CustomFlex direction={"row"}>
-                  <Box flexBasis={"fit-content"}>
-                    <BasicModal
-                      widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Experiencia Académica"}
-                      title={"Experiencia Académica"}
-                      body={<BasicFrom form={extraForm("Experiencia Académica", "academicExperience",voluntario)} readOnly={true} />}
-                    />
-                  </Box>
-                  <BasicModal
-                      variant={VARIANTES_BUTTON.GREEN2}
-
-                    text={<AddIcon />}
-                    title={"Experiencia Académica"}
-                    body={<AcademicExperienceForm />}
-                  />
-                  
-                </CustomFlex>
-                <CustomFlex direction={"row"} >
-                  <Box flexBasis={"fit-content"}>
-                    <BasicModal
-                      widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Experiencia Laboral"}
-                      title={"Experiencia Laboral"}
-                      body={<BasicFrom form={extraForm("Experiencia Laboral", "workingExperience",voluntario)} readOnly={true} />}
-                    />
-                  </Box>
-                    <BasicModal
-                      variant={VARIANTES_BUTTON.GREEN2}
-
-                      text={<AddIcon />}
-                      title={"Experiencia Laboral"}
-                      body={<WorkExperienceForm />}
-                    />
-                </CustomFlex>
-                <CustomFlex direction={"row"}>
-                  <Box flexBasis={"fit-content"}>
-                    <BasicModal
-                       widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Formación Complementaria"}
-                      title={"Formación Complementaria"}
-                      body={<BasicFrom form={extraForm("Formacion Complementaria", "extraEducation",voluntario)} readOnly={true} />}
-                    />
-                  </Box>
-                  <BasicModal
-                      variant={VARIANTES_BUTTON.GREEN2}
-
-                    text={<AddIcon />}
-                    title={"Formación Complementaria"}
-                    body={<ComplementaryFormationForm />}
-                  />
-                </CustomFlex>
+            <CustomFlex direction={"column"}>
+                <VolunteerAcademicExperienceForm id={id} />
+                <VolunteerWorkForm id={id} />
+                <VolunteerComplementaryForm id={id} />
               </CustomFlex>
             </Box>
           </Box>
