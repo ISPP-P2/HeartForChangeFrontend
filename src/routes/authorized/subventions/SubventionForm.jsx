@@ -8,7 +8,7 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import { useAuthUser } from 'react-auth-kit';
 import { saveSubventionAPI } from '../../../api/subvenciones/api';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
-const form = [
+export const form = [
     {
         name: "privateGrant",
         type: FORM_TYPES.SELECT,
