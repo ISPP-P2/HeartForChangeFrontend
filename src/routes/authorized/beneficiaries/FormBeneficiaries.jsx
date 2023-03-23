@@ -16,7 +16,7 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Nombre",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
   {
@@ -49,9 +49,17 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Nombre de usuario",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
+  {
+    name: "password",
+    type: FORM_TYPES.TEXT,
+    label: "Contraseña",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  
   {
     name: "address",
     type: FORM_TYPES.TEXT,
@@ -106,11 +114,20 @@ const form = [
       .max(9, "El número de documentacióndebe tener 9 caracteres"),
   },
   {
+    name: "driveLicenses",
+    type: FORM_TYPES.TEXT,
+    label: "Carnet de conducir",
+    validation: Yup.string()
+    .max(100, "No puede tener más de 100 caracteres"),
+  },
+  
+
+  {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
     label: "Primer apellido",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
   {
@@ -118,7 +135,7 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Segundo apellido",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
   {
@@ -281,6 +298,7 @@ const form = [
     .max(150, "debe tener menos de 150 caracteres")
     .required("Este campo es obligatorio"),
   },
+  
   {
     name: "savingsPossesion",
     type: FORM_TYPES.SELECT,
