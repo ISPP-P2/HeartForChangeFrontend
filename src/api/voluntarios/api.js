@@ -1,7 +1,7 @@
 import { axiosWithToken } from "../auth/axios"
 
 export const getVolunteersAPI = async (token) => {
-    const {data} =  await axiosWithToken(token).get("/api/volunteers/ong")
+    const {data} =  await axiosWithToken(token).get("/api/volunteers/get")
     return data
 }
 export const saveVolunteerAPI = async (token, values) => {
@@ -15,7 +15,7 @@ export const deleteVolunteerAPI = async (token, id) => {
 }
 
 export const getVolunteerAPI = async (token,id) => {
-    const {data} =  await axiosWithToken(token).get(`/api/volunteers/${id}`)
+    const {data} =  await axiosWithToken(token).get(`/api/volunteers/get/${id}`)
     return data
 }
 
@@ -26,5 +26,10 @@ export const updateVolunteersAPI = async (token ,values,id) => {
 
 export const getTotalVolunteersAPI = async (token) => {
     const {data} =  await axiosWithToken(token).get(`/api/volunteers/total`)
+    return data
+}
+
+export const resetPassword = async (token, id, password) => {
+    const {data} =  await axiosWithToken(token).put(`/api/volunteers/update/${id}/password`, password)
     return data
 }

@@ -24,6 +24,9 @@ import { useState } from 'react'
 import { updateBeneficiariesAPI } from '../../../api/beneficiario/api';
 import CustomReloading from "../../../components/CustomReloading";
 import CustomError from "../../../components/CustomError";
+import BeneficiariesComplementaryInformation from "./BeneficiariesComplementaryInformation";
+import BeneficiariesAcademicExperienceForm from "./BeneficiariesAcademicExperienceForm";
+import BeneficiariesWorkExperiencesForm from "./BeneficiariesWorkExperiencesForm";
 
 
 
@@ -33,10 +36,17 @@ const parseBenfeiciario = (beneficiario) => {
     return { ...item, value: beneficiario[item.name] };
   });
 }
+export const extraForm2 = (title, variable) => {
+   return { 
+      name: "academicExperience",
+      type: FORM_TYPES.TEXT,
+      label: title,
+      value: variable
+  }
+  };
 
 
-
-const extraForm = (title, variable) => [
+export const extraForm = (title, variable) => [
   {
     name: "academicExperience",
     type: FORM_TYPES.TEXT,
@@ -52,6 +62,7 @@ function BeneficiariesDetails() {
   const query = useQuery(["QUERY_BENEFICIARIES_DETAILS", id],() => getBeneficiarieAPI(user().token,id));
   const mobile = useMediaQuery("(min-width: 850px)");
 
+
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -61,11 +72,10 @@ function BeneficiariesDetails() {
   }
 
   const updateBeneficiarie = (values) => {
-    console.log(values)
     updateBeneficiariesAPI(user().token, values, id)
     toggleReadOnly(!readOnlyValue);
   }
-
+ 
   return (
     
     <BodyWrapper title={`Beneficiario ${id}`}>
@@ -89,59 +99,9 @@ function BeneficiariesDetails() {
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>
               <CustomFlex direction={"column"}>
-                <CustomFlex direction={"row"}>
-                  <Box flexBasis={"fit-content"}>
-                    <BasicModal
-                      widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Experiencia Académica"}
-                      title={"Experiencia Académica"}
-                      body={<BasicFrom form={extraForm("Experiencia Académica", "Título de Bachillerato")} readOnly={true} />}
-                    />
-                  </Box>
-                  <BasicModal
-                      variant={VARIANTES_BUTTON.GREEN2}
-                    text={<AddIcon />}
-                    title={"Experiencia Académica"}
-                    body={<AcademicExperienceForm />}
-                  />
-                  
-                </CustomFlex>
-                <CustomFlex direction={"row"} >
-                  <Box flexBasis={"fit-content"}>
-                    <BasicModal
-                      widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Experiencia Laboral"}
-                      title={"Experiencia Laboral"}
-                      body={<BasicFrom form={extraForm("Experiencia Laboral", "Puesto: Bombero")} readOnly={true} />}
-                    />
-                  </Box>
-                    <BasicModal
-                      variant={VARIANTES_BUTTON.GREEN2}
-
-                      text={<AddIcon />}
-                      title={"Experiencia Laboral"}
-                      body={<WorkExperienceForm />}
-                    />
-                </CustomFlex>
-                <CustomFlex direction={"row"}>
-                  <Box flexBasis={"fit-content"}>
-                    <BasicModal
-                       widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Formación Complementaria"}
-                      title={"Formación Complementaria"}
-                      body={<BasicFrom form={extraForm("Formación Complementaria", "Puesto: Bombero")} readOnly={true} />}
-                    />
-                  </Box>
-                  <BasicModal
-                    variant={VARIANTES_BUTTON.GREEN2}
-                    text={<AddIcon />}
-                    title={"Formación Complementaria"}
-                    body={<ComplementaryFormationForm />}
-                  />
-                </CustomFlex>
+                <BeneficiariesComplementaryInformation id={id} />
+                <BeneficiariesAcademicExperienceForm id={id} />
+                <BeneficiariesWorkExperiencesForm id={id} />
               </CustomFlex>
             </Box>
           </Box>

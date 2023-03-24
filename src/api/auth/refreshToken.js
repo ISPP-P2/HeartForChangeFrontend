@@ -13,9 +13,7 @@ const refreshApi = createRefresh({
     }) =>  {
       const axios = axiosWithToken(refreshToken)
       const response = await axios.get('/accounts/refresh')
-      console.log("Reload 1")
       if(response.status === 200){
-        console.log("Reload 2")
         const tokens = parseTokens(response) 
         return {
           isSuccess: true, 

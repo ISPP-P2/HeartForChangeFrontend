@@ -3,7 +3,7 @@ import BodyWrapper from '../../../components/BodyWrapper'
 
 function MyListActivity() {
   return (
-    <BodyWrapper title={"Mis de actividades"}>
+    <BodyWrapper title={"Mis actividades"}>
 
     </BodyWrapper>
   )

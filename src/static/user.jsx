@@ -6,7 +6,6 @@ export class CustomList {
   
     parseToTable(header = null, information = null, headerInformation = null, details = null){
         if(header === null && information === null){
-          console.log("faltan cosas")
           return null
         }
 
@@ -32,6 +31,21 @@ export class CustomList {
             details: headerInformation !== null && details !== null
         }
     }
+    parseToTableBasic(header = null, information = null){
+      if(header === null && information === null){
+        return null
+      }
+
+      let list = this.list.map((value)=> {
+        return information.map((info, i)=> {
+            return value[info]
+        })
+      })
+      return {
+          header: header,
+          items: list
+      }
+  }
 
 
 }

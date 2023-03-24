@@ -7,16 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import * as Yup from 'yup';
 
-
-
-
 const form = [
   {
     name: "name",
     type: FORM_TYPES.TEXT,
     label: "Nombre",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
   {
@@ -27,7 +24,6 @@ const form = [
     .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra y 8 dígitos")
     .min(9, "El CIF debe tener una longitud de 9 caracteres")
     .required("Este campo es obligatorio"),
-    
   },
   {
     name: "email",
@@ -49,9 +45,17 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Nombre de usuario",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
+  {
+    name: "password",
+    type: FORM_TYPES.TEXT,
+    label: "Contraseña",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  
   {
     name: "address",
     type: FORM_TYPES.TEXT,
@@ -82,9 +86,6 @@ const form = [
     ],
     validation: Yup.string().required("Este campo es obligatorio"),
   },
-   
-  
-   
   {
     name: "documentType",
     type: FORM_TYPES.SELECT,
@@ -106,11 +107,18 @@ const form = [
       .max(9, "El número de documentacióndebe tener 9 caracteres"),
   },
   {
+    name: "driveLicenses",
+    type: FORM_TYPES.TEXT,
+    label: "Carnet de conducir",
+    validation: Yup.string()
+    .max(100, "No puede tener más de 100 caracteres"),
+  },
+  {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
     label: "Primer apellido",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
   {
@@ -118,7 +126,7 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Segundo apellido",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "La dirección no puede tener más de 20 caracteres")
+    .max(20, "No puede tener más de 20 caracteres")
     .required("Este campo es obligatorio"),
   },
   {
@@ -138,7 +146,6 @@ const form = [
     validation: Yup.date()
       .required("Este campo es obligatorio"),
   },
- 
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
@@ -176,8 +183,6 @@ const form = [
     "El código postal debe tener 5 cifras",
     (val) => val.toString().length === 5
   )
-   
-
   },
   {
     name: "registrationAddress",
@@ -281,6 +286,7 @@ const form = [
     .max(150, "debe tener menos de 150 caracteres")
     .required("Este campo es obligatorio"),
   },
+  
   {
     name: "savingsPossesion",
     type: FORM_TYPES.SELECT,

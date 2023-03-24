@@ -12,6 +12,7 @@ import { useAuthUser, useIsAuthenticated, useSignIn } from 'react-auth-kit';
 import axios from '../../api/auth/axios';
 import { CustomNotistackContext } from '../../context/CustomNotistack';
 import { useContext, useEffect, useState } from 'react';
+import CustomReloading from '../../components/CustomReloading';
 
 function Copyright(props) {
 return (
@@ -42,18 +43,16 @@ export default function SignIn() {
   const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
 
   useEffect(() => {
-    if(isLogged() ){
+    if(isLogged()){
       if(auth().rol == "ONG"){
         navigate("/ong")
       }else{
         navigate("/vol")
       }
+      setIsLoading(false)
     }
     setIsLoading(false)
   }, [isLogged, navigate])
-
-
-
 
 
   const onChangePassword = (event) => {
@@ -98,6 +97,8 @@ export default function SignIn() {
   }
   
 return (
+  <>
+   {isLoading ? <CustomReloading /> :
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
@@ -176,8 +177,8 @@ return (
         </Box>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
+    </Container>}
+    </>
 );
-
 }
 

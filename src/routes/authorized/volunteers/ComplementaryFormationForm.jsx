@@ -7,6 +7,10 @@ import TimelapseIcon from '@mui/icons-material/Timelapse';
 import SchoolIcon from '@mui/icons-material/School';
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
+import { PostAcademixExperience } from '../../../api/complementaryInformation/AcademixExperience';
+import { useAuthUser } from 'react-auth-kit';
+import { PostComplementaryInformation } from '../../../api/complementaryInformation/complementaryFormation';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 const form = [
     {
@@ -14,31 +18,35 @@ const form = [
         type: FORM_TYPES.TEXT,
         label: "Nombre del curso",
         icon: <SchoolIcon />,
-
+        validation: Yup.string("Deber ser una cadena de caracteres")
+        .min(0, "Tiene haber al menos dos caracteres")
+        .max(50, "Tiene que haber menos de 50 caracteres")
+        .required("No puede estar vacío"),
     }, {
-        name: "organism",
+        name: "organization",
         type: FORM_TYPES.TEXT,
         label: "Organismo",
         icon: <BusinessIcon />,
-
+        validation: Yup.string("Deber ser una cadena de caracteres")
+                            .min(0, "Tiene haber al menos dos caracteres")
+                            .max(50, "Tiene que haber menos de 50 caracteres")
+                        .required("No puede estar vacío"),
     },
     {
         name: "place",
         type: FORM_TYPES.TEXT,
         label: "Lugar",
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido"),
+                        .required("No puede estar vacío"),
         icon: <PlaceIcon />,
     },
 
     {
-        name: "year",
-        type: FORM_TYPES.TEXTEAREA,
+        name: "date",
+        type: "date",
         label: "Año",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido"),
+        validation: Yup.date("Deber ser una fecha")
+                        .required("No puede estar vacío"),
         icon: <TimelapseIcon />,
     }
    
@@ -46,12 +54,29 @@ const form = [
 
 
 
-function ComplementaryFormationForm() {
+function ComplementaryFormationForm({id, handleClose}) {
+    const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+    const auth = useAuthUser()
+
+    const handleSubmitForm = (values) => {
+        PostComplementaryInformation(auth().token, values, id).then(
+            (response) => {
+                setSuccessMsg("Se ha añadido correctamente")
+                handleClose.handleClose()
+            }
+        ).catch(
+            (error) => {
+                setErrorMsg("Ha ocurrido un error")
+            }
+        );
+    }
+
+
   return (
         <BasicFrom 
         form={form} 
         buttonText={"añadir"}
-        handleSubmitForm={(values) => console.log(values)}
+        handleSubmitForm={handleSubmitForm}
     />
   )
 }

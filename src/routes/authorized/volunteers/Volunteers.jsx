@@ -1,18 +1,13 @@
 import users, { CustomList } from '../../../static/user'
-import { Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
 import CustomFlex from '../../../components/CustomFlex';
-import CustomCard from '../../../components/CustomCard';
 import BasicTable from '../../../components/BasicTable';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CustomCardMini from '../../../components/CustomCardMini';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
 import CustomLink from '../../../components/CustomLink';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import BasicModal from '../../../components/BasicModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useEffect, useMemo } from 'react';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { Typography, useMediaQuery } from '@mui/material';
@@ -20,13 +15,23 @@ import { deleteVolunteerAPI, getVolunteersAPI } from '../../../api/voluntarios/a
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomError from '../../../components/CustomError';
 import CustomReloading from '../../../components/CustomReloading';
+import { useContext, useState } from 'react';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 const Listado = ({data}) => {
+  const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
 
   const user = useAuthUser();
-  const handleDelete = (id) => {
-    deleteVolunteerAPI(user().token, id)
-    location.reload()
+  const handleDelete = (id, handleClose) => {
+    deleteVolunteerAPI(user().token, id).then(
+      (response) => {
+          setSuccessMsg("Voluntario eliminado correctamente")
+          handleClose.handleClose()
+      }
+    ).catch((error) => {
+        setErrorMsg("Error al eliminar el voluntario")
+        handleClose.handleClose()
+    });
   }
 
 
@@ -45,9 +50,9 @@ const Listado = ({data}) => {
     ["nombreActividad", "fechaActividad"]
   )
 
-    return (
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
-    )
+  return (
+      <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+  )
 
 }
 
@@ -75,7 +80,7 @@ function Volunteers() {
          <CustomFlex  direction={"row"}>
             <CustomCardMini 
                   title='Nº de voluntarios'
-                  iconD={<CustomLink to="/ong/voluntario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
+                  iconD={<CustomLink to="/ong/voluntario/añadir"><CustomButton  text={"Añadir"} /></CustomLink>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
           <Listado data={query.data} />
@@ -89,14 +94,17 @@ export default Volunteers;
 
 
 const ToolList = ({usuario, handleDelete, id}) => {
+
+  const [handleClose, setHandleClose] = useState({})
+
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       <CustomLink  to={`/ong/voluntario/${id}`}>
         <SearchIcon />
       </CustomLink>
-      <BasicModal title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
+      <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleClose)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
@@ -120,7 +128,6 @@ const RolAccountParser = (rolAccount) => {
 
 const VoluntarioParser = (data, handleDelete) => {
   return data.map((usuario) => {
-    console.log(usuario)
     return {
       ...usuario,
       gender: usuario.gender === "MALE" ? "Hombre" : "Mujer",

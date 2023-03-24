@@ -9,6 +9,7 @@ import ActivityDetails from "./activities/ActivityDetails";
 import AssignParticipants from "./activities/AssignParticipants";
 import Attendances from "./activities/Attendances";
 import VolunteerDetails from "./volunteers/VolunteersDetails";
+import SubventionsDetails from "./subventions/SubventionsDetails";
 import ActivityVolunteerDetails from "./activities/ActivityDetailsVolunteers";
 import FormBeneficiaries from "./beneficiaries/FormBeneficiaries";
 import FormVolunteers from "./volunteers/FormVolunteers";
@@ -61,6 +62,9 @@ export default function AutorizedRoutes() {
         <Route path={"añadir"} element={<FormBeneficiaries />} />
       </Route>
       <Route path={"/subvenciones"} element={<Subventions />} />
+      <Route path={"/subvencion"}>
+        <Route path={":id"}element={<SubventionsDetails />} />
+      </Route>
    
     </Routes>
     

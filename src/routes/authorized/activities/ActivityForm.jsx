@@ -62,14 +62,7 @@ const form = [
         .required("Este campo es obligatorio"),
         icon: <EmojiPeopleIcon />,
     },
-    {
-        name: "teacher",
-        type: FORM_TYPES.TEXT,
-        label: "Profesor",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-        .required("Este campo es obligatorio"),
-
-    },{
+   {
         name: "incidences",
         type: FORM_TYPES.TEXT,
         label: "Incidencias",
@@ -90,7 +83,7 @@ function ActivityForm({query,handleClose}) {
     const saveActivity = (values) => {
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
-        const values2 = {...values, date: responseDate, type: "ACTIVIDAD"}
+        const values2 = {...values, date: responseDate, type: "ACTIVIDAD",teacher:"ninguno"}
         saveActivityAPI(user().token, values2).then((response) => {
             handleClose.handleClose();
             query.refetch()

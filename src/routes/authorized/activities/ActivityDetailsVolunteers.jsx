@@ -3,8 +3,19 @@ import Box from '@mui/material/Box';
 import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
+import { useAuthUser } from 'react-auth-kit';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import CustomError from '../../../components/CustomError';
+import { useQuery } from 'react-query';
+import CustomReloading from '../../../components/CustomReloading';
+import { getActivityAPI } from '../../../api/actividades/api';
+import { Link, useParams } from 'react-router-dom';
+import BadgeIcon from '@mui/icons-material/Badge';
+import * as Yup from 'yup';
+import PlaceIcon from '@mui/icons-material/Place';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+
 import { CustomList } from '../../../static/user';
-import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
@@ -18,99 +29,92 @@ import BodyWrapper from '../../../components/BodyWrapper';
 
 const form = [
   {
+      name: "name",
+      type: FORM_TYPES.TEXT,
+      label: "Nombre de la actividad",
+      icon: <BadgeIcon />,
+      validation: Yup.string("Deber ser una cadena de caracteres")
+      .min(2, "Tiene haber al menos dos caracteres")
+      .max(20, "No puede tener más de 20 caracteres")
+      .required("Este campo es obligatorio"),
+
+  }, 
+ 
+  {
       name: "place",
       type: FORM_TYPES.TEXT,
       label: "Lugar",
-      value: 'Parque de la Fuensanta'
-  }, {
+      validation: Yup.string("Deber ser una cadena de caracteres")
+      .required("Este campo es obligatorio"),
+      icon: <PlaceIcon />,
+  },
+  {
+      name: "certificate",
+      type: FORM_TYPES.SELECT,
+      label: "Certificados",
+      list: [
+          {
+              label: "No",
+              value: false
+          }, {
+              label: "Sí",
+              value: true
+          },
+      ],
+      validation: Yup.boolean().required("Este campo es obligatorio"),
+  },
+  {
+      name: "date",
+      type: FORM_TYPES.DATE,
+      label: "Fecha",
+      validation: Yup.date("Deber ser una fecha"),
+      validation: Yup.date()
+      .required("Este campo es obligatorio"),
+  },
+  {
       name: "coordinator",
       type: FORM_TYPES.TEXT,
       label: "Coordinador",
-      value: 'Francisco Fernández'
-  }, {
-      name: "state",
+      validation: Yup.string("Deber ser una cadena de caracteres")
+      .required("Este campo es obligatorio"),
+                      
+      icon: <EmojiPeopleIcon />,
+  },
+  {
+      name: "incidences",
       type: FORM_TYPES.TEXT,
-      label: "Finalizada",
-      value: "No"
-  }, {
-      name: "date",
-      type: FORM_TYPES.TEXT,
-      label: "Fecha de realización",
-      value: "22-03-2023"
-  }, {
-      name: "group",
-      type: FORM_TYPES.TEXT,
-      label: "Grupo/Individual",
-      value: 'Individual'
-  }
+      label: "Incidencias",
+      validation: Yup.string("Deber ser una cadena de caracteres"),
+  },{
+      name: "numParticipants",
+      type: FORM_TYPES.NUMBER,
+      label: "Numero de participantes",
+      validation: Yup.number("Deber ser una cadena de caracteres").min(0, "El número de participantes debe ser mayor o igual a 0"),
+  },
 ]
 
-
-const actividades = [
-  {
-    id: "1",
-    name: "Ursula Valenzuela Martín",
-    dni: "80802020Z",
-    gender: "Mujer",
-    birthDate: "03/05/1998",
-    phoneNumber: "666254876",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
-    description: "Hola" 
-  },
-  {
-    id: "2",
-    name: "Juan Gómez García",
-    dni: "80802025Z",
-    gender: "Hombre",
-    birthDate: "18/01/1971",
-    phoneNumber: "698754687",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
-    description: "Hola" 
-  },
-  {
-    id: "3",
-    name: "Mario Pérez López",
-    dni: "80802028Z",
-    gender: "Hombre",
-    birthDate: "15/11/1982",
-    phoneNumber: "669857438",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>, 
-    description: "Hola" 
-  },
-  {
-    id: "4",
-    name: "Esteban Vázquez Bautista",
-    dni: "80802021Z",
-    gender: "Fluido",
-    birthDate: "20/02/1995",
-    phoneNumber: "611997854",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,    
-    description: "Hola" 
-  }, 
-
-]
-
-const actividadesConBoton = actividades.map((actividad) => {
-  return {
-    ...actividad,
-    button: <CustomLink to="/actividad/1"><SearchIcon /></CustomLink>,
-  };
-});
 
 function ActivityVolunteerDetails() {
-  const ActivityList = new CustomList(actividadesConBoton)
-  let objetoTabla = ActivityList.parseToTable(
-    ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
-    ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
-    ["Descripcion"],
-    ["description"]);
+  
+  const user = useAuthUser();
+  const { id } = useParams()
+  const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
+
+ 
+  if(query.isLoading){
+    return <CustomReloading />
+  }
+
+  if(query.isError){
+    return <CustomError onClick={()=> query.refetch()}/>
+  }
 
   
   return (
   
   <BodyWrapper title={"Actividad: Parque de la Fuensanta"}>
     <CustomFlex direction={"column"}>
-    <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
+    <Typography fontWeight={600} color='#999'>DESCRIPCION</Typography>
       <CustomFlex direction={"column"}>
         <Box>
           <Grid
@@ -119,7 +123,7 @@ function ActivityVolunteerDetails() {
           gridTemplateColumns={"1fr 1fr"}
           gridTemplateRows={"100%"}>
         <BasicFrom 
-        form={form} 
+        form={parseActividad(query.data)} 
         width={"-webkit-fill-available"} 
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
@@ -146,12 +150,17 @@ function ActivityVolunteerDetails() {
         </Box>
         
       </CustomFlex>
-        <Box sx={{marginTop:"5rem"}}>
-          <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
-        </Box>
+      
       </CustomFlex>
       </BodyWrapper>
     );
 }
+
+const parseActividad = (actividad) => {
+  return form.map((item) => {
+    return { ...item, value: actividad[item.name] };
+  });
+}
+
 
 export default ActivityVolunteerDetails;

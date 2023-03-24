@@ -7,6 +7,11 @@ import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import * as Yup from 'yup';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import CustomModal from '../../../components/CustomModal';
+import { Box, Typography } from '@mui/material';
+import random from 'random-string-generator';
+import CustomButton from '../../../components/CustomButton';
 const form = [
   {
     name: "email",
@@ -196,16 +201,40 @@ const form = [
 
 
 function FormVolunteers() {
-
   const user = useAuthUser();
   const navigate = useNavigate();
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+
+  const [open, setOpen] = React.useState(false);
+  const [password, setPassword] = React.useState('');
+  const [usuario, setUsuario] = React.useState('');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {};
 
   const saveVolunteer = (values) => {
-      console.log(values)
-      saveVolunteerAPI(user().token, values)
-      navigate("/ong/voluntarios")
-      
+      const passwordAux = random(8, 'upper')
+      setPassword(passwordAux)
+      const values2 = {
+            ...values, 
+            "password": passwordAux.toString()
+      }
+      saveVolunteerAPI(user().token, values2).then(
+          (response) => {
+              setUsuario(response.username)
+              handleOpen()
+              setSuccessMsg("Voluntario añadido correctamente")
+          }
+      ).catch(
+          (error) => {
+              setErrorMsg("Error al añadir el voluntario")
+          }
+      )
   }
+
+
+
+
 
   return (
     <BodyWrapper>
@@ -213,6 +242,34 @@ function FormVolunteers() {
             buttonText={"Añadir"}
             form={form}
             handleSubmitForm={saveVolunteer}
+        />
+        <CustomModal
+            title={"Voluntario añadido"}
+            body={
+            <Box sx={{display: 'flex', gap:"1rem", flexDirection: "column"}}>
+              <Box sx={{display: 'flex', justifyContent:"space-around"}}>
+                <Typography sx={{padding: "0.4rem", fontSize: "1.1rem"}}>
+                  Usuario:
+                </Typography>
+                <Typography  sx={{padding: "0.5rem", color: "white",fontWeight: "600", backgroundColor:"#999", borderRadius: "4px"}}>
+                  {usuario}
+                </Typography>
+              </Box>
+              <Box sx={{display: 'flex', justifyContent:"space-around"}}>
+                <Typography sx={{padding: "0.4rem", fontSize: "1.1rem"}}>
+                  Contraseña:
+                </Typography>
+                <Typography sx={{padding: "0.5rem", color: "white",fontWeight: "600", backgroundColor:"#999", borderRadius: "4px"}}>
+                  {password}
+                </Typography>
+              </Box>
+              <Box sx={{marginTop: "1rem"}}>
+              <CustomButton text={"Aceptar"} onClick={()=> navigate('/ong/voluntarios')} />
+              </Box>
+            </Box>
+           }
+            open={open}
+            handleClose={handleClose}
         />
     </BodyWrapper>
   )

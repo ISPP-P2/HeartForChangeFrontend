@@ -3,7 +3,9 @@ import BasicTable from '../../../components/BasicTable';
 import { CustomList } from '../../../static/activity'
 import CustomCardMini from '../../../components/CustomCardMini';
 import CustomFlex from '../../../components/CustomFlex';
+import CustomLink from '../../../components/CustomLink';
 import BasicModal from '../../../components/BasicModal';
+import SearchIcon from '@mui/icons-material/Search';
 import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
@@ -130,6 +132,7 @@ const ToolList = ({subvencion, handleDelete, id}) => {
 
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <CustomLink to={`/ong/subvencion/${subvencion.id}`}><SearchIcon /></CustomLink>
       <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>La subvención se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
