@@ -23,7 +23,7 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import * as Yup from 'yup';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
-import { getActivityAPI, updateActivityAPI } from "../../../api/actividades/api";
+import { getActivityAPI, getVolunteersByActivityAPI, updateActivityAPI } from "../../../api/actividades/api";
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 
@@ -111,56 +111,45 @@ const form = [
     },
 ]
 
-const actividades = [
-  {
-    id: "1",
-    name: "Ursula Valenzuela Martín",
-    dni: "80802020Z",
-    gender: "Mujer",
-    birthDate: "03/05/1998",
-    phoneNumber: "666254876",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
-    description: "Hola" 
-  },
-  {
-    id: "2",
-    name: "Juan Gómez García",
-    dni: "80802025Z",
-    gender: "Hombre",
-    birthDate: "18/01/1971",
-    phoneNumber: "698754687",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,
-    description: "Hola" 
-  },
-  {
-    id: "3",
-    name: "Mario Pérez López",
-    dni: "80802028Z",
-    gender: "Hombre",
-    birthDate: "15/11/1982",
-    phoneNumber: "669857438",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>, 
-    description: "Hola" 
-  },
-  {
-    id: "4",
-    name: "Esteban Vázquez Bautista",
-    dni: "80802021Z",
-    gender: "Fluido",
-    birthDate: "20/02/1995",
-    phoneNumber: "611997854",
-    botonVerMas: <CustomLink to="/actividad/2">Ver más</CustomLink>,    
-    description: "Hola" 
-  }, 
-
-];
-
-const actividadesConBoton = actividades.map((actividad) => {
-  return {
-    ...actividad,
-    button: <CustomLink to="/actividad/1"><SearchIcon /></CustomLink>,
-  };
-});
+const ToolList = ({usuario, id}) => {
+  return (
+    <CustomFlex justifyContent={"flex-start"} direction={"row"}>
+      <CustomLink  to={`/ong/voluntario/${id}`}>
+        <SearchIcon />
+      </CustomLink>
+    </CustomFlex>
+  )
+  
+  }
+  
+  
+  const RolAccountParser = (rolAccount) => {
+  if(rolAccount == "ONG"){
+    return "ONG"
+  } 
+  if(rolAccount == "VOLUNTEER"){
+    return "Voluntario"
+  } 
+  if(rolAccount == "BENEFICIARY"){
+    return "Beneficiario"
+  } 
+  return "Error"
+  }
+  
+  
+  const VoluntarioParser = (data) => {
+    if(data!==undefined&&data.length!==0){
+      return data.map((volunteer) => {
+          return {
+            ...volunteer,
+            gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
+            rolAccount: RolAccountParser(volunteer.rolAccount),
+            button:<ToolList usuario={volunteer} id={volunteer.id}/>,
+          }; 
+      });
+    }
+    return [];
+  }
 
 function ActivityDetails() {
   const [readOnlyValue, toggleReadOnly] = useState(true)
@@ -168,7 +157,7 @@ function ActivityDetails() {
   const user = useAuthUser();
   const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
-  
+  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersByActivityAPI(user().token,id));
 
   if(query.isLoading){
     return <CustomReloading />
@@ -184,12 +173,13 @@ function ActivityDetails() {
     toggleReadOnly(!readOnlyValue);
   }
 
-  const ActivityList = new CustomList(actividadesConBoton)
-  let objetoTabla = ActivityList.parseToTable(
-    ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
-    ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
-    ["Descripcion"],
-    ["description"]);
+  const VolunteerList = new CustomList(VoluntarioParser(volunteers.data))
+  let objetoTabla = VolunteerList.parseToTable(
+    ["Nombre de usuario","Género", "Email","Herramientas"], 
+    ["username", "gender","email", "button"],
+    ["Nombre","Primer Apellido", "Segundo Apellido"],
+    ["name", "firstSurname","secondSurname"]
+  )
   
   return (
     <BodyWrapper title={`Detalles de la actividad ${id}`} >
@@ -216,7 +206,7 @@ function ActivityDetails() {
                 <CustomCard
                   title='Editar actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Editar"}
+                  buttonSidebar={<CustomButton text={"Editar"} 
                   onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
@@ -229,15 +219,15 @@ function ActivityDetails() {
                 <CustomCard
                   title='Finalizar'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton onClick={() => {}} text={"Fin"}  float={"right"} 
+                  buttonSidebar={<CustomButton onClick={() => {}} text={"Fin"} 
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.RED}/>}/>
                 <CustomCard
                   title='Solicitudes'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Ver"}  
+                  buttonSidebar={<CustomLink to={`/ong/actividad/${id}/solicitudes`}><CustomButton  text={"Ver"}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.PURPLE}/>}/>
+                  variantButton={VARIANTES_BUTTON.PURPLE}/> </CustomLink>}/>
           </Grid> 
         </Grid> 
       </CustomFlex>
@@ -252,6 +242,5 @@ const parseActividad = (actividad) => {
     return { ...item, value: actividad[item.name] };
   });
 }
-
 
 export default ActivityDetails;

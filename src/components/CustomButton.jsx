@@ -15,7 +15,6 @@ function CustomButton({
     outline = false,
     show = true,
     height="auto",
-    float="auto",
     }) {
     return (
         <Box >
@@ -27,7 +26,6 @@ function CustomButton({
                     opacity: 0.85
                 },
                 display: show ? 'block':'none',
-                float:float
             }}
             onClick={onClick} 
             variant="contained"
