@@ -104,20 +104,7 @@ const ToolList = ({usuario, id}) => {
   
   }
   
-  
-  const RolAccountParser = (rolAccount) => {
-  if(rolAccount == "ONG"){
-    return "ONG"
-  } 
-  if(rolAccount == "VOLUNTEER"){
-    return "Voluntario"
-  } 
-  if(rolAccount == "BENEFICIARY"){
-    return "Beneficiario"
-  } 
-  return "Error"
-  }
-  
+
   
   const VoluntarioParser = (data) => {
     if(data!==undefined&&data.length!==0){
@@ -125,7 +112,6 @@ const ToolList = ({usuario, id}) => {
           return {
             ...volunteer,
             gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
-            rolAccount: RolAccountParser(volunteer.rolAccount),
             button:<ToolList usuario={volunteer} id={volunteer.id}/>,
           }; 
       });

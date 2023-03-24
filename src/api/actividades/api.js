@@ -25,7 +25,7 @@ export const updateActivityAPI = async (token, values, id) => {
 }
 
 export const getTotalActivitiesAPI = async (token) => {
-    const {data} =  await axiosWithToken(token).get(`/api/activities/count`)
+    const {data} =  await axiosWithToken(token).get("/api/activities/ong/get/all")
     return data
 }
 
