@@ -210,7 +210,7 @@ function FormVolunteers() {
   const [usuario, setUsuario] = React.useState('');
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {};
 
   const saveVolunteer = (values) => {
       const passwordAux = random(8, 'upper')
@@ -219,12 +219,8 @@ function FormVolunteers() {
             ...values, 
             "password": passwordAux.toString()
       }
-      console.log(values2)
-
-
-      saveVolunteerAPI(user().token, values).then(
+      saveVolunteerAPI(user().token, values2).then(
           (response) => {
-              console.log(response)
               setUsuario(response.username)
               handleOpen()
               setSuccessMsg("Voluntario añadido correctamente")
