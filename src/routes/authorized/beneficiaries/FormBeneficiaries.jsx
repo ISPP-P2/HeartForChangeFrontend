@@ -7,9 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import * as Yup from 'yup';
 
-
-
-
 const form = [
   {
     name: "name",
@@ -27,7 +24,6 @@ const form = [
     .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra y 8 dígitos")
     .min(9, "El CIF debe tener una longitud de 9 caracteres")
     .required("Este campo es obligatorio"),
-    
   },
   {
     name: "email",
@@ -90,9 +86,6 @@ const form = [
     ],
     validation: Yup.string().required("Este campo es obligatorio"),
   },
-   
-  
-   
   {
     name: "documentType",
     type: FORM_TYPES.SELECT,
@@ -120,8 +113,6 @@ const form = [
     validation: Yup.string()
     .max(100, "No puede tener más de 100 caracteres"),
   },
-  
-
   {
     name: "firstSurname",
     type: FORM_TYPES.TEXT,
@@ -155,7 +146,6 @@ const form = [
     validation: Yup.date()
       .required("Este campo es obligatorio"),
   },
- 
   {
     name: "leavingDate",
     type: FORM_TYPES.ONLYDATE,
@@ -193,8 +183,6 @@ const form = [
     "El código postal debe tener 5 cifras",
     (val) => val.toString().length === 5
   )
-   
-
   },
   {
     name: "registrationAddress",

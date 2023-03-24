@@ -26,7 +26,7 @@ function VolunteerAcademicExperienceForm({id}) {
                         variant={VARIANTES_BUTTON.GREEN2}
                       text={<AddIcon />}
                       title={"Experiencia Académica"}
-                      body={<AcademicExperienceForm id={id} hadleClose={hadleClose}/>}
+                      body={<AcademicExperienceForm id={id} handleClose={hadleClose}/>}
                     />
                     
                   </CustomFlex>

@@ -48,8 +48,7 @@ export default function BasicModal({text,title,body,variant,widthButton,heightBu
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+        aria-describedby="modal-modal-description">
         <Box sx={style(mobile)}  >
           <CustomFlex margin='1rem' direction={"column"}>
             {mobile ? null : <Box display={"flex"} justifyContent={'end'}>
@@ -64,7 +63,6 @@ export default function BasicModal({text,title,body,variant,widthButton,heightBu
               {body}
             </Box>
           </CustomFlex>
-         
         </Box>
       </Modal>
     </>

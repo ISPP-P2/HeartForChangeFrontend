@@ -68,9 +68,9 @@ function Dashboard() {
                 iconD={<PeopleOutlineIcon color='disabled' />}
                 buttonSidebar={
                 <CustomLink to={'/ong/beneficiario/añadir'}>
-                <CustomButton widthButton='10rem' text={"Registar"}  
-                iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                variantButton={VARIANTES_BUTTON.GREEN}/>
+                    <CustomButton widthButton='11rem' text={"Registar"}
+                        iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
+                        variantButton={VARIANTES_BUTTON.GREEN}/>
                 </CustomLink>
                 }/>
             <CustomCard 
@@ -87,7 +87,7 @@ function Dashboard() {
                 iconD={<PeopleOutlineIcon color='disabled'/>}
                 buttonSidebar={
                 <CustomLink to={"/ong/voluntario/añadir"}>
-                    <CustomButton widthButton='10rem' text={"Registrar"}  
+                    <CustomButton widthButton='11rem' text={"Registrar"}  
                     iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                     variantButton={VARIANTES_BUTTON.GREEN}/>
                 </CustomLink>}/>
@@ -96,7 +96,7 @@ function Dashboard() {
                 iconD={<PeopleOutlineIcon color='disabled' />}
                 buttonSidebar={
                 <CustomLink to={'/ong/subvenciones'}>
-                    <CustomButton widthButton='10rem' text={"Registrar"}  
+                    <CustomButton widthButton='11rem' text={"Registrar"}  
                     iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                     variantButton={VARIANTES_BUTTON.GREEN}/>
                 </CustomLink>}/>
