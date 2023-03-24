@@ -1,7 +1,7 @@
 import { axiosWithToken } from "../auth/axios"
 
 export const getSubventions = async (token) => {
-    const {data} =  await axiosWithToken(token).get("/api/grants/get/ong")
+    const {data} =  await axiosWithToken(token).get("/api/grants/get")
     return data
 }
 export const saveSubventionAPI = async (token, values) => {
