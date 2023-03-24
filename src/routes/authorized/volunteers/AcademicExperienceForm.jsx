@@ -16,7 +16,9 @@ const form = [
         type: FORM_TYPES.TEXT,
         label: "Especialidad",
         icon: <SchoolIcon />,
-
+        validation: Yup.string("Deber ser una cadena de caracteres")
+                       .max(50, "Tiene que haber menos de 50 caracteres")
+                        .required("No puede estar vacio"),
     }, {
         name: "endingYear",
         type: FORM_TYPES.NUMBER,
@@ -32,7 +34,7 @@ const form = [
         type: FORM_TYPES.TEXT,
         label: "Nivel",
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
+                       .max(50, "Tiene que haber menos de 50 caracteres")
                         .required("No puede estar vacio"),
         icon: <AssessmentIcon />,
     },
@@ -52,7 +54,7 @@ const form = [
         type: FORM_TYPES.TEXTEAREA,
         label: "Nivel Educación",
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
+                        .min(2, "Tiene haber al menos dos caracteres")
                         .required("No puede estar vacio"),
                        
         

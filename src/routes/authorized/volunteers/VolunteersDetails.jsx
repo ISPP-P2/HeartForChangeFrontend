@@ -23,6 +23,7 @@ import { useParams } from 'react-router-dom';
 import VolunteerAcademicExperienceForm from "./VolunteerAcademicExperienceForm";
 import VolunteerComplementaryForm from "./VolunteerComplementaryForm";
 import VolunteerWorkForm from "./VolunteerWorkForm";
+import ActivityListByVolunteer from "./ActivityListByVolunteer";
 
 
 let voluntarioForm = [
@@ -221,13 +222,14 @@ function VolunteerDetails({ match }) {
             <Box sx={{ marginTop: "1rem" }}>
               <CustomFlex direction={"row"}>
               <Box flexBasis={"fit-content"}>
-                <CustomButton  widthButton="10rem" variantButton={VARIANTES_BUTTON.ORANGE} text="ACTIVIDADES"></CustomButton>
+                <ActivityListByVolunteer  id={id} />
               </Box>
                 <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  text="EDITAR DATOS"></CustomButton>
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>
             <CustomFlex direction={"column"}>
+            
                 <VolunteerAcademicExperienceForm id={id} />
                 <VolunteerWorkForm id={id} />
                 <VolunteerComplementaryForm id={id} />

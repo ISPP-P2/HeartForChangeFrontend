@@ -50,9 +50,9 @@ const Listado = ({data}) => {
     ["nombreActividad", "fechaActividad"]
   )
 
-    return (
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
-    )
+  return (
+      <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+  )
 
 }
 

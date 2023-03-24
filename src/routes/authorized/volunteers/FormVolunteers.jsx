@@ -211,9 +211,18 @@ function FormVolunteers() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const saveVolunteer = (values) => {
-      setPassword(random(8, 'upper'))
-      saveVolunteerAPI(user().token, {...values, password: password}).then(
+      const passwordAux = random(8, 'upper')
+      setPassword(passwordAux)
+      const values2 = {
+            ...values, 
+            "password": passwordAux.toString()
+      }
+      console.log(values2)
+
+
+      saveVolunteerAPI(user().token, values).then(
           (response) => {
               console.log(response)
               setUsuario(response.username)

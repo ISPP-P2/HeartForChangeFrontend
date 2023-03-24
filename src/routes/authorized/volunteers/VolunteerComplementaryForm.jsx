@@ -55,7 +55,6 @@ const ListData = ({id}) => {
     if(query.data.length === 0){
         return <CustomError onClick={()=> query.refetch()}/>
     }
-    console.log(query.data.data)
     const BeneficiarieList = new CustomList(query.data.data)
     let objetoTabla = BeneficiarieList.parseToTableBasic(
         ["Nombre","Organismo","Lugar", "Fecha"],

@@ -18,20 +18,26 @@ const form = [
         type: FORM_TYPES.TEXT,
         label: "Nombre del curso",
         icon: <SchoolIcon />,
-
+        validation: Yup.string("Deber ser una cadena de caracteres")
+        .min(0, "Tiene haber al menos dos caracteres")
+        .max(50, "Tiene que haber menos de 50 caracteres")
+        .required("No puede estar vacío"),
     }, {
         name: "organization",
         type: FORM_TYPES.TEXT,
         label: "Organismo",
         icon: <BusinessIcon />,
+        validation: Yup.string("Deber ser una cadena de caracteres")
+                            .min(0, "Tiene haber al menos dos caracteres")
+                            .max(50, "Tiene que haber menos de 50 caracteres")
+                        .required("No puede estar vacío"),
     },
     {
         name: "place",
         type: FORM_TYPES.TEXT,
         label: "Lugar",
         validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido"),
+                        .required("No puede estar vacío"),
         icon: <PlaceIcon />,
     },
 
@@ -39,9 +45,8 @@ const form = [
         name: "date",
         type: "date",
         label: "Año",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-                        .min(2, "Tiene haber al menos dos caractere")
-                        .required("No puede estar vacido"),
+        validation: Yup.date("Deber ser una fecha")
+                        .required("No puede estar vacío"),
         icon: <TimelapseIcon />,
     }
    
