@@ -25,6 +25,22 @@ export const updateActivityAPI = async (token, values, id) => {
 }
 
 export const getTotalActivitiesAPI = async (token) => {
-    const {data} =  await axiosWithToken(token).get(`/api/activities/ong/get/all`)
-    return data.length
+    const {data} =  await axiosWithToken(token).get(`/api/activities/count`)
+    return data
+}
+
+
+export const getVolunteersByActivityAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${id}/attendances`)
+    return data
+}
+
+export const acceptAttendancesAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).put(`/api/attendances/accept/${id}`)
+    return data
+}
+
+export const denyAttendancesAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).put(`/api/attendances/deny/${id}`)
+    return data
 }

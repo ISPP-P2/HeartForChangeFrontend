@@ -51,6 +51,8 @@ const participants = [
     },     
 ]
 
+
+
 function AssignParticipants() {
   const {id} = useParams("id");
 
