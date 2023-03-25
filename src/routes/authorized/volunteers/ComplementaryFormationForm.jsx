@@ -44,10 +44,12 @@ const form = [
     {
         name: "date",
         type: "date",
-        label: "Año",
+        label: "Fecha",
         validation: Yup.date("Deber ser una fecha")
                         .required("No puede estar vacío"),
         icon: <TimelapseIcon />,
+
+        
     }
    
 ]

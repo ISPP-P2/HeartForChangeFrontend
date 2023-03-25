@@ -26,8 +26,10 @@ const form = [
         icon: <EventAvailableIcon />,
 
         validation: Yup.number("Deber ser un numero")
-                        .min(2023, "Deber ser un año válido")
-                        .max(9000, "Deber ser un año válido")
+
+
+        
+                     
     },
     {
         name: "nivel",
