@@ -168,8 +168,8 @@ function ActivityDetails() {
 
   const ActivityList = new CustomList(actividadesConBoton)
   let objetoTabla = ActivityList.parseToTable(
-    ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono", "Ver detalles"],
-    ["name", "dni", "gender", "birthDate", "phoneNumber", "button"],
+    ["Nombre", "DNI", "Sexo","Fecha Nacimiento", "Teléfono"],
+    ["name", "dni", "gender", "birthDate", "phoneNumber"],
     ["Descripcion"],
     ["description"]);
   
@@ -202,18 +202,6 @@ function ActivityDetails() {
                   onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
-                  <CustomCard
-                  title='Añadir'
-                  iconD={<PeopleOutlineIcon color='disabled'/>}
-                  buttonSidebar={<CustomLink to={`/ong/actividad/${id}/asignarVoluntarios`}><CustomButton  text={"Añadir"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.GREEN}/> </CustomLink>}/>  
-                <CustomCard
-                  title='Finalizar'
-                  iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton onClick={() => {}} text={"Fin"}  float={"right"} 
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.RED}/>}/>
                 <CustomCard
                   title='Solicitudes'
                   iconD={<PeopleOutlineIcon color='disabled' />}

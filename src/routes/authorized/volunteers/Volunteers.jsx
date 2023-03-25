@@ -18,13 +18,14 @@ import CustomReloading from '../../../components/CustomReloading';
 import { useContext, useState } from 'react';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
-const Listado = ({data}) => {
+const Listado = ({data, query}) => {
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
 
   const user = useAuthUser();
   const handleDelete = (id, handleClose) => {
     deleteVolunteerAPI(user().token, id).then(
       (response) => {
+          query.refetch()
           setSuccessMsg("Voluntario eliminado correctamente")
           handleClose.handleClose()
       }
@@ -83,7 +84,7 @@ function Volunteers() {
                   iconD={<CustomLink to="/ong/voluntario/añadir"><CustomButton  text={"Añadir"} /></CustomLink>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
-          <Listado data={query.data} />
+          <Listado data={query.data} query={query}/>
       </CustomFlex>
     </BodyWrapper>
     );

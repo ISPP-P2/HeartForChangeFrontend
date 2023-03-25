@@ -49,7 +49,7 @@ function Beneficiaries() {
                   iconD={<CustomLink to="/ong/beneficiario/añadir"><CustomButton text={"Añadir"} /></CustomLink>}
                   totalNumber={query.data.length}/>
           </CustomFlex>
-          <Listado data={query.data} />
+          <Listado data={query.data} query={query}/>
       </CustomFlex>
     </BodyWrapper>
     );
@@ -59,7 +59,7 @@ export default Beneficiaries;
 
 
 
-const Listado = ({data}) => { 
+const Listado = ({data, query}) => { 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const handleDelete = (id, handleClose) => {
@@ -69,7 +69,6 @@ const Listado = ({data}) => {
       setSuccessMsg("Subvención eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la subvención")
-      
     })
   }
 

@@ -28,3 +28,8 @@ export const getTotalActivitiesAPI = async (token) => {
     const {data} =  await axiosWithToken(token).get(`/api/activities/ong/get/all`)
     return data.length
 }
+
+export const postPersonActivity = async (token, personId, taskId) => {
+    const {data} =  await axiosWithToken(token).post(`/api/attendances/add/${taskId}/${personId}`)
+    return data
+}

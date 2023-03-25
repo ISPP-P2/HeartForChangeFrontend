@@ -1,20 +1,19 @@
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import Volunteers from "./volunteers/Volunteers";
-import Dashboard from "./dashboard/Dashboard";
-import Beneficiaries from "./beneficiaries/Beneficiaries";
-import BeneficiariesDetails from "./beneficiaries/BeneficiariesDetails";
-import Activities from "./activities/Activities";
-import ActivityDetails from "./activities/ActivityDetails";
-import AssignParticipants from "./activities/AssignParticipants";
-import VolunteerDetails from "./volunteers/VolunteersDetails";
-import SubventionsDetails from "./subventions/SubventionsDetails";
-import ActivityVolunteerDetails from "./activities/ActivityDetailsVolunteers";
-import FormBeneficiaries from "./beneficiaries/FormBeneficiaries";
-import FormVolunteers from "./volunteers/FormVolunteers";
 import LoadingWrapper from "../../components/LoadingWrapper";
 
-const Subventions = lazy(() => import('./subventions/Subventions'))
+const Subventions = lazy(() => import('./subventions/Subventions'));
+const SubventionsDetails = lazy(() => import("./subventions/SubventionsDetails"));
+const FormBeneficiaries = lazy(() => import("./beneficiaries/FormBeneficiaries"));
+const Volunteers = lazy(() => import("./volunteers/Volunteers"));
+const Dashboard = lazy(() => import("./dashboard/Dashboard"));
+const Beneficiaries = lazy(() => import("./beneficiaries/Beneficiaries"));
+const BeneficiariesDetails = lazy(() => import("./beneficiaries/BeneficiariesDetails"));
+const Activities = lazy(() => import("./activities/Activities"));
+const ActivityDetails = lazy(() => import("./activities/ActivityDetails"));
+const VolunteerDetails = lazy(() => import("./volunteers/VolunteersDetails"));
+const FormVolunteers = lazy(() => import("./volunteers/FormVolunteers"));
+
 
 
 export default function AutorizedRoutes() {
@@ -32,12 +31,6 @@ export default function AutorizedRoutes() {
           path={":id"}
           element={
               <ActivityDetails />
-          }
-        />
-        <Route
-          path={":id/asignarVoluntarios"}
-          element={
-            <AssignParticipants />
           }
         />
       </Route>
