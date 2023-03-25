@@ -205,7 +205,7 @@ function VolunteerDetails({ match }) {
 
 
   return (
-    <BodyWrapper title={"Voluntario 1"}>
+    <BodyWrapper title={"Voluntario"}>
       <CustomFlex direction={"column"}>
         <Box
           sx={{

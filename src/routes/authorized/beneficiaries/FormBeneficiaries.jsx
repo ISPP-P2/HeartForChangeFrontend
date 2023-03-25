@@ -21,7 +21,7 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Código de identificación fiscal",
     validation: Yup.string("Deber ser una cadena de caracteres")
-    .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra y 8 dígitos")
+    .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra (mayúscula) y 8 dígitos")
     .min(9, "El CIF debe tener una longitud de 9 caracteres")
     .required("Este campo es obligatorio"),
   },
@@ -111,6 +111,7 @@ const form = [
     type: FORM_TYPES.TEXT,
     label: "Carnet de conducir",
     validation: Yup.string()
+    .required("Este campo es obligatorio")
     .max(100, "No puede tener más de 100 caracteres"),
   },
   {

@@ -42,9 +42,7 @@ function DashboardVolunteers() {
   return (
     <BodyWrapper title={"Actividades disponibles"}>
       {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
-                    <CustomFlex>
-                  <CustomLink to="/vol/activities"><CustomButton text={"Añadir"} /></CustomLink>
-                  </CustomFlex>
+                  
     </BodyWrapper>
   )
 }

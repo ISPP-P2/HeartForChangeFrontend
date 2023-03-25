@@ -1,6 +1,7 @@
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoadingWrapper from "../../components/LoadingWrapper";
+import Attendances from "./activities/Attendances";
 
 const Subventions = lazy(() => import('./subventions/Subventions'));
 const SubventionsDetails = lazy(() => import("./subventions/SubventionsDetails"));
@@ -31,6 +32,20 @@ export default function AutorizedRoutes() {
           path={":id"}
           element={
               <ActivityDetails />
+          }
+        />
+      </Route>
+      <Route path={"/actividad"}>
+        <Route
+          path={":id"}
+          element={
+              <ActivityDetails />
+          }
+        />
+        <Route
+          path={":id/solicitudes"}
+          element={
+            <Attendances />
           }
         />
       </Route>

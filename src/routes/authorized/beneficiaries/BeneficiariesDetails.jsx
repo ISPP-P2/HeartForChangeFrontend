@@ -78,7 +78,7 @@ function BeneficiariesDetails() {
  
   return (
     
-    <BodyWrapper title={`Beneficiario ${id}`}>
+    <BodyWrapper title={`Beneficiario`}>
       <CustomFlex direction={"column"}>
         <Box
           sx={{

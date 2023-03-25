@@ -33,3 +33,18 @@ export const postPersonActivity = async (token, personId, taskId) => {
     const {data} =  await axiosWithToken(token).post(`/api/attendances/add/${taskId}/${personId}`)
     return data
 }
+
+export const getVolunteersByActivityAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${id}/attendances`)
+    return data
+}
+
+export const acceptAttendancesAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).put(`/api/attendances/accept/${id}`)
+    return data
+}
+
+export const denyAttendancesAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).put(`/api/attendances/deny/${id}`)
+    return data
+}
