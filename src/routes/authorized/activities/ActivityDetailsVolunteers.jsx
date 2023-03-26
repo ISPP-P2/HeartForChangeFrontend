@@ -8,7 +8,7 @@ import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import CustomError from '../../../components/CustomError';
 import { useQuery } from 'react-query';
 import CustomReloading from '../../../components/CustomReloading';
-import { getActivityAPI } from '../../../api/actividades/api';
+import { getActivityAPI, getStateByTaskId, quitAttendancesAPI, saveAttendancesAPI } from '../../../api/actividades/api';
 import { Link, useParams } from 'react-router-dom';
 import BadgeIcon from '@mui/icons-material/Badge';
 import * as Yup from 'yup';
@@ -24,6 +24,7 @@ import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import CustomLink from '../../../components/CustomLink';
 import { Grid, Typography } from '@mui/material';
 import BodyWrapper from '../../../components/BodyWrapper';
+import { StateComponent } from '../../authorizedVolunteer/MyList/MyActivities';
   
 
 
@@ -100,6 +101,11 @@ function ActivityVolunteerDetails() {
   const { id } = useParams()
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
 
+
+  
+
+
+  
  
   if(query.isLoading){
     return <CustomReloading />
@@ -108,11 +114,10 @@ function ActivityVolunteerDetails() {
   if(query.isError){
     return <CustomError onClick={()=> query.refetch()}/>
   }
-
-  
   return (
   
-  <BodyWrapper title={"Actividad: Parque de la Fuensanta"}>
+  <BodyWrapper title={`Actividad: ${query.data.name}` }>
+    <StateComponent  actividadId={id} />
     <CustomFlex direction={"column"}>
     <Typography fontWeight={600} color='#999'>DESCRIPCION</Typography>
       <CustomFlex direction={"column"}>
@@ -128,24 +133,7 @@ function ActivityVolunteerDetails() {
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         /> 
-          <Grid
-              display={"grid"}
-              justifyContent={"center"}
-              marginLeft={"2rem"}
-              gridTemplateColumns={"1fr 1fr"}>    
-                <CustomCard
-                  title='Solicitud para apuntarse'
-                  iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Apuntarse"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "0rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.GREEN}/>}/> 
-                <CustomCard
-                  title='Salir de la actividad'
-                  iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Salir"}  
-                  iconD={<ArrowForwardIcon sx={{marginLeft: "1rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.RED}/>}/>
-          </Grid> 
+         <ButtonWrap actividadId={id}/>
         </Grid> 
         </Box>
         
@@ -155,6 +143,60 @@ function ActivityVolunteerDetails() {
       </BodyWrapper>
     );
 }
+
+export const ButtonWrap = ({actividadId}) => {
+
+  const user = useAuthUser();
+  const query = useQuery(["QUERY_STATE", actividadId],() => getStateByTaskId(user().token, actividadId),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
+
+  if(query.isLoading){
+    return <CustomReloading />
+  }
+
+  if(query.isError){
+    return <CustomError onClick={()=> query.refetch()}/>
+  }
+
+  const makeAttendace = (id) =>{
+    saveAttendancesAPI(user().token,id);
+  }
+
+
+  const quitAttendance = () => {
+    quitAttendancesAPI(actividadId,user().id)
+  }
+  return (
+
+    <Grid
+    display={"grid"}
+    justifyContent={"center"}
+    marginLeft={"2rem"}
+    gridTemplateColumns={"1fr 1fr"}> 
+            {query.data.state === undefined ? <CustomCard
+                  title='Solicitud para apuntarse'
+                  iconD={<PeopleOutlineIcon color='disabled' />}
+                  buttonSidebar={<CustomButton text={"Apuntarse"}  
+                  onClick={()=>makeAttendace(query.data.id)}
+                  iconD={<ArrowForwardIcon sx={{marginLeft: "0rem"}}/>} 
+                  variantButton={VARIANTES_BUTTON.GREEN}/>}/> : null}
+            {query.data.state === "ACEPTADA" ?  <CustomCard
+                  title='Salir de la actividad'
+                  iconD={<PeopleOutlineIcon color='disabled' />}
+                  buttonSidebar={<CustomButton text={"Salir"}
+                  onClick={()=>quitAttendance()}  
+                  iconD={<ArrowForwardIcon sx={{marginLeft: "1rem"}}/>} 
+                  variantButton={VARIANTES_BUTTON.RED}/>}/> : null}
+    </Grid> 
+     
+  )
+
+}
+
+
+
 
 const parseActividad = (actividad) => {
   return form.map((item) => {

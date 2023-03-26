@@ -38,6 +38,8 @@ function Activities() {
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
+
+
   const handleDelete = (id, handleClose) => {
     deleteActivityAPI(user().token, id).then(() => {
       handleClose.handleClose()

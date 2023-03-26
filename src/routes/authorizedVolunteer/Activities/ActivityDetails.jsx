@@ -90,7 +90,7 @@ const form = [
         type: FORM_TYPES.NUMBER,
         label: "Numero de participantes",
         validation: Yup.number("Deber ser una cadena de caracteres").min(0, "El número de participantes debe ser mayor o igual a 0"),
-    },
+    }
 ]
 
 const actividades = [

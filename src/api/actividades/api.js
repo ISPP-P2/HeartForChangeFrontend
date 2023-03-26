@@ -4,6 +4,12 @@ export const getActivitiesAPI = async (token) => {
     const {data} =  await axiosWithToken(token).get("/api/activities/ong/get/all")
     return data
 }
+
+export const getMyActivitiesAPI = async (token) => {
+    const {data} =  await axiosWithToken(token).get("/api/activities/volunteer/get/attendances")
+    return data
+}
+
 export const saveActivityAPI = async (token, values) => {
     const {data} =  await axiosWithToken(token).post(`/api/activities/new`, values)
     return data
@@ -34,8 +40,23 @@ export const postPersonActivity = async (token, personId, taskId) => {
     return data
 }
 
+export const getVolunteersAcceptedByActivityAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${id}/attendances/volunteer/accepted`)
+    return data
+}
+
 export const getVolunteersByActivityAPI = async (token, id) => {
-    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${id}/attendances`)
+    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${id}/attendances/volunteer`)
+    return data
+}
+
+export const getStateByVolunteerAndActivity = async (token, idPerson, taskId) => {
+    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${idPerson}/${taskId}/petition/state/`)
+    return data
+}
+
+export const getAttendancesByActivityAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).get(`/api/attendances/get/task/${id}`)
     return data
 }
 
@@ -44,7 +65,25 @@ export const acceptAttendancesAPI = async (token, id) => {
     return data
 }
 
+export const saveAttendancesAPI = async (token, id) => {
+    const {data} =  await axiosWithToken(token).post(`/api/attendances/new/${id}`)
+    return data
+}
+
+
+
 export const denyAttendancesAPI = async (token, id) => {
     const {data} =  await axiosWithToken(token).put(`/api/attendances/deny/${id}`)
+    return data
+}
+
+export const quitAttendancesAPI = async (token, idTask,idPerson) => {
+    const {data} =  await axiosWithToken(token).put(`/api/attendances/quit/${idTask}/${idPerson}`)
+    return data
+}
+
+
+export const getStateByTaskId = async (token, taskId) => {
+    const {data} =  await axiosWithToken(token).get(`/api/activities/get/${taskId}/petition/state/`)
     return data
 }

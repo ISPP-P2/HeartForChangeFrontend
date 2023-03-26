@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import { FORM_TYPES } from '../../../components/utils/utilsForms'
 import * as Yup from 'yup';
@@ -9,6 +9,7 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { saveActivityAPI } from '../../../api/actividades/api';
 import { useAuthUser } from 'react-auth-kit';
 import moment from 'moment/moment';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 
 const form = [
@@ -80,13 +81,15 @@ const form = [
 
 function ActivityForm({query,handleClose}) {
     const user = useAuthUser();
+    const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
     const saveActivity = (values) => {
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
-        const values2 = {...values, date: responseDate, type: "ACTIVIDAD",teacher:"ninguno"}
+        const values2 = {...values, date: responseDate, type: "ACTIVIDAD",teacher:"ninguno",ongId:0}
         saveActivityAPI(user().token, values2).then((response) => {
             handleClose.handleClose();
             query.refetch()
+            setSuccessMsg("La actividad se ha creado correctamente")
         }).catch(
             (err) => {
                 setErrorMsg("Ha ocurrido un error")

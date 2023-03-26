@@ -23,7 +23,7 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import * as Yup from 'yup';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
-import { getActivityAPI, getVolunteersByActivityAPI, updateActivityAPI } from "../../../api/actividades/api";
+import { getActivityAPI, getVolunteersAcceptedByActivityAPI, getVolunteersByActivityAPI, updateActivityAPI } from "../../../api/actividades/api";
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 
@@ -125,7 +125,7 @@ function ActivityDetails() {
   const user = useAuthUser();
   const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
-  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersByActivityAPI(user().token,id));
+  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
 
   if(query.isLoading){
     return <CustomReloading />

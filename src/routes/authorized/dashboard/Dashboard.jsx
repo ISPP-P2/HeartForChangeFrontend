@@ -54,7 +54,7 @@ function Dashboard() {
             <CustomCardMini 
                 title='Actividades'
                 iconD={<AssignmentIcon htmlColor='#0055FF'/>}
-                totalNumber={!queryTaskTotal.isError && !queryTaskTotal.isLoading ? queryTaskTotal.data.length : <CircularProgress />}/>
+                totalNumber={!queryTaskTotal.isError && !queryTaskTotal.isLoading ? queryTaskTotal.data : <CircularProgress />}/>
             <CustomCardMini 
                 title='Voluntarios'
                 iconD={<VolunteerActivismIcon htmlColor='#0055FF'/>}
