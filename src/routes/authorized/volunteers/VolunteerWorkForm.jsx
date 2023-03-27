@@ -13,8 +13,6 @@ import { CustomList } from '../../../static/user';
 import WorkExperienceForm from './WorkExperienceForm';
 import AddIcon from '@mui/icons-material/Add';
 function VolunteerWorkForm({id}) {
-    
-
     const [handleClose, setHandleClose] = React.useState({});
     const user = useAuthUser();
     const query = useQuery(["QUERY_VOLUNTEERS_DETAILS_WORK_EXPERIENCE", id],() => GetWorkExperienceVolunteers(user().token,id),{
@@ -33,7 +31,7 @@ function VolunteerWorkForm({id}) {
             variant={VARIANTES_BUTTON.GREEN2}
             text={<AddIcon />}
             title={"Experiencia Laboral"}
-            body={<WorkExperienceForm id={id} handleClose={handleClose} query={query.refetch}/>}
+            body={<WorkExperienceForm id={id} handleClose={handleClose} refetch={query.refetch}/>}
             />
         </CustomFlex>
     )
