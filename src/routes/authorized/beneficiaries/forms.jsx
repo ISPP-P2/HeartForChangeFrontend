@@ -76,30 +76,12 @@ export let beneficiarioBasicFormValue = [
     .required("Este campo es obligatorio"),
   },
   {
-    name: "cif",
-    type: FORM_TYPES.TEXT,
-    label: "Código de identificación fiscal",
-    value: "cif",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra y 8 dígitos")
-    .min(9, "El CIF debe tener una longitud de 9 caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Email",
     value: "email",
     validation: Yup.string()
     .email("Debe ser un email válido")
-    .required("Este campo es obligatorio"),
-  },
-  {
-    name: "description",
-    type: FORM_TYPES.TEXTEAREA,
-    label: "Descripción",
-    value: "description",
-    validation: Yup.string("Deber ser una cadena de caracteres")
     .required("Este campo es obligatorio"),
   },
   {

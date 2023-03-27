@@ -17,15 +17,6 @@ const form = [
     .required("Este campo es obligatorio"),
   },
   {
-    name: "cif",
-    type: FORM_TYPES.TEXT,
-    label: "Código de identificación fiscal",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .matches(/^[A-HJNPQSUVW]\d{8}$/, "El CIF debe estar compuesto por una letra (mayúscula) y 8 dígitos")
-    .min(9, "El CIF debe tener una longitud de 9 caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  {
     name: "email",
     type: FORM_TYPES.TEXT,
     label: "Email",
@@ -33,29 +24,6 @@ const form = [
    .email("Debe ser un email válido")
    .required("Este campo es obligatorio"),
   },
-  {
-    name: "description",
-    type: FORM_TYPES.TEXTEAREA,
-    label: "Descripción",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  {
-    name: "username",
-    type: FORM_TYPES.TEXT,
-    label: "Nombre de usuario",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .max(20, "No puede tener más de 20 caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  {
-    name: "password",
-    type: FORM_TYPES.TEXT,
-    label: "Contraseña",
-    validation: Yup.string("Deber ser una cadena de caracteres")
-    .required("Este campo es obligatorio"),
-  },
-  
   {
     name: "address",
     type: FORM_TYPES.TEXT,
