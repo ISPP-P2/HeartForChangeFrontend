@@ -17,6 +17,7 @@ import CustomError from '../../../components/CustomError';
 import CustomReloading from '../../../components/CustomReloading';
 import { useContext, useState } from 'react';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import BasicTableNoDescription from '../../../components/BasicTableNoDescription';
 
 const Listado = ({data, query}) => {
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
@@ -44,15 +45,13 @@ const Listado = ({data, query}) => {
 
 
   const VolunteersList = new CustomList(VoluntarioParser(data, handleDelete))
-  let objetoTabla = VolunteersList.parseToTable(
+  let objetoTabla = VolunteersList.parseToTableBasic(
     ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Herramientas"], 
-    ["username", "name", "firstSurname","secondSurname", "gender","email", "button"],
-    ["Actividades Realizadas", "Fecha"],
-    ["nombreActividad", "fechaActividad"]
+    ["username", "name", "firstSurname","secondSurname", "gender","email", "button"]
   )
 
   return (
-      <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+      <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />
   )
 
 }

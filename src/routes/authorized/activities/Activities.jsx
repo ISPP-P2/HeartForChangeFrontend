@@ -18,6 +18,7 @@ import BodyWrapper from '../../../components/BodyWrapper';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import BasicTableNoDescription from '../../../components/BasicTableNoDescription';
 
 
 
@@ -52,11 +53,9 @@ function Activities() {
   
 
   const ActivityList = new CustomList(ParseActivity(query.data, handleDelete));
-  let objetoTabla = ActivityList.parseToTable(
+  let objetoTabla = ActivityList.parseToTableBasic(
     ["Nombre de actividad","Lugar","Coordinador","Fecha","Ver detalles"],
-    ["name", "place","coordinator","date", "button"],
-    ["Observaciones"],
-    ["observations"]   
+    ["name", "place","coordinator","date", "button"]
     )
 
   
@@ -69,7 +68,7 @@ function Activities() {
                     iconD={<BasicModal setHandleCloseButton={setHandleDeleteFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleDeleteFunc} query={query}/>}/>}
                     totalNumber={query.data.length}/>
             </CustomFlex>
-        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
+        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />}
         </CustomFlex> 
       </BodyWrapper>
     );

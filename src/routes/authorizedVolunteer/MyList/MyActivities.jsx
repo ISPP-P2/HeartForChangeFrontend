@@ -13,6 +13,8 @@ import BodyWrapper from '../../../components/BodyWrapper';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import { useEffect } from 'react';
+import BasicTableNoDescription from '../../../components/BasicTableNoDescription';
 
 
 
@@ -33,11 +35,9 @@ function MyActivities() {
 
 
   const ActivityList = new CustomList(ParseActivity(query.data));
-  let objetoTabla = ActivityList.parseToTable(
+  let objetoTabla = ActivityList.parseToTableBasic(
     ["Nombre de actividad","Lugar","Coordinador","Fecha","Estado","Ver detalles"],
-    ["name", "place","coordinator","date","state", "button"],
-    ["Observaciones"],
-    ["observations"]   
+    ["name", "place","coordinator","date","state", "button"]
     )
 
   
@@ -50,7 +50,7 @@ function MyActivities() {
                     totalNumber={query.data.length}/>
             </CustomFlex>
         {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No estás apuntado a ninguna actividad</Typography>
-        :<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
+        :<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />}
         </CustomFlex> 
       </BodyWrapper>
     );
@@ -72,13 +72,17 @@ const ToolList = ({actividad, id}) => {
 
 }
 
-export const StateComponent = ({actividadId}) => {
+export const StateComponent = ({actividadId,setRefetch}) => {
 
   const user = useAuthUser();
   const query = useQuery(["QUERY_STATE", actividadId],() => getStateByTaskId(user().token, actividadId),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
+  useEffect(() => {
+    if(setRefetch===undefined) return;
+    setRefetch({queryRefetch: query.refetch})
+  }, [setRefetch])
 
   if(query.isLoading){
     return <CustomReloading />
@@ -90,10 +94,19 @@ export const StateComponent = ({actividadId}) => {
 
   
   return (
-      <Typography>{!query.isError ? query.data.state : "Hubo un error" }</Typography>
+      <Typography>{!query.isError ? parseSTATE(query.data.state) : "Hubo un error" }</Typography>
   )
 
 }
+
+const parseSTATE = (state) => {
+  if(state === "NO_SOLICITADA"){
+    return "No solicitada"
+  }
+  
+  return state
+}
+
 
 const ParseActivity = (data) => {
   return data.map((actividad) => {

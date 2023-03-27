@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
-import { getActivitiesAPI } from '../../../api/actividades/api';
+import { getActivitiesAPI, getActivitiesDateAPI } from '../../../api/actividades/api';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomList } from '../../../static/user';
@@ -16,11 +16,12 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomCardMini from '../../../components/CustomCardMini';
 import { Typography } from '@mui/material';
+import BasicTableNoDescription from '../../../components/BasicTableNoDescription';
 
 
 function DashboardVolunteers() {
   const user = useAuthUser();
-  const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token),{
+  const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesDateAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
@@ -33,16 +34,13 @@ function DashboardVolunteers() {
   const ActivityList = new CustomList(ParseActivity(query.data));
   let objetoTabla = ActivityList.parseToTable(
     ["Nombre de actividad","Lugar","Coordinador","Fecha","Ver detalles"],
-    ["name", "place","coordinator","date", "button"],
-    ["Observaciones"],
-    ["observations"]   
+    ["name", "place","coordinator","date", "button"]
     )
 
 
   return (
     <BodyWrapper title={"Actividades disponibles"}>
-      {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>}
-                  
+      {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />}
     </BodyWrapper>
   )
 }

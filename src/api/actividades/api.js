@@ -5,6 +5,11 @@ export const getActivitiesAPI = async (token) => {
     return data
 }
 
+export const getActivitiesDateAPI = async (token) => {
+    const {data} = await axiosWithToken(token).get("/api/activities/ong/get/date")
+    return data
+}
+
 export const getMyActivitiesAPI = async (token) => {
     const {data} =  await axiosWithToken(token).get("/api/activities/volunteer/get/attendances")
     return data
@@ -77,8 +82,8 @@ export const denyAttendancesAPI = async (token, id) => {
     return data
 }
 
-export const quitAttendancesAPI = async (token, idTask,idPerson) => {
-    const {data} =  await axiosWithToken(token).put(`/api/attendances/quit/${idTask}/${idPerson}`)
+export const quitAttendancesAPI = async (token, idTask) => {
+    const {data} =  await axiosWithToken(token).post(`/api/attendances/quit/activity/${idTask}`)
     return data
 }
 

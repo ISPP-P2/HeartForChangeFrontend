@@ -104,7 +104,7 @@ function ActivityVolunteerDetails() {
 
   
 
-
+  const [refetchState, setRefetchState] = React.useState(false);
   
  
   if(query.isLoading){
@@ -117,7 +117,7 @@ function ActivityVolunteerDetails() {
   return (
   
   <BodyWrapper title={`Actividad: ${query.data.name}` }>
-    <StateComponent  actividadId={id} />
+    <StateComponent setRefetch={setRefetchState}  actividadId={id} />
     <CustomFlex direction={"column"}>
     <Typography fontWeight={600} color='#999'>DESCRIPCION</Typography>
       <CustomFlex direction={"column"}>
@@ -133,7 +133,7 @@ function ActivityVolunteerDetails() {
         readOnly={true}
         handleSubmitForm={(values) => console.log(values)}
         /> 
-         <ButtonWrap actividadId={id}/>
+         <ButtonWrap actividadId={id} queryDetails={refetchState}/>
         </Grid> 
         </Box>
         
@@ -144,7 +144,7 @@ function ActivityVolunteerDetails() {
     );
 }
 
-export const ButtonWrap = ({actividadId}) => {
+export const ButtonWrap = ({actividadId, queryDetails}) => {
 
   const user = useAuthUser();
   const query = useQuery(["QUERY_STATE", actividadId],() => getStateByTaskId(user().token, actividadId),{
@@ -156,17 +156,32 @@ export const ButtonWrap = ({actividadId}) => {
     return <CustomReloading />
   }
 
+
   if(query.isError){
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
   const makeAttendace = (id) =>{
-    saveAttendancesAPI(user().token,id);
+    saveAttendancesAPI(user().token,id).then(
+      (res) => {
+        query.refetch();
+        queryDetails.queryRefetch();
+      }
+    );
   }
 
 
   const quitAttendance = () => {
-    quitAttendancesAPI(actividadId,user().id)
+    quitAttendancesAPI(user().token, actividadId).then(
+      (res) => {
+        query.refetch();
+        queryDetails.queryRefetch();
+      }
+    ).catch(
+      (err) => {
+        console.log(err)
+      }
+    )
   }
   return (
 
@@ -175,11 +190,11 @@ export const ButtonWrap = ({actividadId}) => {
     justifyContent={"center"}
     marginLeft={"2rem"}
     gridTemplateColumns={"1fr 1fr"}> 
-            {query.data.state === undefined ? <CustomCard
+            {query.data.state === "NO_SOLICITADA" ? <CustomCard
                   title='Solicitud para apuntarse'
                   iconD={<PeopleOutlineIcon color='disabled' />}
                   buttonSidebar={<CustomButton text={"Apuntarse"}  
-                  onClick={()=>makeAttendace(query.data.id)}
+                  onClick={()=>makeAttendace(actividadId)}
                   iconD={<ArrowForwardIcon sx={{marginLeft: "0rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.GREEN}/>}/> : null}
             {query.data.state === "ACEPTADA" ?  <CustomCard
