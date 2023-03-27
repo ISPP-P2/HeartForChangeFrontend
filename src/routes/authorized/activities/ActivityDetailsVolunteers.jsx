@@ -101,9 +101,6 @@ function ActivityVolunteerDetails() {
   const { id } = useParams()
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
 
-
-  
-
   const [refetchState, setRefetchState] = React.useState(false);
   
  
@@ -131,7 +128,7 @@ function ActivityVolunteerDetails() {
         form={parseActividad(query.data)} 
         width={"-webkit-fill-available"} 
         readOnly={true}
-        handleSubmitForm={(values) => console.log(values)}
+        handleSubmitForm={(values) =>{}}
         /> 
          <ButtonWrap actividadId={id} queryDetails={refetchState}/>
         </Grid> 
@@ -151,7 +148,7 @@ export const ButtonWrap = ({actividadId, queryDetails}) => {
     retry: 2,
     refetchOnWindowFocus: false,
   });
-
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -166,20 +163,26 @@ export const ButtonWrap = ({actividadId, queryDetails}) => {
       (res) => {
         query.refetch();
         queryDetails.queryRefetch();
+        setSuccessMsg("Te has apuntado correctamente")
       }
-    );
+    ).catch(
+      (err) => {
+        setErrorMsg("No se ha podido apuntar correctamente")
+      }
+    )
   }
 
 
   const quitAttendance = () => {
     quitAttendancesAPI(user().token, actividadId).then(
       (res) => {
+        setSuccessMsg("Te has dado de baja correctamente")
         query.refetch();
         queryDetails.queryRefetch();
       }
     ).catch(
       (err) => {
-        console.log(err)
+        setErrorMsg("No se ha podido darte de baja correctamente")
       }
     )
   }

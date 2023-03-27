@@ -313,7 +313,6 @@ function FormBeneficiaries() {
   
 
     const saveBeneficiarie = (values) => {
-        console.log(values)
         saveBeneficiariesAPI(user().token, values).then((res) => {
           navigate('/ong/beneficiarios')
         });

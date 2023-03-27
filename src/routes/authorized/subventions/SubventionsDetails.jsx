@@ -44,7 +44,6 @@ function SubventionsDetails() {
   }
 
   const updateSubvention = (values) => {
-    console.log(values)
     updateSubventionAPI(user().token, values, id)
     toggleReadOnly(!readOnlyValue);
   }
@@ -63,7 +62,7 @@ function SubventionsDetails() {
         >
             <Box sx={{ marginTop: "1rem" }}>
               <CustomFlex direction={"row"}>
-                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }} text="EDITAR DATOS"></CustomButton>
+                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue);}} text="EDITAR DATOS"></CustomButton>
               </CustomFlex>
             </Box>
            

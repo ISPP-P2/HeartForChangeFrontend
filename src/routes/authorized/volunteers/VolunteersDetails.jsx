@@ -24,6 +24,7 @@ import VolunteerAcademicExperienceForm from "./VolunteerAcademicExperienceForm";
 import VolunteerComplementaryForm from "./VolunteerComplementaryForm";
 import VolunteerWorkForm from "./VolunteerWorkForm";
 import ActivityListByVolunteer from "./ActivityListByVolunteer";
+import { CustomNotistackContext } from "../../../context/CustomNotistack";
 
 
 let voluntarioForm = [
@@ -180,6 +181,9 @@ const extraForm = (title, variable,voluntario) => [
 
 function VolunteerDetails({ match }) {
   const [readOnlyValue, toggleReadOnly] = React.useState(true)
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+
+
   const mobile = useMediaQuery("(min-width: 850px)");
   const { id } = useParams();
   const user = useAuthUser();
@@ -197,10 +201,14 @@ function VolunteerDetails({ match }) {
   }
   
   const updateVolunteer = (values) => {
-    console.log(values)
-    console.log(id)
-    updateVolunteersAPI(user().token, values, id)
-    toggleReadOnly(!readOnlyValue);
+    updateVolunteersAPI(user().token, values, id).then(
+      (response) => {
+        toggleReadOnly(!readOnlyValue);
+        voluntario.refetch();
+        setSuccessMsg("Voluntario actualizado correctamente")
+      }).catch((error) => {
+          setErrorMsg("Error al actualizar el voluntario")
+      });
   }
 
 
@@ -224,7 +232,7 @@ function VolunteerDetails({ match }) {
               <Box flexBasis={"fit-content"}>
                 <ActivityListByVolunteer  id={id} />
               </Box>
-                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  text="EDITAR DATOS"></CustomButton>
+                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue) }}  text="EDITAR DATOS"></CustomButton>
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>

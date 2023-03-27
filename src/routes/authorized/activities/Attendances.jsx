@@ -40,7 +40,6 @@ const ToolList = ({usuarioId}) => {
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
-  console.log(query.data)
 
   const handleAccept = (id, handleClose) => {
     acceptAttendancesAPI(user().token, id).then(() => {
@@ -87,7 +86,6 @@ const ToolList = ({usuarioId}) => {
 const AttendanceParser = (data) => {
   if(data!==undefined&&data.length!==0){
       return data.map((person) => {
-        console.log(person)
         return {
             ...person,
             toolList: <ToolList usuarioId={person.id} />

@@ -6,7 +6,6 @@ export class CustomList {
 
     parseToTable(header = null, information = null, headerInformation = null, details = null){
         if(header === null && information === null){
-          console.log("faltan cosas")
           return null
         }
 

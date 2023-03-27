@@ -54,7 +54,7 @@ const form = [
 
 
 
-function WorkExperienceForm({id, handleClose}) {
+function WorkExperienceForm({id, handleClose, refetch}) {
 
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
     const auth = useAuthUser()
@@ -62,6 +62,7 @@ function WorkExperienceForm({id, handleClose}) {
         PostWorkExperience(auth().token, values, id).then(
             (response) => {
                 setSuccessMsg("Se ha añadido correctamente")
+                refetch()
                 handleClose.handleClose()
             }
         ).catch(

@@ -313,7 +313,7 @@ export let beneficiarioBasicFormValue = [
   {
     name: "dateTouristVisa",
     type: FORM_TYPES.ONLYDATE,
-    label: "fecha de visado turista",
+    label: "Fecha de visado turista",
     value: "dateTouristVisa",
     validation: Yup.date()
   },

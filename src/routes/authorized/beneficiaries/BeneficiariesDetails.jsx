@@ -27,6 +27,8 @@ import CustomError from "../../../components/CustomError";
 import BeneficiariesComplementaryInformation from "./BeneficiariesComplementaryInformation";
 import BeneficiariesAcademicExperienceForm from "./BeneficiariesAcademicExperienceForm";
 import BeneficiariesWorkExperiencesForm from "./BeneficiariesWorkExperiencesForm";
+import { CustomNotistackContext } from "../../../context/CustomNotistack";
+import { useContext } from "react";
 
 
 
@@ -61,7 +63,7 @@ function BeneficiariesDetails() {
   const { id } = useParams();
   const query = useQuery(["QUERY_BENEFICIARIES_DETAILS", id],() => getBeneficiarieAPI(user().token,id));
   const mobile = useMediaQuery("(min-width: 850px)");
-
+  const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
 
   if(query.isLoading){
     return <CustomReloading />
@@ -72,8 +74,17 @@ function BeneficiariesDetails() {
   }
 
   const updateBeneficiarie = (values) => {
-    updateBeneficiariesAPI(user().token, values, id)
-    toggleReadOnly(!readOnlyValue);
+    updateBeneficiariesAPI(user().token, values, id).then(
+      (response) => {
+        toggleReadOnly(!readOnlyValue);
+        query.refetch();
+        setSuccessMsg("Beneficiario actualizado correctamente")
+      }
+    ).catch(
+      (error) => {
+        setErrorMsg("Error al actualizar beneficiario")
+      });
+
   }
  
   return (
@@ -91,10 +102,7 @@ function BeneficiariesDetails() {
           <Box>
             <Box sx={{ marginTop: "1rem" }}>
               <CustomFlex direction={"row"}>
-              <Box flexBasis={"fit-content"}>
-                <CustomButton  widthButton="10rem" variantButton={VARIANTES_BUTTON.ORANGE} text="ACTIVIDADES"></CustomButton>
-              </Box>
-                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }} text="EDITAR DATOS"></CustomButton>
+                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue) }} text="EDITAR DATOS"></CustomButton>
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>

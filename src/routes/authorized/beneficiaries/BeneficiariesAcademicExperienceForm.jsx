@@ -15,18 +15,24 @@ import { GetAcademixExperienceBeneficiary } from '../../../api/complementaryInfo
 function BeneficiariesAcademicExperienceForm({id}) {
 
   const [hadleClose, setHadleClose] = React.useState({})
+  const user = useAuthUser();
+  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_ACADEMIC_INFORMATION", id],() => GetAcademixExperienceBeneficiary(user().token, id),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
+
 
   return (
     <CustomFlex direction={"row"}>
                   <Box flexBasis={"fit-content"}>
-                    <ListData id={id}/>
+                    <ListData id={id} query={query}/>
                   </Box>
                   <BasicModal
                   setHandleCloseButton={setHadleClose}
                       variant={VARIANTES_BUTTON.GREEN2}
                     text={<AddIcon />}
                     title={"Experiencia Académica"}
-                    body={<AcademicExperienceForm id={id}  handleClose={hadleClose} />}
+                    body={<AcademicExperienceForm id={id}  handleClose={hadleClose} refetch={query.refetch}/>}
                   />
                 </CustomFlex>
   )
@@ -35,12 +41,8 @@ function BeneficiariesAcademicExperienceForm({id}) {
 export default BeneficiariesAcademicExperienceForm
 
 
-const ListData = ({id}) => {
-  const user = useAuthUser();
-  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_ACADEMIC_INFORMATION", id],() => GetAcademixExperienceBeneficiary(user().token, id),{
-    retry: 2,
-    refetchOnWindowFocus: false,
-  });
+const ListData = ({id, query}) => {
+  
 
   if(query.isLoading){
       return <CustomReloading />

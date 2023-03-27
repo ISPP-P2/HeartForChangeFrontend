@@ -28,10 +28,7 @@ const SignInComponent  = ({prop}) => {
                         refreshTokenExpireIn: tokens.refreshTokenExpireIn   
                     }
                 )){
-                    console.log("Sesion iniciada")
                     navigate('/')
-                }else {
-                    console.log("error")
                 }
             }
         ).catch(

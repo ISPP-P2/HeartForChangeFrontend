@@ -15,19 +15,23 @@ import { CustomList } from '../../../static/user';
 function VolunteerComplementaryForm({id}) {
 
     const [hadleClose, setHadleClose] = React.useState({});
-
+    const user = useAuthUser();
+    const query = useQuery(["QUERY_VOLUNTEERS_DETAILS_COMPLEMENTARY_INFORMATION", id],() => GetComplementaryInformationVolunteers(user().token, id),{
+        retry: 2,
+        refetchOnWindowFocus: false,
+      });
 
     return (
     <CustomFlex direction={"row"}>
                   <Box flexBasis={"fit-content"}>
-                    <ListData id={id}/>
+                    <ListData id={id} query={query}/>
                   </Box>
                   <BasicModal
                     setHandleCloseButton={setHadleClose}
                     variant={VARIANTES_BUTTON.GREEN2}
                     text={<AddIcon />}
                     title={"Formación Complementaria"}
-                    body={<ComplementaryFormationForm id={id} handleClose={hadleClose}/>}
+                    body={<ComplementaryFormationForm id={id} handleClose={hadleClose} refetch={query.refetch}/>}
                   />
                 </CustomFlex>
   )
@@ -36,12 +40,8 @@ function VolunteerComplementaryForm({id}) {
 export default VolunteerComplementaryForm
 
 
-const ListData = ({id}) => {
-    const user = useAuthUser();
-    const query = useQuery(["QUERY_VOLUNTEERS_DETAILS_COMPLEMENTARY_INFORMATION", id],() => GetComplementaryInformationVolunteers(user().token, id),{
-        retry: 2,
-        refetchOnWindowFocus: false,
-      });
+const ListData = ({id, query}) => {
+   
   
     if(query.isLoading){
         return <CustomReloading />

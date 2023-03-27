@@ -15,7 +15,7 @@ function DetailsCard({title, buttonText}) {
                         {title}
                     </Typography>
                 </CardContent>
-                <CustomButton onClick={()=> {console.log()}} text={buttonText} variantButton={VARIANTES_BUTTON.RED}/>
+                <CustomButton onClick={()=> {}} text={buttonText} variantButton={VARIANTES_BUTTON.RED}/>
             </Box>
             <CardMedia
                 component="img"

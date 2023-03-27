@@ -32,16 +32,6 @@ const form = [
                      
     },
     {
-        name: "nivel",
-        type: FORM_TYPES.TEXT,
-        label: "Nivel",
-        validation: Yup.string("Deber ser una cadena de caracteres")
-                       .max(50, "Tiene que haber menos de 50 caracteres")
-                        .required("No puede estar vacio"),
-        icon: <AssessmentIcon />,
-    },
-
-    {
         name: "satisfactionDegree",
         type: FORM_TYPES.NUMBER,
         label: "Satisfacción",
@@ -66,7 +56,7 @@ const form = [
 
 
 
-function AcademicExperienceForm({id, handleClose}) {
+function AcademicExperienceForm({id, handleClose, refetch}) {
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
     const auth = useAuthUser()
 
@@ -74,6 +64,7 @@ function AcademicExperienceForm({id, handleClose}) {
         PostAcademixExperience(auth().token, values, id).then(
             (response) => {
                 setSuccessMsg("Se ha añadido la experiencia académica")
+                refetch()
                 handleClose.handleClose()
             }
         ).catch(

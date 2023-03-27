@@ -16,20 +16,23 @@ import {GetComplementaryInformationBeneficiary } from '../../../api/complementar
 function BeneficiariesComplementaryInformation({id}) {
     
     const [handleClose, setHandleClose] = React.useState({});
-
-
+    const user = useAuthUser();
+    const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_COMPLEMENTARY_INFORMATION", id],() => GetComplementaryInformationBeneficiary(user().token, id),{
+      retry: 2,
+      refetchOnWindowFocus: false,
+    });
 
     return (
     <CustomFlex direction={"row"}>
                   <Box flexBasis={"fit-content"}>
-                    <ListData id={id}/>
+                    <ListData id={id} query={query}/>
                   </Box>
                   <BasicModal
                   setHandleCloseButton={setHandleClose}
                     variant={VARIANTES_BUTTON.GREEN2}
                     text={<AddIcon />}
                     title={"Formación Complementaria"}
-                    body={<ComplementaryFormationForm id={id} handleClose={handleClose} />}
+                    body={<ComplementaryFormationForm id={id} handleClose={handleClose} refetch={query.refetch}/>}
                   />
                 </CustomFlex>
   )
@@ -38,12 +41,8 @@ function BeneficiariesComplementaryInformation({id}) {
 export default BeneficiariesComplementaryInformation
 
 
-const ListData = ({id}) => {
-    const user = useAuthUser();
-    const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_COMPLEMENTARY_INFORMATION", id],() => GetComplementaryInformationBeneficiary(user().token, id),{
-        retry: 2,
-        refetchOnWindowFocus: false,
-      });
+const ListData = ({id,query}) => {
+ 
   
     if(query.isLoading){
         return <CustomReloading />
@@ -64,12 +63,12 @@ const ListData = ({id}) => {
     )
     return (
             <BasicModal
-                       widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Formación Complementaria"}
-                      title={"Formación Complementaria"}
-                      body={<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />}
-                    />
+                widthButton={"10rem"}
+              variant={VARIANTES_BUTTON.ORANGE}
+              text={"Formación Complementaria"}
+              title={"Formación Complementaria"}
+              body={<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />}
+            />
     )
 
 

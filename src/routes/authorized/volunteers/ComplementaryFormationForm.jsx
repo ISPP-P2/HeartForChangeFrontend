@@ -28,7 +28,6 @@ const form = [
         label: "Organismo",
         icon: <BusinessIcon />,
         validation: Yup.string("Deber ser una cadena de caracteres")
-                            .min(0, "Tiene haber al menos dos caracteres")
                             .max(50, "Tiene que haber menos de 50 caracteres")
                         .required("No puede estar vacío"),
     },
@@ -56,7 +55,7 @@ const form = [
 
 
 
-function ComplementaryFormationForm({id, handleClose}) {
+function ComplementaryFormationForm({id, handleClose, refetch}) {
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
     const auth = useAuthUser()
 
@@ -64,6 +63,7 @@ function ComplementaryFormationForm({id, handleClose}) {
         PostComplementaryInformation(auth().token, values, id).then(
             (response) => {
                 setSuccessMsg("Se ha añadido correctamente")
+                refetch()
                 handleClose.handleClose()
             }
         ).catch(

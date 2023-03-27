@@ -16,18 +16,24 @@ function VolunteerWorkForm({id}) {
     
 
     const [handleClose, setHandleClose] = React.useState({});
+    const user = useAuthUser();
+    const query = useQuery(["QUERY_VOLUNTEERS_DETAILS_WORK_EXPERIENCE", id],() => GetWorkExperienceVolunteers(user().token,id),{
+        retry: 2,
+        refetchOnWindowFocus: false,
+    });
+    
 
     return (
       <CustomFlex direction={"row"} >
         <Box flexBasis={"fit-content"}>
-           <ListData id={id}/>
+           <ListData id={id} query={query}/>
         </Box>
             <BasicModal
             setHandleCloseButton={setHandleClose}
             variant={VARIANTES_BUTTON.GREEN2}
             text={<AddIcon />}
             title={"Experiencia Laboral"}
-            body={<WorkExperienceForm id={id} handleClose={handleClose} />}
+            body={<WorkExperienceForm id={id} handleClose={handleClose} query={query.refetch}/>}
             />
         </CustomFlex>
     )
@@ -36,13 +42,7 @@ function VolunteerWorkForm({id}) {
 export default VolunteerWorkForm
 
 
-const ListData = ({id}) => {
-
-    const user = useAuthUser();
-    const query = useQuery(["QUERY_VOLUNTEERS_DETAILS_WORK_EXPERIENCE", id],() => GetWorkExperienceVolunteers(user().token,id),{
-        retry: 2,
-        refetchOnWindowFocus: false,
-    });
+const ListData = ({id, query}) => {
     
     if(query.isLoading){
       return <CustomReloading />

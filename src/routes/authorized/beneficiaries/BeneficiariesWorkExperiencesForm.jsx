@@ -21,18 +21,24 @@ import BasicTableNoDescription from '../../../components/BasicTableNoDescription
 
 function BeneficiariesWorkExperiencesForm({id}) {
   const [handleClose, setHandleClose] = React.useState({});
+  const user = useAuthUser();
+  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_WORK_EXPERIENCE", id],() => GetWorkExperienceBeneficiary(user().token,id),{
+    retry: 2,
+    refetchOnWindowFocus: false,
+  });
+
 
   return (
     <CustomFlex direction={"row"} >
                   <Box flexBasis={"fit-content"}>
-                    <ListData id={id}/>
+                    <ListData id={id} query={query}/>
                   </Box>
                     <BasicModal
                       variant={VARIANTES_BUTTON.GREEN2}
                       setHandleCloseButton={setHandleClose}
                       text={<AddIcon />}
                       title={"Experiencia Laboral"}
-                      body={<WorkExperienceForm id={id} handleClose={handleClose} />}
+                      body={<WorkExperienceForm id={id} handleClose={handleClose} refetch={query.refetch}/>}
                     />
                 </CustomFlex>
   )
@@ -42,12 +48,8 @@ export default BeneficiariesWorkExperiencesForm
 
 
 
-const ListData = ({id}) => {
-  const user = useAuthUser();
-  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_WORK_EXPERIENCE", id],() => GetWorkExperienceBeneficiary(user().token,id),{
-    retry: 2,
-    refetchOnWindowFocus: false,
-  });
+const ListData = ({id, query}) => {
+  
   
   if(query.isLoading){
     return <CustomReloading />

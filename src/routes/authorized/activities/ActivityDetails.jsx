@@ -26,6 +26,7 @@ import { useQuery } from 'react-query';
 import { getActivityAPI, getVolunteersAcceptedByActivityAPI, getVolunteersByActivityAPI, updateActivityAPI } from "../../../api/actividades/api";
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 const form = [
     {
@@ -126,7 +127,7 @@ function ActivityDetails() {
   const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
   const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
-
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -136,9 +137,14 @@ function ActivityDetails() {
   }
 
   const updateActivity = (values) => {
-    console.log(values)
-    updateActivityAPI(user().token, values, id)
-    toggleReadOnly(!readOnlyValue);
+    updateActivityAPI(user().token, values, id).then((res) => {
+      toggleReadOnly(!readOnlyValue);
+      query.refetch();
+      setSuccessMsg("Actividad actualizada correctamente")
+    }).catch((err) => {
+      setErrorMsg("Ha ocurrido un error al actualizar la actividad")
+    })
+   
   }
 
   const VolunteerList = new CustomList(VoluntarioParser(volunteers.data))
@@ -175,7 +181,7 @@ function ActivityDetails() {
                   title='Editar actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
                   buttonSidebar={<CustomButton text={"Editar"} 
-                  onClick={() => {toggleReadOnly(!readOnlyValue); console.log(readOnlyValue); }}  
+                  onClick={() => {toggleReadOnly(!readOnlyValue) }}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 
                 <CustomCard
