@@ -102,13 +102,12 @@ const ToolList = ({usuario, handleDelete, id}) => {
       <CustomLink  to={`/ong/voluntario/${id}`}>
         <SearchIcon />
       </CustomLink>
-      <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
+      {/* <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleClose)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/> */}
     </CustomFlex>
   )
-
 }
 
 
