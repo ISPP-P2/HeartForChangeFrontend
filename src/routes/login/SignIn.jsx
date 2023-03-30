@@ -23,6 +23,9 @@ return (
     </Link>{' '}
     {new Date().getFullYear()}
     {'.'}
+    <Link color="inherit" href="/privacidad" target="_blank">
+      Términos y condiciones
+    </Link>
   </Typography>
 );
 }
@@ -99,7 +102,7 @@ export default function SignIn() {
 return (
   <>
    {isLoading ? <CustomReloading /> :
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="s">
       <Box
         sx={{
           marginTop: 8,
