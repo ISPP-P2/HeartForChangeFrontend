@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import LegalTerms from "../../components/LegalTerms";
+import LegalPage from "../../components/LegalPage";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import Attendances from "./activities/Attendances";
 
@@ -59,7 +59,7 @@ export default function AutorizedRoutes() {
       <Route path={"/subvencion"}>
         <Route path={":id"}element={<SubventionsDetails />} />
       </Route>
-      <Route path={'/privacidad'} element={<LegalTerms/>}></Route>
+      <Route path={'/privacidad'} element={<LegalPage/>}></Route>
     </Routes>
     
   );
