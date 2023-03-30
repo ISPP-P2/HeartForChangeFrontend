@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import LegalTerms from '../../components/LegalTerms'
 import ActivityVolunteerDetails from '../authorized/activities/ActivityDetailsVolunteers'
 import DashboardVolunteers from './Dashboard/DashboardVolunteers'
 import MyActivities from './MyList/MyActivities'
@@ -12,6 +13,7 @@ function IndexRoutes() {
         <Route path={'/actividad'}>
           <Route path={':id'} element={<ActivityVolunteerDetails  />}/>
         </Route>
+       
   </Routes>
   )
 }

@@ -7,6 +7,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CustomFlex from './CustomFlex';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 
 
 function Sidebar({handleClose}) {
@@ -19,6 +20,10 @@ function Sidebar({handleClose}) {
           <ButtonSideBoard text={"Voluntarios"} href={"/ong/voluntarios"} handleClose={handleClose} icon={<PeopleAltIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Actividades"} href={"/ong/actividades"} handleClose={handleClose} icon={<FormatListBulletedIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Subvenciones"} href={"/ong/subvenciones"} handleClose={handleClose} icon={<AttachMoneyIcon sx={{color: 'white'}}/>} />
+          <SecondaryText text={"Utilidad"} />
+          <ButtonSideBoard text={"Privacidad"} href={"/ong/privacidad"} handleClose={handleClose} icon={<PrivacyTipIcon sx={{color: 'white'}}/>} />
+
+
       </List>
     </>
   )

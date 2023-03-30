@@ -3,6 +3,7 @@ import "./index.css";
 import { RequireAuth } from 'react-auth-kit'
 import CustomSecurePath from "./routes/login/CustomSecurePath";
 import LoadingWrapper from "./components/LoadingWrapper";
+import LegalTerms from "./components/LegalTerms";
 import { lazy } from "react";
 
 
@@ -23,6 +24,7 @@ function App() {
                     </CustomSecurePath>}/>	
                 <Route path={'/'} element={<SignIn  />} />
           </Route>
+          <Route path={'/privacidad'} element={<LegalTerms/>}></Route>
       </Routes>
   )
 }
