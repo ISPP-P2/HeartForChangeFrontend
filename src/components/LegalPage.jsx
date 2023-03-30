@@ -1,35 +1,14 @@
 import * as React from 'react';
-import CustomButton from './CustomButton';
-import CustomFlex from './CustomFlex';
 import { Box } from '@mui/system';
 import BodyWrapper from './BodyWrapper';
-import { AppBar, Toolbar } from "@mui/material"
 
 
 
-
-
-function LegalTerms({ window } ) {
-
-    return (
-    <Box>
-        <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - 0px)` },
-          ml: { sm: `0px` },
-          height: "100px",
-          background: "rgb(255,137,49)",
-        }}
-      >
-       <CustomFlex direction={"row"} align={"center"}>
-        <img src="../static/logo2.png" alt="logo" style={{width:"100px", height:"100px", marginLeft:"20px"}}/>
-        <p> HEART FOR CHANGE </p>
-        </CustomFlex> 
-        </AppBar>
-
+function LegalPage() {
+  return (
+    <BodyWrapper>
         <Box>
-        <div style={{marginTop:"110px",textAlign:"center", fontFamily:"Arial"}}><h1>Términos y Condiciones de HeartForChange<br/></h1>
+        <div style={{textAlign:"center", fontFamily:"Arial"}}><h1>Términos y Condiciones de HeartForChange<br/></h1>
 
 Por favor, lea atentamente los siguientes términos y condiciones antes de utilizar la aplicación HeartForChange.<br/>
 
@@ -70,9 +49,8 @@ Estos Términos y Condiciones constituyen el acuerdo completo entre HeartForChan
 Si tiene alguna pregunta o comentario sobre estos Términos y Condiciones, por favor, contáctenos a través de la sección de ayuda de la Aplicación.</div>
 
         </Box>
-        </Box>)
+      </BodyWrapper>
+    );
 }
 
-export default LegalTerms;
-
-
+export default LegalPage;
