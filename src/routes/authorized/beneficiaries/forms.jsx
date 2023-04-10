@@ -400,3 +400,30 @@ export let beneficiarioBasicFormValue = [
     .required("Este campo es obligatorio"),
   },
 ];
+
+
+export const APPOINTMENT_FORM = [
+  {
+    name: "date",
+    type: FORM_TYPES.ONLYDATE,
+    label: "Fecha",
+    validation: Yup.date()
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "hour",
+    type: FORM_TYPES.TIME,
+    label: "Hora",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(5, "debe tener menos de 5 caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "notes",
+    type: FORM_TYPES.TEXTEAREA,
+    label: "Descripción",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .max(200, "debe tener menos de 200 caracteres")
+    .required("Este campo es obligatorio"),
+  },
+];

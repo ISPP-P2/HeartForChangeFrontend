@@ -16,11 +16,15 @@ function CustomButton({
     show = true,
     height="auto",
     }) {
+
     return (
-        <Box >
+        <Box  sx={{display: "flex", justifyContent:"center", alignItems:"center"}}> 
             <Button type={'button'} sx={{
-                 width: widthButton,
-                 height: heightButton,
+                width: widthButton,
+                height: heightButton,
+                padding: "0.5rem 0.5rem 0.2rem 0.5rem",
+                minWidth: "0",
+                minHeight: "0",
                 backgroundColor: variantButton + "!important",
                 "&:hover": {
                     opacity: 0.85

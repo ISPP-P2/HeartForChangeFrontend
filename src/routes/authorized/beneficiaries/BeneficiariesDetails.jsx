@@ -29,6 +29,7 @@ import BeneficiariesAcademicExperienceForm from "./BeneficiariesAcademicExperien
 import BeneficiariesWorkExperiencesForm from "./BeneficiariesWorkExperiencesForm";
 import { CustomNotistackContext } from "../../../context/CustomNotistack";
 import { useContext } from "react";
+import BeneficiariesAppointments from "./BeneficiariesAppointments";
 
 
 
@@ -89,10 +90,15 @@ function BeneficiariesDetails() {
  
   return (
     
-    <BodyWrapper title={`Beneficiario`}>
+    <BodyWrapper  title={
+                  <CustomFlex justifyContent={"space-between"}>
+                    Beneficiario
+                    <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue) }} text="EDITAR DATOS">
+                    </CustomButton></CustomFlex>}>
       <CustomFlex direction={"column"}>
         <Box
           sx={{
+            marginBottom: "50rem",
             display: mobile ? "grid" : "flex",
             gridTemplateColumns: "23em 1fr",
             gridTemplateRows: "10em 2em",
@@ -102,7 +108,7 @@ function BeneficiariesDetails() {
           <Box>
             <Box sx={{ marginTop: "1rem" }}>
               <CustomFlex direction={"row"}>
-                <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue) }} text="EDITAR DATOS"></CustomButton>
+                
               </CustomFlex>
             </Box>
             <Box sx={{ marginTop: "1rem", marginRight: "1rem" }}>
@@ -110,6 +116,7 @@ function BeneficiariesDetails() {
                 <BeneficiariesComplementaryInformation id={id} />
                 <BeneficiariesAcademicExperienceForm id={id} />
                 <BeneficiariesWorkExperiencesForm id={id} />
+                <BeneficiariesAppointments id={id} />
               </CustomFlex>
             </Box>
           </Box>
@@ -126,8 +133,6 @@ function BeneficiariesDetails() {
           </Box>
           
         </Box>
-
-        <CustomFlex direction={"column"}></CustomFlex>
       </CustomFlex>
     </BodyWrapper>
   );

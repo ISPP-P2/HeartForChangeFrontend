@@ -11,49 +11,52 @@ import CustomReloading from '../../../components/CustomReloading'
 import CustomError from '../../../components/CustomError'
 import { CustomList } from '../../../static/user'
 import BasicTableNoDescription from '../../../components/BasicTableNoDescription'
-import { DeleteAcademixExperience, GetAcademixExperienceBeneficiary } from '../../../api/complementaryInformation/AcademixExperience'
+import { GetAcademixExperienceBeneficiary } from '../../../api/complementaryInformation/AcademixExperience'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CustomNotistackContext } from '../../../context/CustomNotistack'
 import { useContext } from 'react'
-
-function BeneficiariesAcademicExperienceForm({id}) {
+import BeneficiaryAppoinmentForm from './BeneficiaryAppoinmentForm'
+import { DeleteAppoinmentAPI, getAllAppoinmentsByBeneficiary } from '../../../api/beneficiario/appointment/api'
+import moment from 'moment/moment'
+function BeneficiariesAppointments({id}) {
 
   const [hadleClose, setHadleClose] = React.useState({})
   const user = useAuthUser();
-  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_ACADEMIC_INFORMATION", id],() => GetAcademixExperienceBeneficiary(user().token, id),{
+  const query = useQuery(["QUERY_BENEFICIARIES_DETAILS_APPOINTMENT", id],() => getAllAppoinmentsByBeneficiary(user().token, id),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
 
+  console.log(query)
 
   return (
     <CustomFlex direction={"row"}>
-                  <Box flexBasis={"fit-content"}>
-                    <ListData id={id} query={query}/>
-                  </Box>
-                  <BasicModal
-                  setHandleCloseButton={setHadleClose}
-                      variant={VARIANTES_BUTTON.GREEN2}
-                    text={<AddIcon />}
-                    title={"Experiencia Académica"}
-                    body={<AcademicExperienceForm id={id}  handleClose={hadleClose} refetch={query.refetch}/>}
-                  />
-                </CustomFlex>
+          <Box flexBasis={"fit-content"}>
+            <ListData id={id} query={query}/>
+          </Box>
+          <BasicModal
+          setHandleCloseButton={setHadleClose}
+              variant={VARIANTES_BUTTON.GREEN2}
+            text={<AddIcon />}
+            title={"Crear cita"}
+            body={<BeneficiaryAppoinmentForm id={id}  handleClose={hadleClose} refetch={query.refetch}/>}
+          />
+    </CustomFlex>
   )
 }
 
-
+export default BeneficiariesAppointments
 
 const ToolList = ({id, query}) => {
+
+  const [handleClose, setHandleClose] = React.useState({});
+
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
 
-  const [handleClose, setHandleClose] = React.useState({})
-
-
   const handleDelete = () => {
-    DeleteAcademixExperience(user().token, id)
+    DeleteAppoinmentAPI(user().token, id)
     .then(() => {
       query.refetch()
       handleClose.handleClose()
@@ -67,8 +70,8 @@ const ToolList = ({id, query}) => {
   return (
     <BasicModal
           widthButton={"10rem"}
-          setHandleCloseButton={setHandleClose}
           variant={VARIANTES_BUTTON.RED}
+          setHandleCloseButton={setHandleClose}
           text={<DeleteIcon />}
           title={"¿Estás seguro?"}
           body={<CustomFlex direction={"column"}>
@@ -82,16 +85,13 @@ const ParseToTable = (data, query) => {
   return data.map((item) => {
     return {
       ...item,
+      date: moment(item.date).format("DD/MM/YYYY"),
       toollist : <ToolList id={item.id} query={query}/>
     }
   })
 }
 
-export default BeneficiariesAcademicExperienceForm
-
-
 const ListData = ({id, query}) => {
-  
   if(query.isLoading){
       return <CustomReloading />
   }
@@ -107,15 +107,16 @@ const ListData = ({id, query}) => {
 
   const BeneficiarieList = new CustomList(ParseToTable(query.data.data, query))
   let objetoTabla = BeneficiarieList.parseToTableBasic(
-    ["Especialidad","Nivel","Satisfacción","Año de finalización", "Acciones"],
-    ["speciality","educationalLevel","satisfactionDegree","endingYear", "toollist"])
+    ["Fecha", "Hora", "Acción"],
+    ["date", "hour","toollist"]
+    )
 
   return (
       <BasicModal
             widthButton={"10rem"}
             variant={VARIANTES_BUTTON.ORANGE}
-            text={"Experiencia Académica"}
-            title={"Experiencia Académica"}
+            text={"Citas"}
+            title={"Citas"}
             body={<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />}
       />)
   } 
