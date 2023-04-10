@@ -31,11 +31,16 @@ return (
 }
 
 
-export default function SignIn() {
+export default function Register() {
 
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
+    cif:'',
+    name:'',
+    email:'',
+    description:'',
+
   });
   const isLogged = useIsAuthenticated()
   const [isLoading, setIsLoading] = useState(true)
@@ -66,36 +71,40 @@ export default function SignIn() {
     setCredentials({ ...credentials, username: event.target.value });
   };
 
+  const onChangeDescription = (event) => {
+    setCredentials({ ...credentials, description: event.target.value });
+  };
+
+  const onChangeName = (event) => {
+    setCredentials({ ...credentials, name: event.target.value });
+  };
+
+  const onChangeCif = (event) => {
+    setCredentials({ ...credentials, cif: event.target.value });
+  };
+
+  const onChangeEmail = (event) => {
+    setCredentials({ ...credentials, email: event.target.value });
+  };
+
   
 
   const onSubmitDev = () => {
-    axios.post("/api/accounts/signin", {
+    console.log(credentials)
+    axios.post("/api/ongs/signup", {
       username: credentials.username,
-      password: credentials.password
+      password: credentials.password,
+      cif: credentials.cif,
+      email: credentials.email,
+      name: credentials.name,
+      description: credentials.description
     }).then((response) => {
-      const tokens = parseTokens(response)
-      if(SignIn(
-        {
-            token: tokens.token,
-            expiresIn: tokens.expiresIn,
-            tokenType: tokens.tokenType,
-            authState: tokens.authState,
-            refreshToken: tokens.refreshToken,                   
-            refreshTokenExpireIn: tokens.refreshTokenExpireIn   
-        }
-      )){
-          if(tokens.authState.rol == "ONG"){
-            navigate("/ong")
-          }else{
-            navigate("/vol")
-          }
-          setSuccessMsg("Sesion iniciada");
-      }else {
-          setErrorMsg("Error al iniciar sesión");
-      }
-    }).catch((error) => {
+          setSuccessMsg("Cuenta creada correctamente");
+          navigate('/')
+    }
+).catch((error) => {
       console.log(error)
-      setErrorMsg("Error al iniciar sesión");
+      setErrorMsg("Error al crear la cuenta");
     })
   }
   
@@ -115,18 +124,41 @@ return (
           <img style={{ maxWidth: '50%' }}  src={logo}   ></img>
         </div>
         <Typography component="h1" variant="h5" color="#686868">
-          Iniciar sesión
+          Registrar una ONG
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
+        <Box component="form" noValidate sx={{ mt: 1, width:'30%' }}>
           <TextField
             margin="normal"
             required
-            onChange={onChangeUser}
+            onChange={onChangeEmail}
             fullWidth
             id="email"
             label="Correo electrónico"
             name="email"
             autoComplete="email"
+            autoFocus
+            sx={{
+              // input label when focused
+              "& label.Mui-focused": {
+                color:  "#ff862f"
+              },
+            // focused color for input with variant='outlined'
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff862f"
+                  }
+                }
+                }}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            onChange={onChangeUser}
+            id="username"
+            label="Nombre de usuario"
+            name="username"
+            autoComplete="username"
             autoFocus
             sx={{
               // input label when focused
@@ -164,16 +196,89 @@ return (
                 }
                 }}
           />
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, justifyContent: 'space-between', margin:'0' }}>
+          <TextField
+            margin="normal"
+            required
+            
+            onChange={onChangeCif}
+            id="cif"
+            label="CIF"
+            name="cif"
+            autoComplete="cif"
+            autoFocus
+            sx={{width:'47%',
+              // input label when focused
+              "& label.Mui-focused": {
+                color:  "#ff862f"
+              },
+            // focused color for input with variant='outlined'
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff862f"
+                  }
+                }
+                }}
+          />
+          <TextField
+            margin="normal"
+            required
+            
+            onChange={onChangeName}
+            id="name"
+            label="Nombre de la ONG"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            sx={{width:'47%',
+            selfAlign:'flex-end',
+              // input label when focused
+              "& label.Mui-focused": {
+                color:  "#ff862f"
+              },
+            // focused color for input with variant='outlined'
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff862f"
+                  }
+                }
+                }}
+          />
+          </Box>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            onChange={onChangeDescription}
+            id="description"
+            label="Descripción de la ONG"
+            name="description"
+            autoComplete="description"
+            autoFocus
+            sx={{
+              // input label when focused
+              "& label.Mui-focused": {
+                color:  "#ff862f"
+              },
+            // focused color for input with variant='outlined'
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff862f"
+                  }
+                }
+                }}
+          />
+          
                 
           <div  style={{ display: 'flex', justifyContent:'center' }}>
-          <CustomButton  onClick={onSubmitDev} text={"Entrar"} variantButton={VARIANTES_BUTTON.ORANGE }/>
+          <CustomButton  onClick={onSubmitDev} text={"Registrar"} variantButton={VARIANTES_BUTTON.ORANGE }/>
           </div>
           <Grid container>
             <Grid item >
-            <Link color="text.secondary" variant="h5" fontSize= "1em" href="/register" underline="none" sx={{"&:hover": {
+            <Link color="text.secondary" variant="h5" fontSize= "1em" href="/" underline="none" sx={{"&:hover": {
                     opacity: 0.70
                 }}}>
-            Crear Cuenta
+            Iniciar sesión
         </Link>
             </Grid>
           </Grid>
