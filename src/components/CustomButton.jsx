@@ -19,17 +19,20 @@ function CustomButton({
 
     return (
         <Box  sx={{display: "flex", justifyContent:"center", alignItems:"center"}}> 
-            <Button type={'button'} sx={{
+            <Button type={'button'} 
+            sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row",
                 width: widthButton,
                 height: heightButton,
-                padding: "0.5rem 0.5rem 0.2rem 0.5rem",
                 minWidth: "0",
                 minHeight: "0",
                 backgroundColor: variantButton + "!important",
                 "&:hover": {
                     opacity: 0.85
                 },
-                display: show ? 'block':'none',
+                display: show ? 'flex':'none',
             }}
             onClick={onClick} 
             variant="contained"
