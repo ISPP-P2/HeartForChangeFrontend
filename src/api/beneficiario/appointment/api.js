@@ -12,3 +12,8 @@ export const getAllAppoinmentsByBeneficiary = (token, id) => {
 export const DeleteAppoinmentAPI = (token, id) => {
     return axiosWithToken(token).post(`/api/appointments/delete/${id}`);
 }
+
+export const getAllAppointmentAPI  = async (token) => {
+    const {data} = await axiosWithToken(token).get(`/api/appointments/get`);
+    return data
+}
