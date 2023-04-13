@@ -11,6 +11,12 @@ export const saveWorkshopsAPI = async (token, values) => {
 }
 
 
+export const deleteBeneficiarieInWorkShopAPI = async (token, taskId, personId) => {
+    const {data} = await axiosWithToken(token).post(`/api/attendances/quit/${taskId}/${personId}`)
+    return data
+}
+
+
 export const getWorkshopByIdAPI = async (token, id) => {
     const {data} = await axiosWithToken(token).get(`/api/workshops/get/${id}`)
     return data
