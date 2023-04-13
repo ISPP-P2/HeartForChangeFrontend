@@ -19,5 +19,5 @@ export const PutWorkExperience = (token,data, id) => {
 }
 
 export const DeleteWorkExperience = (token,id) => {
-    return axiosWithToken(token).get(`/api/workExperiences/delete/${id}`);
+    return axiosWithToken(token).post(`/api/workExperiences/delete/${id}`);
 }

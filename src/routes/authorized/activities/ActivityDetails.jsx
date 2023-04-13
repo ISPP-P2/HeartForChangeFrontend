@@ -4,7 +4,7 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -123,6 +123,7 @@ const ToolList = ({usuario, id}) => {
 function ActivityDetails() {
   const [readOnlyValue, toggleReadOnly] = useState(true)
   const { id } = useParams()
+  const navigate = useNavigate();
   const user = useAuthUser();
   const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
@@ -146,6 +147,13 @@ function ActivityDetails() {
     })
    
   }
+
+  if(query.data.type !== "ACTIVIDAD"){
+    query.remove()
+    setErrorMsg("Error al cargar")
+    navigate("/ong/actividades")
+  }
+
 
   const VolunteerList = new CustomList(VoluntarioParser(volunteers.data))
   let objetoTabla = VolunteerList.parseToTable(

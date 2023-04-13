@@ -17,5 +17,5 @@ export const PutAcademixExperience = (token,data, id) => {
 }
 
 export const DeleteAcademixExperience = (token,id) => {
-    return axiosWithToken(token).get(`/api/academicExperiences/delete/${id}`);
+    return axiosWithToken(token).post(`/api/academicExperiences/delete/${id}`);
 }

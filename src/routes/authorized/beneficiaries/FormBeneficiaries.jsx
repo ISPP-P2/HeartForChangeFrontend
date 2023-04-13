@@ -316,8 +316,6 @@ function FormBeneficiaries() {
         saveBeneficiariesAPI(user().token, values).then((res) => {
           navigate('/ong/beneficiarios')
         });
-        
-        
     }
 
   return (

@@ -130,7 +130,14 @@ export default function BasicTable({
           </TableRow>
         </TableHead>
         <TableBody>
-        {objetoTabla.items.map((row, i) => (
+        {objetoTabla.items.length === 0 ?
+          <TableRow>
+            <TableCell sx={{textAlign: "center"}}>
+              No hay datos para mostrar
+            </TableCell>
+          </TableRow>
+          :
+        objetoTabla.items.map((row, i) => (
             <Row key={i} row={row}/>
           ))}
         </TableBody>

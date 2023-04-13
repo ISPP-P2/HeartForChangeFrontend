@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, useMediaQuery } from '@mui/material';
+import { CircularProgress, Grid, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import CustomCard from '../../../components/CustomCard';
@@ -45,7 +45,7 @@ function Dashboard() {
 
 
     return (
-        <BodyWrapper title={"Panel de control (Beta)"}>
+        <BodyWrapper title={"Panel de control"}>
         <Grid display={mobile ? "grid" : "flex"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
             <CustomCardMini 
                 title='Beneficiarios registrados'

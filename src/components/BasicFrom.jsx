@@ -98,7 +98,11 @@ function BasicFrom({
 }
 
 const CustomInput = (props) => {
-  if (props.type == FORM_TYPES.TEXT || props.type == FORM_TYPES.ONLYDATE   || props.type == FORM_TYPES.NUMBER || props.type == FORM_TYPES.DATE) {
+  if (props.type == FORM_TYPES.TEXT 
+    || props.type == FORM_TYPES.ONLYDATE   
+    || props.type == FORM_TYPES.NUMBER || 
+    props.type == FORM_TYPES.DATE || 
+    props.type == FORM_TYPES.TIME) {
     return (
       <TextField
         type={props.type}
