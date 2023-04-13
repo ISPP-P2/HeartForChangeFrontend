@@ -39,8 +39,6 @@ function Activities() {
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
-
-
   const handleDelete = (id, handleClose) => {
     deleteActivityAPI(user().token, id).then(() => {
       handleClose.handleClose()
@@ -68,7 +66,7 @@ function Activities() {
                     iconD={<BasicModal setHandleCloseButton={setHandleDeleteFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleDeleteFunc} query={query}/>}/>}
                     totalNumber={query.data.length}/>
             </CustomFlex>
-        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No hay actividades</Typography>:<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />}
+        <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
         </CustomFlex> 
       </BodyWrapper>
     );
