@@ -31,3 +31,8 @@ export const getAttendancesByTaskId = async (token, taskId) => {
     const {data} = await axiosWithToken(token).get(`/api/workshops/get/${taskId}/attendances/beneficiaries`)
     return data
 }
+
+export const getAllAttendancesByTaskId = async (token, taskId) => {
+    const {data} = await axiosWithToken(token).get(`/api/attendances/get/task/${taskId}`)
+    return data
+}
