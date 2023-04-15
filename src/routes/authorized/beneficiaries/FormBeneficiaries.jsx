@@ -121,7 +121,6 @@ const form = [
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de salida",
     validation: Yup.date()
-
   },
   {
     name: "numberOfChildren",
