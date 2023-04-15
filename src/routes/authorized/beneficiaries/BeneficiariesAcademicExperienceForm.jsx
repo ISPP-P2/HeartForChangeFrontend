@@ -28,17 +28,17 @@ function BeneficiariesAcademicExperienceForm({id}) {
 
   return (
     <CustomFlex direction={"row"}>
-                  <Box flexBasis={"fit-content"}>
-                    <ListData id={id} query={query}/>
-                  </Box>
-                  <BasicModal
-                  setHandleCloseButton={setHadleClose}
-                      variant={VARIANTES_BUTTON.GREEN2}
-                    text={<AddIcon />}
-                    title={"Experiencia Académica"}
-                    body={<AcademicExperienceForm id={id}  handleClose={hadleClose} refetch={query.refetch}/>}
-                  />
-                </CustomFlex>
+        <Box flexBasis={"fit-content"}>
+          <ListData id={id} query={query}/>
+        </Box>
+        <BasicModal
+        setHandleCloseButton={setHadleClose}
+            variant={VARIANTES_BUTTON.GREEN2}
+          text={<AddIcon />}
+          title={"Experiencia Académica"}
+          body={<AcademicExperienceForm id={id}  handleClose={hadleClose} refetch={query.refetch}/>}
+        />
+    </CustomFlex>
   )
 }
 

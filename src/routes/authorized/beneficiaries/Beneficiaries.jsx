@@ -79,8 +79,6 @@ const Listado = ({data, query}) => {
     })
   }
 
-
-
   const [filterValue, setFilterValue] = React.useState('');
 
   const filteredData = data.filter((item) =>
@@ -93,7 +91,7 @@ const Listado = ({data, query}) => {
   let objetoTabla = BeneficiarieList.parseToTable(
     ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
     ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
-    ["Fecha de nacimiento","correo","Dirección"],
+    ["Fecha de nacimiento","Correo","Dirección"],
     ["birthday","email","address"]
     )
     return (

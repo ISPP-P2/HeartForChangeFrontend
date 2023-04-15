@@ -40,7 +40,6 @@ const Listado = ({data, query}) => {
 
 
 
-
   const [filterValue, setFilterValue] = useState('');
 
   const filteredData = data.filter((item) =>

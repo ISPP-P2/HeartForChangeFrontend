@@ -10,11 +10,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import users from '../static/user';
-import { useState } from 'react';
-import { margin } from '@mui/system';
 
 
 
@@ -67,13 +62,13 @@ export default function BasicTableNoDescription({
         </TableHead>
         <TableBody>
         {objetoTabla.items.length === 0 ?
-          <TableRow>
-            <TableCell sx={{textAlign: "center"}}>
+          <TableRow sx={{textAlign: "center"}}>
+            <TableCell>
               No hay datos para mostrar
             </TableCell>
           </TableRow>
           :
-        objetoTabla.items.map((row, i) => (
+          objetoTabla.items.map((row, i) => (
             <Row key={i} row={row}/>
           ))}
         </TableBody>

@@ -17,3 +17,9 @@ export const getAllAppointmentAPI  = async (token) => {
     const {data} = await axiosWithToken(token).get(`/api/appointments/get`);
     return data
 }
+
+
+export const getBeneficiaryByAppointment = async (token, id) => {
+    const {data} = await axiosWithToken(token).get(`/api/appointments/get/${id}/beneficiary`);
+    return data
+}
