@@ -11,6 +11,8 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Typography } from '@mui/material';
 import ActivityForm from './ActivityForm';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { deleteActivityAPI, getActivitiesAPI } from '../../../api/actividades/api';
@@ -26,6 +28,9 @@ function Activities() {
   const user = useAuthUser();
   const [handleDeleteFunc, setHandleDeleteFunc] = React.useState({});
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  
+  const [filterValue, setFilterValue] = React.useState('');
+
   const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
@@ -48,9 +53,11 @@ function Activities() {
       setErrorMsg("Error al eliminar la subvención")
     })
   }
-  
+  const filteredData = query.data.filter((item) =>
+  item.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
 
-  const ActivityList = new CustomList(ParseActivity(query.data, handleDelete));
+  const ActivityList = new CustomList(ParseActivity(filteredData, handleDelete));
   let objetoTabla = ActivityList.parseToTableBasic(
     ["Nombre de actividad","Lugar","Coordinador","Fecha","Ver detalles"],
     ["name", "place","coordinator","date", "button"]
@@ -66,7 +73,24 @@ function Activities() {
                     iconD={<BasicModal setHandleCloseButton={setHandleDeleteFunc} title={"Añadir actividad"} text={"Añadir"} body={<ActivityForm handleClose={handleDeleteFunc} query={query}/>}/>}
                     totalNumber={query.data.length}/>
             </CustomFlex>
-        <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
+        <Box>
+        <TextField
+          id="input-with-icon-textfield"
+          label="Nombre de la actividad"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+        />
+          <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
+        </Box>
+        
         </CustomFlex> 
       </BodyWrapper>
     );

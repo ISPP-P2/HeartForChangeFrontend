@@ -11,6 +11,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
 import { Typography, useMediaQuery } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import { deleteVolunteerAPI, getVolunteersAPI } from '../../../api/voluntarios/api';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomError from '../../../components/CustomError';
@@ -37,15 +39,39 @@ const Listado = ({data, query}) => {
   }
 
 
+  
 
-  const VolunteersList = new CustomList(VoluntarioParser(data, handleDelete))
+  const [filterValue, setFilterValue] = useState('');
+
+  const filteredData = data.filter((item) =>
+  item.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
+  const VolunteersList = new CustomList(VoluntarioParser(filteredData, handleDelete))
+
+  
   let objetoTabla = VolunteersList.parseToTableBasic(
     ["Nombre de usuario", "Nombre","Primer Apellido", "Segundo Apellido","Género", "Email","Herramientas"], 
     ["username", "name", "firstSurname","secondSurname", "gender","email", "button"]
   )
 
   return (
+            <Box>
+            <TextField
+          id="input-with-icon-textfield"
+          label="Nombre del voluntario"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
+          value={filterValue}
+        onChange={(e) => setFilterValue(e.target.value)}
+        />
       <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />
+      </Box>
   )
 
 }
