@@ -9,14 +9,13 @@ import PlaceIcon from '@mui/icons-material/Place';
 import BadgeIcon from '@mui/icons-material/Badge';
 import * as Yup from 'yup';
 import BasicFrom from '../../../components/BasicFrom';
-import { saveWorkshopsAPI } from '../../../api/beneficiario/workshop';
 import moment from 'moment';
-
-export const WorkShop_Form = [
+import { saveCourseAPI } from '../../../api/beneficiario/course';
+export const Course_Form = [
      {
          name: "name",
          type: FORM_TYPES.TEXT,
-         label: "Nombre del taller",
+         label: "Nombre de la actividad",
          icon: <BadgeIcon />,
          validation: Yup.string("Deber ser una cadena de caracteres")
          .min(2, "Tiene haber al menos dos caracteres")
@@ -82,7 +81,7 @@ export const WorkShop_Form = [
         },
     ]
 
-function WorkShopForm({query,handleClose}) {
+function CourseForm({query,handleClose}) {
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
     const [disableButton, setDisableButton] = React.useState(false)
@@ -91,7 +90,7 @@ function WorkShopForm({query,handleClose}) {
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
         const values2 = {...values, date: responseDate,teacher:"ninguno",ongId:0}
-        saveWorkshopsAPI(user().token, values2)
+        saveCourseAPI(user().token, values2)
         .then((response) => {
             query.refetch()
             setSuccessMsg("Se ha añadido el taller correctamente")
@@ -107,11 +106,11 @@ function WorkShopForm({query,handleClose}) {
   return (
         <BasicFrom
         isLoading={disableButton}
-        form={WorkShop_Form}
+        form={Course_Form}
         buttonText={"añadir"}
         handleSubmitForm={handleSubmitForm}
     />
   )
 }
 
-export default WorkShopForm
+export default CourseForm

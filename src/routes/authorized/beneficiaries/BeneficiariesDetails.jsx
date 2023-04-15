@@ -15,7 +15,7 @@ import ComplementaryFormationForm from "../volunteers/ComplementaryFormationForm
 import WorkExperienceForm from "..//volunteers/WorkExperienceForm";
 import { Typography, useMediaQuery } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { beneficiarioBasicFormValue, beneficiarios } from "./forms";
+import { beneficiarie_Form, beneficiarioBasicFormValue, beneficiarios } from "./forms";
 import { useAuthUser } from "react-auth-kit";
 import { useQuery } from "react-query";
 import { getBeneficiarieAPI } from "../../../api/beneficiario/api";
@@ -35,7 +35,7 @@ import BeneficiariesAppointments from "./BeneficiariesAppointments";
 
 
 const parseBenfeiciario = (beneficiario) => {
-  return beneficiarioBasicFormValue.map((item) => {
+  return beneficiarie_Form.map((item) => {
     return { ...item, value: beneficiario[item.name] };
   });
 }
@@ -46,7 +46,7 @@ export const extraForm2 = (title, variable) => {
       label: title,
       value: variable
   }
-  };
+};
 
 
 export const extraForm = (title, variable) => [

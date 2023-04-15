@@ -82,7 +82,9 @@ const form = [
 function ActivityForm({query,handleClose}) {
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
+    const [disableButton, setDisableButton] = React.useState(false)
     const saveActivity = (values) => {
+        setDisableButton(true)
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
         const values2 = {...values, date: responseDate, type: "ACTIVIDAD",teacher:"ninguno",ongId:0}
@@ -94,10 +96,13 @@ function ActivityForm({query,handleClose}) {
             (err) => {
                 setErrorMsg("Ha ocurrido un error")
             }
-        )
+        ).finally(() => {
+            setDisableButton(false)
+        })
   }
   return (
         <BasicFrom 
+        isLoading={disableButton}
         form={form}
         buttonText={"añadir"}
         handleSubmitForm={saveActivity}

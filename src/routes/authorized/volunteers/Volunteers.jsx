@@ -39,7 +39,6 @@ const Listado = ({data, query}) => {
   }
 
 
-  
 
   const [filterValue, setFilterValue] = useState('');
 
@@ -55,21 +54,23 @@ const Listado = ({data, query}) => {
   )
 
   return (
-            <Box>
-            <TextField
-          id="input-with-icon-textfield"
-          label="Nombre del voluntario"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="standard"
-          value={filterValue}
+    <Box display={"flex"} flexDirection={"column"} gap={'1rem'}>
+    <Box>
+          <TextField
+        id="input-with-icon-textfield"
+        label="Nombre del voluntario"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"  
+        value={filterValue}
         onChange={(e) => setFilterValue(e.target.value)}
-        />
+      />
+    </Box>
       <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />
       </Box>
   )
@@ -122,10 +123,10 @@ const ToolList = ({usuario, handleDelete, id}) => {
       <CustomLink  to={`/ong/voluntario/${id}`}>
         <SearchIcon />
       </CustomLink>
-      {/* <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
+      <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleClose)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/> */}
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 }

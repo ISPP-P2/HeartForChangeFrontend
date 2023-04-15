@@ -58,8 +58,9 @@ const form = [
 function ComplementaryFormationForm({id, handleClose, refetch}) {
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
     const auth = useAuthUser()
-
+    const [disableButton, setDisableButton] = React.useState(false)
     const handleSubmitForm = (values) => {
+        setDisableButton(true)
         PostComplementaryInformation(auth().token, values, id).then(
             (response) => {
                 setSuccessMsg("Se ha añadido correctamente")
@@ -70,13 +71,16 @@ function ComplementaryFormationForm({id, handleClose, refetch}) {
             (error) => {
                 setErrorMsg("Ha ocurrido un error")
             }
-        );
+        ).finally(() => {
+            setDisableButton(false)
+        });
     }
 
 
   return (
         <BasicFrom 
         form={form} 
+        isLoading={disableButton}
         buttonText={"añadir"}
         handleSubmitForm={handleSubmitForm}
     />

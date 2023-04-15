@@ -1,12 +1,5 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { 
-  addBeneficiaryToWorkshopAPI, 
-  deleteBeneficiarieInWorkShopAPI,
-  getAttendancesByTaskId, 
-  getAllAttendancesByTaskId, 
-  getWorkshopByIdAPI, 
-  updateWorkshopAPI } from '../../../api/beneficiario/workshop';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
@@ -17,7 +10,7 @@ import CustomError from '../../../components/CustomError';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomFlex from '../../../components/CustomFlex';
 import { Autocomplete, Box, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography, useMediaQuery } from '@mui/material';
-import { WorkShop_Form } from './WorkShopForm';
+import { Course_Form } from './CourseForm';
 import BasicFrom from '../../../components/BasicFrom';
 import CustomCard from '../../../components/CustomCard';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
@@ -28,13 +21,15 @@ import CustomLink from '../../../components/CustomLink';
 import { getBeneficiariesAPI, updateTypeOfAttendanceById } from '../../../api/beneficiario/api';
 import BasicTable from '../../../components/BasicTable';
 import BasicModal from '../../../components/BasicModal';
-import { updateActivityAPI } from '../../../api/actividades/api';
-function WorkShopDetails() {
+import { addBeneficiaryToCoursesAPI, deleteBeneficiarieInCourseAPI, getAllAttendancesByTaskId, getAttendancesByTaskId, getCourseByIdAPI } from '../../../api/beneficiario/course';
+
+
+function CourseDetails() {
 
     const { id } = useParams()
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-    const query = useQuery(["QUERY_WORKSHOP", id],() => getWorkshopByIdAPI(user().token, id),{
+    const query = useQuery(["QUERY_COURSE", id],() => getCourseByIdAPI(user().token, id),{
       retry: 2,
       refetchOnWindowFocus: false,
     });
@@ -52,28 +47,20 @@ function WorkShopDetails() {
         return <CustomError onClick={()=> query.refetch()}/>
     }
 
-    if(query.data.type !== "TALLER"){
+    if(query.data.type !== "CURSO"){
         query.remove()
         setErrorMsg("Error al cargar")
-        navigate("/ong/talleres")
+        navigate("/ong/cursos")
     }
 
     const updateActivity = (data) => { 
-        updateWorkshopAPI(user().token, data,id ).then(() => {
-            query.refetch()
-            toggleReadOnly(true)
-            setSuccessMsg("Datos actualizados correctamente")
-        }).catch((err) => {
-            console.log(err)
-            setErrorMsg("Error al actualizar los datos")
-        })
     }
     
 
   return (
     <BodyWrapper title={
         <CustomFlex justifyContent={"space-between"}>
-        {`Detalles del taller ${id}`}
+        {`Detalles del curso ${id}`}
         <CustomButton variantButton={VARIANTES_BUTTON.GREEN2} onClick={() => {toggleReadOnly(!readOnlyValue)}} text="EDITAR DATOS" />
         </CustomFlex>
        } >
@@ -98,7 +85,7 @@ function WorkShopDetails() {
   )
 }
 
-export default WorkShopDetails
+export default CourseDetails
 
 
 const ATTENDANCES_TYPES = ["TOTAL", "PARCIAL", "NO_ASISTIDA"]
@@ -156,7 +143,7 @@ return (
 
 
 const parseTaller = (taller) => {
-    return WorkShop_Form.map((item) => {
+    return Course_Form.map((item) => {
       return { ...item, value: taller[item.name] };
     });
   }
@@ -167,7 +154,7 @@ const parseTaller = (taller) => {
     const [beneficiaries, setBeneficiaries] = React.useState(null);
     const [attendances, setAttendances] = React.useState(null);
 
-    const query = useQuery(["QUERY_WORKSHOP_ATTENDANCES_BENEFICIARIES", taskId], () => getAttendancesByTaskId(user().token, taskId),{
+    const query = useQuery(["QUERY_COURSE_ATTENDANCES_BENEFICIARIES", taskId], () => getAttendancesByTaskId(user().token, taskId),{
       retry: 2,
       onSuccess: (data) => {
         setBeneficiaries(data)
@@ -175,7 +162,7 @@ const parseTaller = (taller) => {
       refetchOnWindowFocus: false,
     });
 
-    const queryAttendaces = useQuery(["QUERY_WORKSHOP_ATTENDANCES", taskId], () => getAllAttendancesByTaskId(user().token, taskId),{
+    const queryAttendaces = useQuery(["QUERY_COURSE_ATTENDANCES", taskId], () => getAllAttendancesByTaskId(user().token, taskId),{
       retry: 2,
       onSuccess: (data) => {
         setAttendances(data)
@@ -196,7 +183,7 @@ const parseTaller = (taller) => {
         return <CustomError onClick={()=> query.refetch()}/>
     }
 
-    const isInWorkshop = (beneficiaryId) => {
+    const isInCourse = (beneficiaryId) => {
       return beneficiaries.find((beneficiario) => beneficiario.id === beneficiaryId)
 
     }
@@ -208,7 +195,7 @@ const parseTaller = (taller) => {
     )
     return (
       <>
-        <BeneficiariosBusqueda taskId={taskId} isInWorkshop={isInWorkshop} refetchList={refetch} />
+        <BeneficiariosBusqueda taskId={taskId} isInCourse={isInCourse} refetchList={refetch} />
         <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"50vh"} />
       </>
     )
@@ -228,7 +215,7 @@ const ParseBeneficiarios = (beneficiarios, taskId, refetch, attendances) =>  {
 
 
 
-const BeneficiariosBusqueda = ({taskId,isInWorkshop, refetchList}) => {
+const BeneficiariosBusqueda = ({taskId,isInCourse, refetchList}) => {
     const user = useAuthUser();
     const [beneficiaries, setBeneficiaries] = React.useState(null);
     const [value, setValue] = React.useState(null);
@@ -261,13 +248,13 @@ const BeneficiariosBusqueda = ({taskId,isInWorkshop, refetchList}) => {
             return
         }
 
-        if(isInWorkshop(value.value.id)){
+        if(isInCourse(value.value.id)){
             setErrorMsg("El beneficiario ya está en el taller")
             return
         }
 
         setIsLoading(true)
-        addBeneficiaryToWorkshopAPI(user().token, taskId, value.value.id)
+        addBeneficiaryToCoursesAPI(user().token, taskId, value.value.id)
         .then((res) => {
             refetchList()
             setSuccessMsg("Beneficiario añadido correctamente")
@@ -315,7 +302,7 @@ const DeleteBeneficiarios = ({beneficiario, taskId, refetch}) => {
 
     const user = useAuthUser();
     const handleDelete = () => {
-      deleteBeneficiarieInWorkShopAPI(user().token,taskId, beneficiario.id)
+      deleteBeneficiarieInCourseAPI(user().token,taskId, beneficiario.id)
       .then((res) => {
         handleCloseFunc.handleClose()
         refetch()

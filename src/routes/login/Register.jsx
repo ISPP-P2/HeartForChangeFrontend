@@ -90,7 +90,6 @@ export default function Register() {
   
 
   const onSubmitDev = () => {
-    console.log(credentials)
     axios.post("/api/ongs/signup", {
       username: credentials.username,
       password: credentials.password,
@@ -103,7 +102,6 @@ export default function Register() {
           navigate('/')
     }
 ).catch((error) => {
-      console.log(error)
       setErrorMsg("Error al crear la cuenta");
     })
   }

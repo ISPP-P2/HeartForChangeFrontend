@@ -28,7 +28,8 @@ function BasicFrom({
   width = "-webkit-fill-available",
   buttonText = null,
   readOnly = false,
-  showButton = true
+  showButton = true,
+  isLoading=false,
 }) {
   if (form == null || handleSubmitForm == null) {
     <div>Loading form...</div>;
@@ -84,6 +85,7 @@ function BasicFrom({
             {buttonText === null ?  null : 
             <Box gridColumn={"-2/-1"} display={"flex"} alignItems={"flex-end"} justifyContent={"center"}>
                 <CustomButton 
+                isLoading={isLoading}
                 onClick={handleSubmit} 
                 text={buttonText} 
                 show={showButton}
