@@ -10,8 +10,6 @@ import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import BasicTableNoDescription from '../../../components/BasicTableNoDescription';
-import { getWorkshopsAPI } from '../../../api/beneficiario/workshop';
-import WorkShopForm from './WorkShopForm';
 import CustomLink from '../../../components/CustomLink';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import TextField from '@mui/material/TextField';
@@ -19,14 +17,16 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
+import { getCoursesAPI } from '../../../api/beneficiario/course';
+import CourseForm from './CourseForm';
 
 
-function WorkShops() {
+function Courses() {
   const user = useAuthUser();
   const [handleDeleteFunc, setHandleDeleteFunc] = React.useState({});
   const [filterValue, setFilterValue] = React.useState('');
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-  const query = useQuery(["QUERY_WORKSHOP"],() => getWorkshopsAPI(user().token),{
+  const query = useQuery(["QUERY_COURSES"],() => getCoursesAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
@@ -51,7 +51,7 @@ function WorkShops() {
 
   
   return (
-    <BodyWrapper title={"Lista de talleres"}>
+    <BodyWrapper title={"Lista de cursos"}>
       <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
               <CustomCardMini
@@ -60,14 +60,14 @@ function WorkShops() {
                       setHandleCloseButton={setHandleDeleteFunc} 
                       title={"Añadir taller"} 
                       text={"Añadir"}
-                      body={<WorkShopForm handleClose={handleDeleteFunc} query={query}/>}
+                      body={<CourseForm handleClose={handleDeleteFunc} query={query}/>}
                       />}
                     totalNumber={query.data.length}/>
             </CustomFlex>
             <Box>
         <TextField
           id="input-with-icon-textfield"
-          label="Nombre del taller"
+          label="Nombre del curso"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -86,7 +86,7 @@ function WorkShops() {
     );
 }
 
-export default WorkShops;
+export default Courses;
 
 
 const ToolList = ({actividad, handleDelete, id}) => {
@@ -94,11 +94,11 @@ const ToolList = ({actividad, handleDelete, id}) => {
 
   return (
     <CustomFlex justifyContent={"flex-start"} direction={"row"}>
-      <CustomLink  to={`/ong/taller/${id}`}>
+      <CustomLink  to={`/ong/curso/${id}`}>
         <SearchIcon />
       </CustomLink>
       <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
-        <Typography>El actividad se eliminará permanentemente</Typography>
+        <Typography>El curso se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED}  text={<DeleteForeverIcon />}
         />
