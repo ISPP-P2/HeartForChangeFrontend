@@ -5,6 +5,8 @@ import LoadingWrapper from "../../components/LoadingWrapper";
 import Attendances from "./activities/Attendances";
 import WorkShops from "./workshop/WorkShops";
 import WorkShopDetails from "./workshop/WorkShopDetails";
+import Courses from "./courses/Courses";
+import CourseDetails from "./courses/CourseDetails";
 
 const Subventions = lazy(() => import('./subventions/Subventions'));
 const SubventionsDetails = lazy(() => import("./subventions/SubventionsDetails"));
@@ -56,6 +58,10 @@ export default function AutorizedRoutes() {
       <Route path={"/talleres"} element={<WorkShops />}/>
       <Route path={"/taller"} >
         <Route path={":id"}element={<WorkShopDetails />} />
+      </Route>
+      <Route path={"/cursos"} element={<Courses />}/>
+      <Route path={"/curso"} >
+        <Route path={":id"}element={<CourseDetails />} />
       </Route>
       <Route path={"/beneficiario"}>
         <Route path={":id"}element={<BeneficiariesDetails />} />
