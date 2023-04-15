@@ -201,7 +201,6 @@ const form = [
     type: FORM_TYPES.ONLYDATE,
     label: "Fecha de llegada",
     validation: Yup.date()
-    .required("Este campo es obligatorio"),
   },
   {
     name: "europeanCitizenAuthorization",
