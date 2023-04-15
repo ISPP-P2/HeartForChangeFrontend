@@ -41,7 +41,7 @@ export const AppointmentsListWeek = () => {
     )
     
     return (
-        <Box height={"40vh"}>
+        <Box maxHeight={"40vh"}>
             <Typography component={"h1"} fontSize={"2rem"} fontWeight={"550"} color={"#686868"} marginBottom={'1rem'}>
                 Próximas citas
             </Typography>

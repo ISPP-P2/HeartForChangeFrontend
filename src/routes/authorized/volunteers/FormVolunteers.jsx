@@ -79,7 +79,7 @@ const form = [
   {
     name: "birthday",
     type: FORM_TYPES.ONLYDATE,
-    label: "Fecha de cumpleaños",
+    label: "Fecha de nacimiento",
     validation: Yup.date()
     .max(new Date(), "La fecha de nacimiento no puede ser en el futuro")
     .required("Este campo es obligatorio"),
