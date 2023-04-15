@@ -193,7 +193,6 @@ function ActivityDetails() {
   return (
     <BodyWrapper title={`Detalles de la actividad ${id}`} >
     <CustomFlex direction={"column"}>
-      <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
       <CustomFlex direction={mobile ? "column" : "row"}>
         <Grid
         display={"grid"}
