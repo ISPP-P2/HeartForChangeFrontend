@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { addBeneficiaryToWorkshopAPI, deleteBeneficiarieInWorkShopAPI, getAttendancesByTaskId, getWorkshopByIdAPI } from '../../../api/beneficiario/workshop';
+import { addBeneficiaryToWorkshopAPI, deleteBeneficiarieInWorkShopAPI, getAllAttendancesByTaskId, getAttendancesByTaskId, getWorkshopByIdAPI } from '../../../api/beneficiario/workshop';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
@@ -10,7 +10,7 @@ import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomFlex from '../../../components/CustomFlex';
-import { Autocomplete, Box, Grid, TextField, Typography, useMediaQuery } from '@mui/material';
+import { Autocomplete, Box, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography, useMediaQuery } from '@mui/material';
 import { WorkShop_Form } from './WorkShopForm';
 import BasicFrom from '../../../components/BasicFrom';
 import CustomCard from '../../../components/CustomCard';
@@ -19,9 +19,11 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomLink from '../../../components/CustomLink';
-import { getBeneficiariesAPI } from '../../../api/beneficiario/api';
+import { getBeneficiariesAPI, updateTypeOfAttendanceById } from '../../../api/beneficiario/api';
 import BasicTable from '../../../components/BasicTable';
 import BasicModal from '../../../components/BasicModal';
+
+
 function WorkShopDetails() {
 
     const { id } = useParams()
@@ -52,7 +54,6 @@ function WorkShopDetails() {
     }
 
     const updateActivity = (data) => { 
-        console.log(data)
     }
     
 
@@ -87,6 +88,56 @@ function WorkShopDetails() {
 export default WorkShopDetails
 
 
+const ATTENDANCES_TYPES = ["TOTAL", "PARCIAL", "NO_ASISTIDA"]
+
+
+function BasicSelect({attendance}) {
+
+  const user = useAuthUser();
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const [state, setState] = React.useState(attendance === null ? undefined : ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
+  const [isLoading, setIsLoading] = React.useState(false)
+
+
+  const handleChange = (event, value) => {
+    setIsLoading(true)
+    updateTypeOfAttendanceById(user().token, attendance.id, value.props.value)
+    .then((data) => {
+      setSuccessMsg("Estado guardado con éxito")
+      setIsLoading(false)
+      setState(ATTENDANCES_TYPES.findIndex((value) => value === data.type))
+    }).catch(
+      (err)=> {
+        setIsLoading(false)
+        setErrorMsg("Ha ocurrido un error al guardar")
+      }
+    );
+
+  };
+
+return (
+ <>
+  {isLoading ?  <CustomReloading />: <FormControl fullWidth>
+    <InputLabel id="demo-simple-select-label">Estado</InputLabel>
+    <Select
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      value={state}
+      label="Estado"
+      onChange={handleChange}
+    >
+      <MenuItem  value={undefined}>Seleccionar asistencia</MenuItem>
+      <MenuItem  value={0}>Total</MenuItem>
+      <MenuItem value={1}>Parcial</MenuItem>
+      <MenuItem value={2}>No asistida</MenuItem>
+    </Select>
+  </FormControl>}
+ </>
+);
+}
+
+   
+
 
 const parseTaller = (taller) => {
     return WorkShop_Form.map((item) => {
@@ -98,8 +149,9 @@ const parseTaller = (taller) => {
   const BeneficiariosTable = ({taskId}) => {
     const user = useAuthUser();
     const [beneficiaries, setBeneficiaries] = React.useState(null);
+    const [attendances, setAttendances] = React.useState(null);
 
-    const query = useQuery(["QUERY_WORKSHOP_ATTENDANCES", taskId], () => getAttendancesByTaskId(user().token, taskId),{
+    const query = useQuery(["QUERY_WORKSHOP_ATTENDANCES_BENEFICIARIES", taskId], () => getAttendancesByTaskId(user().token, taskId),{
       retry: 2,
       onSuccess: (data) => {
         setBeneficiaries(data)
@@ -108,22 +160,31 @@ const parseTaller = (taller) => {
     });
 
 
-    if(query.isLoading || beneficiaries === null){
+    const queryAttendaces = useQuery(["QUERY_WORKSHOP_ATTENDANCES", taskId], () => getAllAttendancesByTaskId(user().token, taskId),{
+      retry: 2,
+      onSuccess: (data) => {
+        setAttendances(data)
+      },
+      refetchOnWindowFocus: false,
+    });
+
+    if(query.isLoading || beneficiaries === null || queryAttendaces.isLoading || attendances === null){
         return <CustomReloading />
     }
 
-    if(query.isError){
+    if(query.isError || queryAttendaces.isError){
         return <CustomError onClick={()=> query.refetch()}/>
     }
 
     const isInWorkshop = (beneficiaryId) => {
       return beneficiaries.find((beneficiario) => beneficiario.id === beneficiaryId)
+
     }
         
-    const BeneficiaryList = new CustomList(ParseBeneficiarios(beneficiaries, taskId, query.refetch))
+    const BeneficiaryList = new CustomList(ParseBeneficiarios(beneficiaries, taskId, query.refetch, attendances))
     let objetoTabla = BeneficiaryList.parseToTableBasic(
-      ["Nombre","Género", "Email","Eliminar"], 
-      ["name", "gender","email", "deleteBeneficiarios"]
+      ["Nombre","Género", "Email","Estado", "Eliminar"], 
+      ["name", "gender","email","state",  "deleteBeneficiarios"]
     )
     return (
       <>
@@ -134,13 +195,13 @@ const parseTaller = (taller) => {
 
 }
 
-const ParseBeneficiarios = (beneficiarios, taskId, refetch) => {
+const ParseBeneficiarios = (beneficiarios, taskId, refetch, attendances) =>  {
     return beneficiarios.map((beneficiario) => {
         return {  
-
             ...beneficiario,
             gender: beneficiario.gender === "MALE" ? "Hombre" : "Mujer" ,
-            deleteBeneficiarios: <DeleteBeneficiarios beneficiario={beneficiario} taskId={taskId} refetch={refetch}/>
+            deleteBeneficiarios: <DeleteBeneficiarios beneficiario={beneficiario} taskId={taskId} refetch={refetch}/>,
+            state: <BasicSelect  attendance={attendances.find((value) => value.personId === beneficiario.id)}  />
         }
     })
 }
@@ -243,7 +304,6 @@ const DeleteBeneficiarios = ({beneficiario, taskId, refetch}) => {
         setSuccessMsg("Beneficiario eliminado correctamente")
       })
       .catch((err) => {
-        console.log(err)
         setErrorMsg("Error al eliminar beneficiario")
       })
     }

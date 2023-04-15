@@ -102,23 +102,30 @@ const ToolList = ({usuario, id}) => {
       </CustomLink>
     </CustomFlex>
   )
+}
+
   
-  }
   
 
   
-  const VoluntarioParser = (data) => {
-    if(data!==undefined&&data.length!==0){
-      return data.map((volunteer) => {
-          return {
-            ...volunteer,
-            gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
-            button:<ToolList usuario={volunteer} id={volunteer.id}/>,
-          }; 
-      });
-    }
-    return [];
+const VoluntarioParser = (data, attendances) => {
+  if(data!==undefined&&data.length!==0){
+    return data.map((volunteer) => {
+        return {
+          ...volunteer,
+          gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
+          button:<ToolList usuario={volunteer} id={volunteer.id}/>,
+        }; 
+    });
   }
+  return [];
+
+
+}
+
+
+
+
 
 function ActivityDetails() {
   const [readOnlyValue, toggleReadOnly] = useState(true)
@@ -158,7 +165,7 @@ function ActivityDetails() {
   const VolunteerList = new CustomList(VoluntarioParser(volunteers.data))
   let objetoTabla = VolunteerList.parseToTable(
     ["Nombre de usuario","Género", "Email","Herramientas"], 
-    ["username", "gender","email", "button"],
+    ["username", "gender","email","button"],
     ["Nombre","Primer Apellido", "Segundo Apellido"],
     ["name", "firstSurname","secondSurname"]
   )
