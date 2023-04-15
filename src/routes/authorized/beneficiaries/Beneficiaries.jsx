@@ -65,13 +65,17 @@ export default Beneficiaries;
 const Listado = ({data, query}) => { 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const [disableButton, setDisableButton] = React.useState(false)
   const handleDelete = (id, handleClose) => {
+    setDisableButton(true)
     deleteBeneficiariesAPI(user().token, id).then(() => {
       handleClose.handleClose()
       query.refetch()
       setSuccessMsg("Subvención eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la subvención")
+    }).finally(() => {
+      setDisableButton(false)
     })
   }
 
@@ -81,14 +85,14 @@ const Listado = ({data, query}) => {
         </Typography>
   }
 
-  const [filterValue, setFilterValue] = useState('');
+  const [filterValue, setFilterValue] = React.useState('');
 
   const filteredData = data.filter((item) =>
   item.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
 
-  const BeneficiarieList = new CustomList(ParseBenficiario(filteredData, handleDelete))
+  const BeneficiarieList = new CustomList(ParseBenficiario(filteredData, handleDelete, disableButton))
 
   let objetoTabla = BeneficiarieList.parseToTable(
     ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
@@ -123,7 +127,7 @@ const Listado = ({data, query}) => {
 
 
 
-const ToolList = ({beneficiarie, handleDelete, id}) => {
+const ToolList = ({beneficiarie, handleDelete, id, disableButton}) => {
 
   const [handleCloseFunc, setHandleCloseFunc] = React.useState({});
 
@@ -132,19 +136,19 @@ const ToolList = ({beneficiarie, handleDelete, id}) => {
       <CustomLink to={`/ong/beneficiario/${beneficiarie.id}`}><SearchIcon /></CustomLink>
       <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El Beneficiario se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton isLoading={disableButton} onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 }
 
 
-const ParseBenficiario = (data, handleDelete) => {
+const ParseBenficiario = (data, handleDelete, disableButton) => {
   return data.map((beneficiarie) => {
     return {
       ...beneficiarie,
       gender: beneficiarie.gender === "MALE" ? "Hombre" : "Mujer",
-      button: <ToolList beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
+      button: <ToolList disableButton={disableButton} beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
     };
   });
 }

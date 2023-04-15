@@ -9,8 +9,10 @@ import { APPOINTMENT_FORM } from './forms';
 function BeneficiaryAppoinmentForm({id, handleClose, refetch}) {
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
   const auth = useAuthUser()
+  const [disableButton, setDisableButton] = React.useState(false)
 
   const handleSubmitForm = (values) => {
+        setDisableButton(true)
     postAppointmentAPI(auth().token, values, id).then(
           (response) => {
               setSuccessMsg("Se ha añadido correctamente")
@@ -21,12 +23,15 @@ function BeneficiaryAppoinmentForm({id, handleClose, refetch}) {
           (error) => {
               setErrorMsg("Ha ocurrido un error")
           }
-      );
+      ).finally(() => {
+        setDisableButton(false)
+      });
   }
 
 
 return (
       <BasicFrom 
+      isLoading={disableButton}
       form={APPOINTMENT_FORM} 
       buttonText={"añadir"}
       handleSubmitForm={handleSubmitForm}

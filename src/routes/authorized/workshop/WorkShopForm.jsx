@@ -85,8 +85,9 @@ export const WorkShop_Form = [
 function WorkShopForm({query,handleClose}) {
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
-
+    const [disableButton, setDisableButton] = React.useState(false)
     const handleSubmitForm =  (values) => {
+        setDisableButton(true)
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
         const values2 = {...values, date: responseDate,teacher:"ninguno",ongId:0}
@@ -98,11 +99,14 @@ function WorkShopForm({query,handleClose}) {
         })
         .catch((error) => {
             setErrorMsg("Ha ocurrido un error al añadir el taller")
-        })
+        }).finally(() => {
+            setDisableButton(false)
+          })
     }
 
   return (
-        <BasicFrom 
+        <BasicFrom
+        isLoading={disableButton}
         form={form}
         buttonText={"añadir"}
         handleSubmitForm={handleSubmitForm}

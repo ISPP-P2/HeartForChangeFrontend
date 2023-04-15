@@ -139,7 +139,7 @@ function ActivityDetails() {
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const [attendances, setAttendances] = useState([])
-
+  const [disableButton, setDisableButton] = useState(false);
   const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
 
   const queryAttendaces = useQuery(["QUERY_WORKSHOP_ATTENDANCES", id], () => getAllAttendancesByTaskId(user().token, id),{
@@ -160,12 +160,15 @@ function ActivityDetails() {
   }
 
   const updateActivity = (values) => {
+    setDisableButton(true)
     updateActivityAPI(user().token, values, id).then((res) => {
       toggleReadOnly(!readOnlyValue);
       query.refetch();
       setSuccessMsg("Actividad actualizada correctamente")
     }).catch((err) => {
       setErrorMsg("Ha ocurrido un error al actualizar la actividad")
+    }).finally(() => {
+      setDisableButton(false)
     })
    
   }
@@ -195,13 +198,14 @@ function ActivityDetails() {
         gap={"1rem"}
         gridTemplateColumns={mobile ? "1fr 1fr":"1fr"}
         gridTemplateRows={mobile ? "100%":"1fr"}> 
-        <BasicFrom 
+         <BasicFrom
+         isLoading={disableButton} 
         form={parseActividad(query.data)}
         readOnly={readOnlyValue}
         buttonText={"Confirmar"}
         handleSubmitForm={updateActivity}
         showButton = {!readOnlyValue}
-        />     
+        /> 
           <Grid
               display={"grid"}
               gap={"1rem"}
@@ -210,7 +214,7 @@ function ActivityDetails() {
                 <CustomCard
                   title='Editar actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Editar"} 
+                  buttonSidebar={<CustomButton isLoading={disableButton} text={"Editar"} 
                   onClick={() => {toggleReadOnly(!readOnlyValue) }}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 

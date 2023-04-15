@@ -96,21 +96,23 @@ const Listado = ({query}) => {
     )
 
     return (
+      <Box display={"flex"} flexDirection={"column"} gap={'1rem'}>
       <Box>
-        <TextField
+            <TextField
           id="input-with-icon-textfield"
-          label="Nombre de la Subvención"
+          label="Nombre del Beneficiario"
           InputProps={{
-            startAdornment: (
+            endAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
             ),
           }}
-          variant="standard"
+          variant="standard"  
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
         />
+      </Box>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
         </Box>
     )

@@ -6,6 +6,7 @@ import { FORM_TYPES } from '../../../components/utils/utilsForms';
 import { useNavigate } from 'react-router-dom';
 import { useAuthUser } from 'react-auth-kit';
 import * as Yup from 'yup';
+import { CustomNotistackContext } from '../../../context/CustomNotistack';
 
 const form = [
   {
@@ -225,7 +226,7 @@ const form = [
   {
     name: "dateTouristVisa",
     type: FORM_TYPES.ONLYDATE,
-    label: "fecha de visado turista",
+    label: "Fecha de visado turista",
     validation: Yup.date()
   },
   {
@@ -310,17 +311,24 @@ function FormBeneficiaries() {
 
   const user = useAuthUser();
   const navigate = useNavigate();
-  
+  const [disableButton, setDisableButton] = React.useState(false);
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
 
     const saveBeneficiarie = (values) => {
+        setDisableButton(true);
         saveBeneficiariesAPI(user().token, values).then((res) => {
+          setSuccessMsg("Beneficiario añadido correctamente")
           navigate('/ong/beneficiarios')
-        });
+        }).catch((err) => {
+          setErrorMsg("Error al añadir el beneficiario")
+        }).finally(() => setDisableButton(false));
+        
     }
 
   return (
     <BodyWrapper>
         <BasicFrom 
+            isLoading={disableButton}
             buttonText={"Añadir"}
             form={form}
             handleSubmitForm={saveBeneficiarie}

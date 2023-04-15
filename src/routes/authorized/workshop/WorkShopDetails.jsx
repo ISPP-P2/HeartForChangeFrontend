@@ -92,13 +92,16 @@ const ATTENDANCES_TYPES = ["TOTAL", "PARCIAL", "NO_ASISTIDA"]
 
 
 export const  BasicSelectAttendance = ({attendance}) =>  {
-
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-  const [state, setState] = React.useState(attendance === null ? undefined : ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [state, setState] = React.useState(attendance === null ?
+    -1 : 
+    ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
+  
+  
+    const [isLoading, setIsLoading] = React.useState(false)
 
-
+  console.log(attendance)
   const handleChange = (event, value) => {
     setIsLoading(true)
     updateTypeOfAttendanceById(user().token, attendance.id, value.props.value)
@@ -126,7 +129,7 @@ return (
       label="Estado"
       onChange={handleChange}
     >
-      <MenuItem  value={undefined}>Seleccionar asistencia</MenuItem>
+      <MenuItem  value={-1}>Seleccionar asistencia</MenuItem>
       <MenuItem  value={0}>Total</MenuItem>
       <MenuItem value={1}>Parcial</MenuItem>
       <MenuItem value={2}>No asistida</MenuItem>
@@ -167,6 +170,11 @@ const parseTaller = (taller) => {
       refetchOnWindowFocus: false,
     });
 
+    const refetch = () => {
+      query.refetch()
+      queryAttendaces.refetch()
+    }
+
     if(query.isLoading || beneficiaries === null || queryAttendaces.isLoading || attendances === null){
         return <CustomReloading />
     }
@@ -187,7 +195,7 @@ const parseTaller = (taller) => {
     )
     return (
       <>
-        <BeneficiariosBusqueda taskId={taskId} isInWorkshop={isInWorkshop} refetchList={query.refetch} />
+        <BeneficiariosBusqueda taskId={taskId} isInWorkshop={isInWorkshop} refetchList={refetch} />
         <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"50vh"} />
       </>
     )
