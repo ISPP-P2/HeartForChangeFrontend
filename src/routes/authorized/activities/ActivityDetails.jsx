@@ -27,6 +27,8 @@ import { getActivityAPI, getVolunteersAcceptedByActivityAPI, getVolunteersByActi
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import { BasicSelectAttendance } from '../workshop/WorkShopDetails';
+import { getAllAttendancesByTaskId } from '../../../api/beneficiario/workshop';
 
 const form = [
     {
@@ -115,6 +117,7 @@ const VoluntarioParser = (data, attendances) => {
           ...volunteer,
           gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
           button:<ToolList usuario={volunteer} id={volunteer.id}/>,
+          state: <BasicSelectAttendance attendance={attendances.find((value)  => value.personId === volunteer.id)} />
         }; 
     });
   }
@@ -134,8 +137,20 @@ function ActivityDetails() {
   const user = useAuthUser();
   const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
-  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const [attendances, setAttendances] = useState([])
+
+  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
+
+  const queryAttendaces = useQuery(["QUERY_WORKSHOP_ATTENDANCES", id], () => getAllAttendancesByTaskId(user().token, id),{
+    retry: 2,
+    onSuccess: (data) => {
+      setAttendances(data)
+    },
+    refetchOnWindowFocus: false,
+  });
+
+
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -162,10 +177,10 @@ function ActivityDetails() {
   }
 
 
-  const VolunteerList = new CustomList(VoluntarioParser(volunteers.data))
+  const VolunteerList = new CustomList(VoluntarioParser(volunteers.data, attendances))
   let objetoTabla = VolunteerList.parseToTable(
-    ["Nombre de usuario","Género", "Email","Herramientas"], 
-    ["username", "gender","email","button"],
+    ["Nombre de usuario","Género", "Email", "Estado", "Herramientas"], 
+    ["username", "gender","email","state","button"],
     ["Nombre","Primer Apellido", "Segundo Apellido"],
     ["name", "firstSurname","secondSurname"]
   )

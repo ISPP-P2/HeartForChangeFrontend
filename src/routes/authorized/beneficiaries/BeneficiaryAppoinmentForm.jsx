@@ -11,8 +11,6 @@ function BeneficiaryAppoinmentForm({id, handleClose, refetch}) {
   const auth = useAuthUser()
 
   const handleSubmitForm = (values) => {
-    console.log(values)
-    console.log(auth().token)
     postAppointmentAPI(auth().token, values, id).then(
           (response) => {
               setSuccessMsg("Se ha añadido correctamente")

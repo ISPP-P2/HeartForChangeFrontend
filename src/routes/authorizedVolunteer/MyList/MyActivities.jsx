@@ -20,7 +20,7 @@ import BasicTableNoDescription from '../../../components/BasicTableNoDescription
 
 function MyActivities() {
   const user = useAuthUser();
-  const query = useQuery(["QUERY_ACTIVITIES"],() => getMyActivitiesAPI(user().token),{
+  const query = useQuery(["QUERY_MY_ACTIVITIES"],() => getMyActivitiesAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
   });
@@ -49,8 +49,7 @@ function MyActivities() {
                     title='Nº de actividades'
                     totalNumber={query.data.length}/>
             </CustomFlex>
-        {query.data.length ===0 ? <Typography variant="h4" component="div" gutterBottom>No estás apuntado a ninguna actividad</Typography>
-        :<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />}
+        <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
         </CustomFlex> 
       </BodyWrapper>
     );

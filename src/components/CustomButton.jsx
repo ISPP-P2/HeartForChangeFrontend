@@ -1,6 +1,7 @@
 import { Button } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
+import CustomReloading from './CustomReloading'
 
 
 
@@ -15,10 +16,12 @@ function CustomButton({
     outline = false,
     show = true,
     height="auto",
+    isLoading = false,
     }) {
-
+    
     return (
-        <Box  sx={{display: "flex", justifyContent:"center", alignItems:"center"}}> 
+        <>
+            {  isLoading ? <CustomReloading /> : <Box  sx={{display: "flex", justifyContent:"center", alignItems:"center"}}> 
             <Button type={'button'} 
             sx={{
                 justifyContent: "center",
@@ -40,7 +43,9 @@ function CustomButton({
                 {text}
                 {iconD}
             </Button>
-        </Box>
+        </Box>}
+        </>
+      
         
     )
 }

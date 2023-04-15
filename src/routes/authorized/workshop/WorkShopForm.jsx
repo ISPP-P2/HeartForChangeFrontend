@@ -87,7 +87,6 @@ function WorkShopForm({query,handleClose}) {
     const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
 
     const handleSubmitForm =  (values) => {
-        console.log(values)
         let parse = "YYYY-MM-DD HH:mm:ss"
         var responseDate = moment(values.date).format(parse);
         const values2 = {...values, date: responseDate,teacher:"ninguno",ongId:0}

@@ -97,7 +97,6 @@ export default function SignIn() {
           setErrorMsg("Error al iniciar sesión");
       }
     }).catch((error) => {
-      console.log(error)
       setErrorMsg("Error al iniciar sesión");
     }).finally(() => {
       setButtonDisabled(false)

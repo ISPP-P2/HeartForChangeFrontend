@@ -27,7 +27,6 @@ function BeneficiariesAppointments({id}) {
     refetchOnWindowFocus: false,
   });
 
-  console.log(query)
 
   return (
     <CustomFlex direction={"row"}>

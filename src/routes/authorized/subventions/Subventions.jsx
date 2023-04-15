@@ -84,7 +84,6 @@ const Listado = ({query}) => {
   }
 
   const [filterValue, setFilterValue] = useState('');
-  console.log(query.data)
   const filteredData = query.data.filter((item) =>
   item.justification.toLowerCase().includes(filterValue.toLowerCase())
   );

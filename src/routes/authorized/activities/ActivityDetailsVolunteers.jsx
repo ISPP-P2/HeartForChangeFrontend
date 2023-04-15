@@ -144,6 +144,7 @@ function ActivityVolunteerDetails() {
 export const ButtonWrap = ({actividadId, queryDetails}) => {
 
   const user = useAuthUser();
+  const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
   const query = useQuery(["QUERY_STATE", actividadId],() => getStateByTaskId(user().token, actividadId),{
     retry: 2,
     refetchOnWindowFocus: false,
@@ -159,8 +160,10 @@ export const ButtonWrap = ({actividadId, queryDetails}) => {
   }
 
   const makeAttendace = (id) =>{
+    setIsButtonDisabled(true);
     saveAttendancesAPI(user().token,id).then(
       (res) => {
+        
         query.refetch();
         queryDetails.queryRefetch();
         setSuccessMsg("Te has apuntado correctamente")
@@ -169,11 +172,16 @@ export const ButtonWrap = ({actividadId, queryDetails}) => {
       (err) => {
         setErrorMsg("No se ha podido apuntar correctamente")
       }
+    ).finally(
+      () => {
+        setIsButtonDisabled(false);
+      }
     )
   }
 
 
   const quitAttendance = () => {
+    setIsButtonDisabled(true);
     quitAttendancesAPI(user().token, actividadId).then(
       (res) => {
         setSuccessMsg("Te has dado de baja correctamente")
@@ -183,6 +191,10 @@ export const ButtonWrap = ({actividadId, queryDetails}) => {
     ).catch(
       (err) => {
         setErrorMsg("No se ha podido darte de baja correctamente")
+      }
+    ).finally(
+      () => {
+        setIsButtonDisabled(false);
       }
     )
   }
@@ -196,10 +208,15 @@ export const ButtonWrap = ({actividadId, queryDetails}) => {
             {query.data.state === "NO_SOLICITADA" ? <CustomCard
                   title='Solicitud para apuntarse'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Apuntarse"}  
+                  buttonSidebar={
+                  <CustomButton text={"Apuntarse"}  
                   onClick={()=>makeAttendace(actividadId)}
                   iconD={<ArrowForwardIcon sx={{marginLeft: "0rem"}}/>} 
-                  variantButton={VARIANTES_BUTTON.GREEN}/>}/> : null}
+                  variantButton={VARIANTES_BUTTON.GREEN}
+                  isLoading={isButtonDisabled}
+                  />}
+                  
+                  /> : null}
             {query.data.state === "ACEPTADA" ?  <CustomCard
                   title='Salir de la actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}

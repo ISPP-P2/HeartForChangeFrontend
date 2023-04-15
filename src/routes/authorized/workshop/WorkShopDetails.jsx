@@ -91,7 +91,7 @@ export default WorkShopDetails
 const ATTENDANCES_TYPES = ["TOTAL", "PARCIAL", "NO_ASISTIDA"]
 
 
-function BasicSelect({attendance}) {
+export const  BasicSelectAttendance = ({attendance}) =>  {
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
@@ -113,7 +113,7 @@ function BasicSelect({attendance}) {
       }
     );
 
-  };
+};
 
 return (
  <>
@@ -159,7 +159,6 @@ const parseTaller = (taller) => {
       refetchOnWindowFocus: false,
     });
 
-
     const queryAttendaces = useQuery(["QUERY_WORKSHOP_ATTENDANCES", taskId], () => getAllAttendancesByTaskId(user().token, taskId),{
       retry: 2,
       onSuccess: (data) => {
@@ -201,12 +200,10 @@ const ParseBeneficiarios = (beneficiarios, taskId, refetch, attendances) =>  {
             ...beneficiario,
             gender: beneficiario.gender === "MALE" ? "Hombre" : "Mujer" ,
             deleteBeneficiarios: <DeleteBeneficiarios beneficiario={beneficiario} taskId={taskId} refetch={refetch}/>,
-            state: <BasicSelect  attendance={attendances.find((value) => value.personId === beneficiario.id)}  />
+            state: <BasicSelectAttendance  attendance={attendances.find((value) => value.personId === beneficiario.id)}  />
         }
     })
 }
-
-
 
 
 
