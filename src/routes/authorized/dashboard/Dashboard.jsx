@@ -14,7 +14,7 @@ import BodyWrapper from '../../../components/BodyWrapper';
 import { useAuthUser } from 'react-auth-kit';
 import { getActivitiesAPI, getTotalActivitiesAPI } from '../../../api/actividades/api';
 import { getTotalVolunteersAPI } from '../../../api/voluntarios/api';
-import { getTotalBeneficiariesAPI } from '../../../api/beneficiario/api';
+import { getBeneficiariesAPI, getTotalBeneficiariesAPI } from '../../../api/beneficiario/api';
 import { useQuery } from 'react-query';
 import { getTOTALSubventionAPI } from '../../../api/subvenciones/api';
 import CustomReloading from '../../../components/CustomReloading';
@@ -27,10 +27,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import { getAllAppointmentAPI } from '../../../api/beneficiario/appointment/api';
 import { AppointmentsListWeek } from './AppointmentsListWeek';
 import { ActivityListWeek } from './ActivityListWeek';
+import LoadingWrapper from '../../../components/LoadingWrapper';
 
 function Dashboard() {
     
     const user = useAuthUser();
+    const [beneficiaries, setBeneficiaries] = useState(null);
 
     const mobile = useMediaQuery('(min-width:600px)')
    
@@ -50,6 +52,14 @@ function Dashboard() {
         retry: 2,
         refetchOnWindowFocus: false,
         });
+
+    const queryBeneficiaries = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token),{
+        retry: 2,
+        onSuccess: (data) => {
+            setBeneficiaries(data);
+        },
+        refetchOnWindowFocus: false,
+    })
     
                     
 
@@ -114,7 +124,7 @@ function Dashboard() {
             </Grid>
             <Grid display={mobile ? "grid" : "flex"} justifyContent={"space-around"} marginTop={"2rem"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={"repeat(auto-fill, minmax(20vw, 40vw))"}>
                     <ActivityListWeek />
-                    <AppointmentsListWeek />
+                    { beneficiaries === null ?   <LoadingWrapper />  :<AppointmentsListWeek beneficiaries={beneficiaries}/>}
             </Grid>
             </CustomFlex>
         </BodyWrapper>

@@ -16,7 +16,7 @@ export const WorkShop_Form = [
      {
          name: "name",
          type: FORM_TYPES.TEXT,
-         label: "Nombre de la actividad",
+         label: "Nombre del taller",
          icon: <BadgeIcon />,
          validation: Yup.string("Deber ser una cadena de caracteres")
          .min(2, "Tiene haber al menos dos caracteres")
@@ -104,7 +104,7 @@ function WorkShopForm({query,handleClose}) {
 
   return (
         <BasicFrom 
-        form={form}
+        form={WorkShop_Form}
         buttonText={"añadir"}
         handleSubmitForm={handleSubmitForm}
     />

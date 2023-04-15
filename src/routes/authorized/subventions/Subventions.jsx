@@ -75,12 +75,6 @@ const Listado = ({query}) => {
 
   
 
-  if(query.data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay subvenciones
-        </Typography>
-  }
-
 
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { addBeneficiaryToWorkshopAPI, deleteBeneficiarieInWorkShopAPI, getAttendancesByTaskId, getWorkshopByIdAPI } from '../../../api/beneficiario/workshop';
+import { addBeneficiaryToWorkshopAPI, deleteBeneficiarieInWorkShopAPI, getAttendancesByTaskId, getWorkshopByIdAPI, updateWorkshopAPI } from '../../../api/beneficiario/workshop';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import { useAuthUser } from 'react-auth-kit';
 import { useQuery } from 'react-query';
@@ -22,6 +22,7 @@ import CustomLink from '../../../components/CustomLink';
 import { getBeneficiariesAPI } from '../../../api/beneficiario/api';
 import BasicTable from '../../../components/BasicTable';
 import BasicModal from '../../../components/BasicModal';
+import { updateActivityAPI } from '../../../api/actividades/api';
 function WorkShopDetails() {
 
     const { id } = useParams()
@@ -52,7 +53,14 @@ function WorkShopDetails() {
     }
 
     const updateActivity = (data) => { 
-        console.log(data)
+        updateWorkshopAPI(user().token, data,id ).then(() => {
+            query.refetch()
+            toggleReadOnly(true)
+            setSuccessMsg("Datos actualizados correctamente")
+        }).catch((err) => {
+            console.log(err)
+            setErrorMsg("Error al actualizar los datos")
+        })
     }
     
 

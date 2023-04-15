@@ -37,12 +37,6 @@ const Listado = ({data, query}) => {
   }
 
 
-  if(data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay voluntarios
-        </Typography>
-  }
-
 
   const VolunteersList = new CustomList(VoluntarioParser(data, handleDelete))
   let objetoTabla = VolunteersList.parseToTableBasic(

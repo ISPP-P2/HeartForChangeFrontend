@@ -72,18 +72,13 @@ const Listado = ({data, query}) => {
     })
   }
 
-  if(data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay Beneficiarios
-        </Typography>
-  }
-
+  
 
   const BeneficiarieList = new CustomList(ParseBenficiario(data, handleDelete))
   let objetoTabla = BeneficiarieList.parseToTable(
     ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
     ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
-    ["Fecha de nacimiento","correo","Dirección"],
+    ["Fecha de nacimiento","Correo","Dirección"],
     ["birthday","email","address"]
     )
     return (

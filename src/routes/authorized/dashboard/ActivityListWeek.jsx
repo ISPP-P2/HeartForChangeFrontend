@@ -19,12 +19,13 @@ export const ActivityListWeek = () => {
     const user = useAuthUser();
     const [activities, setActivities] = useState(null);
 
-
     const query = useQuery(["QUERY_ACTIVITIES"],() => getActivitiesAPI(user().token),{
       retry: 2,
       onSuccess: (data) => {
          setActivities(data.filter((activity) => {
-                return moment(activity.date).isBetween(moment(), moment().add(7, 'days'), null, '[]');
+                return moment(activity.date)
+                .isBetween(moment(), moment()
+                    .add(7, 'days'), null, '[]');
             }))
         },
       refetchOnWindowFocus: false,
