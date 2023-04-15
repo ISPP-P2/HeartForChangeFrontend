@@ -41,3 +41,8 @@ export const getAllAttendancesByTaskId = async (token, taskId) => {
     const {data} = await axiosWithToken(token).get(`/api/attendances/get/task/${taskId}`)
     return data
 }
+
+export const updateCourseAPI = async (token, values, courseId) => {
+    const {data} = await axiosWithToken(token).put(`/api/courses/update/${courseId}`, values)
+    return data
+}

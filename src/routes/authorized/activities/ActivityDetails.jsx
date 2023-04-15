@@ -29,6 +29,7 @@ import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import { BasicSelectAttendance } from '../workshop/WorkShopDetails';
 import { getAllAttendancesByTaskId } from '../../../api/beneficiario/workshop';
+import moment from 'moment';
 
 const form = [
     {
@@ -161,7 +162,8 @@ function ActivityDetails() {
 
   const updateActivity = (values) => {
     setDisableButton(true)
-    updateActivityAPI(user().token, values, id).then((res) => {
+    const values2 = {...data, date: moment(values.date).format("YYYY-MM-DD HH:mm:ss")}
+    updateActivityAPI(user().token, values2, id).then((res) => {
       toggleReadOnly(!readOnlyValue);
       query.refetch();
       setSuccessMsg("Actividad actualizada correctamente")

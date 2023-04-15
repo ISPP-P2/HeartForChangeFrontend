@@ -25,6 +25,8 @@ import VolunteerComplementaryForm from "./VolunteerComplementaryForm";
 import VolunteerWorkForm from "./VolunteerWorkForm";
 import ActivityListByVolunteer from "./ActivityListByVolunteer";
 import { CustomNotistackContext } from "../../../context/CustomNotistack";
+import CustomReloading from "../../../components/CustomReloading";
+import CustomError from "../../../components/CustomError";
 
 
 let voluntarioForm = [
@@ -189,15 +191,11 @@ function VolunteerDetails({ match }) {
   const user = useAuthUser();
   const voluntario = useQuery(["QUERY_VOLUNTEER", id],() => getVolunteerAPI(user().token,id));
   if(voluntario.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(voluntario.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> voluntario.refetch()}/>
   }
   
   const updateVolunteer = (values) => {

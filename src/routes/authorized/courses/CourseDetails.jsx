@@ -21,7 +21,8 @@ import CustomLink from '../../../components/CustomLink';
 import { getBeneficiariesAPI, updateTypeOfAttendanceById } from '../../../api/beneficiario/api';
 import BasicTable from '../../../components/BasicTable';
 import BasicModal from '../../../components/BasicModal';
-import { addBeneficiaryToCoursesAPI, deleteBeneficiarieInCourseAPI, getAllAttendancesByTaskId, getAttendancesByTaskId, getCourseByIdAPI } from '../../../api/beneficiario/course';
+import { addBeneficiaryToCoursesAPI, deleteBeneficiarieInCourseAPI, getAllAttendancesByTaskId, getAttendancesByTaskId, getCourseByIdAPI, updateCourseAPI } from '../../../api/beneficiario/course';
+import moment from 'moment';
 
 
 function CourseDetails() {
@@ -54,6 +55,15 @@ function CourseDetails() {
     }
 
     const updateActivity = (data) => { 
+      const values = {...data, date: moment(data.date).format("YYYY-MM-DD HH:mm:ss")}
+      updateCourseAPI(user().token, values,id ).then(() => {
+        query.refetch()
+        toggleReadOnly(true)
+        setSuccessMsg("Datos actualizados correctamente")
+    }).catch((err) => {
+        console.log(err)
+        setErrorMsg("Error al actualizar los datos")
+    })
     }
     
 

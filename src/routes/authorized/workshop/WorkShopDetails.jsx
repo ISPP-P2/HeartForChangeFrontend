@@ -29,6 +29,7 @@ import { getBeneficiariesAPI, updateTypeOfAttendanceById } from '../../../api/be
 import BasicTable from '../../../components/BasicTable';
 import BasicModal from '../../../components/BasicModal';
 import { updateActivityAPI } from '../../../api/actividades/api';
+import moment from 'moment';
 function WorkShopDetails() {
 
     const { id } = useParams()
@@ -59,7 +60,8 @@ function WorkShopDetails() {
     }
 
     const updateActivity = (data) => { 
-        updateWorkshopAPI(user().token, data,id ).then(() => {
+        const values = {...data, date: moment(data.date).format("YYYY-MM-DD HH:mm:ss")}
+        updateWorkshopAPI(user().token, values,id ).then(() => {
             query.refetch()
             toggleReadOnly(true)
             setSuccessMsg("Datos actualizados correctamente")

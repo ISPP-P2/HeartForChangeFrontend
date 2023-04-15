@@ -95,7 +95,7 @@ const Listado = ({query}) => {
       <Box>
             <TextField
           id="input-with-icon-textfield"
-          label="Justificación"
+          label="Nombre de la subvención"
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">
