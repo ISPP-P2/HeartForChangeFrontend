@@ -27,6 +27,11 @@ export const addBeneficiaryToCoursesAPI = async (token, taskId, beneficiaryId) =
     return data
 }
 
+export const deleteCourseAPI = async (token, id) => {
+    const {data} = await axiosWithToken(token).post(`/api/courses/delete/${id}`)
+    return data
+}
+
 export const getAttendancesByTaskId = async (token, taskId) => {
     const {data} = await axiosWithToken(token).get(`/api/courses/get/${taskId}/attendances/beneficiaries`)
     return data

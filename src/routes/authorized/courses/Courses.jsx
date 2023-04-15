@@ -17,7 +17,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
-import { getCoursesAPI } from '../../../api/beneficiario/course';
+import { deleteCourseAPI, getCoursesAPI } from '../../../api/beneficiario/course';
 import CourseForm from './CourseForm';
 
 
@@ -26,6 +26,19 @@ function Courses() {
   const [handleDeleteFunc, setHandleDeleteFunc] = React.useState({});
   const [filterValue, setFilterValue] = React.useState('');
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const [disableButton, setDisableButton] = React.useState(false)
+  const handleDelete = (id, handleClose) => {
+    setDisableButton(true)
+    deleteCourseAPI(user().token, id).then(() => {
+      handleClose.handleClose()
+      query.refetch()
+      setSuccessMsg("Curso eliminado correctamente")
+    }).catch((err) => {
+      setErrorMsg("Error al eliminar el curso")
+    }).finally(() => {
+      setDisableButton(false)
+    })
+  }
   const query = useQuery(["QUERY_COURSES"],() => getCoursesAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
@@ -43,7 +56,7 @@ function Courses() {
   item.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
-  const ActivityList = new CustomList(parseTaller(filteredData));
+  const ActivityList = new CustomList(parseCurso(filteredData, handleDelete, disableButton));
   let objetoTabla = ActivityList.parseToTableBasic(
     ["Nombre del taller","Lugar","Coordinador","Fecha","Ver detalles"],
     ["name", "place","coordinator","date", "button"]
@@ -99,7 +112,7 @@ const ToolList = ({actividad, handleDelete, id}) => {
       </CustomLink>
       <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El curso se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc,)} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED}  text={<DeleteForeverIcon />}
         />
     </CustomFlex>
@@ -107,12 +120,14 @@ const ToolList = ({actividad, handleDelete, id}) => {
 }
 
 
-const parseTaller = (data) => {
-    return data.map((taller) => {
+
+
+const parseCurso = (data, handleDelete, disableButton) => {
+    return data.map((curso) => {
         
         return {  
-            ...taller,  
-            button:<ToolList actividad={taller} handleDelete={()=> {}} id={taller.id}/>
+            ...curso,  
+            button:<ToolList disableButton={disableButton} actividad={curso} handleDelete={handleDelete} id={curso.id}/>
           };
     })
           

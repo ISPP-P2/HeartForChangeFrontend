@@ -10,7 +10,7 @@ import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
 import BasicTableNoDescription from '../../../components/BasicTableNoDescription';
-import { getWorkshopsAPI } from '../../../api/beneficiario/workshop';
+import { deleteWorkShopAPI, getWorkshopsAPI } from '../../../api/beneficiario/workshop';
 import WorkShopForm from './WorkShopForm';
 import CustomLink from '../../../components/CustomLink';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -26,6 +26,19 @@ function WorkShops() {
   const [handleDeleteFunc, setHandleDeleteFunc] = React.useState({});
   const [filterValue, setFilterValue] = React.useState('');
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const [disableButton, setDisableButton] = React.useState(false)
+  const handleDelete = (id, handleClose) => {
+    setDisableButton(true)
+    deleteWorkShopAPI(user().token, id).then(() => {
+      handleClose.handleClose()
+      query.refetch()
+      setSuccessMsg("Curso eliminado correctamente")
+    }).catch((err) => {
+      setErrorMsg("Error al eliminar el curso")
+    }).finally(() => {
+      setDisableButton(false)
+    })
+  }
   const query = useQuery(["QUERY_WORKSHOP"],() => getWorkshopsAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,
@@ -43,7 +56,7 @@ function WorkShops() {
   item.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
-  const ActivityList = new CustomList(parseTaller(filteredData));
+  const ActivityList = new CustomList(parseTaller(filteredData, handleDelete, disableButton));
   let objetoTabla = ActivityList.parseToTableBasic(
     ["Nombre del taller","Lugar","Coordinador","Fecha","Ver detalles"],
     ["name", "place","coordinator","date", "button"]
@@ -107,12 +120,12 @@ const ToolList = ({actividad, handleDelete, id}) => {
 }
 
 
-const parseTaller = (data) => {
+const parseTaller = (data, handleDelete, disableButton) => {
     return data.map((taller) => {
         
         return {  
             ...taller,  
-            button:<ToolList actividad={taller} handleDelete={()=> {}} id={taller.id}/>
+            button:<ToolList disableButton={disableButton} actividad={taller} handleDelete={handleDelete} id={taller.id}/>
           };
     })
           
