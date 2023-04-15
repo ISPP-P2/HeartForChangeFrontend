@@ -79,11 +79,7 @@ const Listado = ({data, query}) => {
     })
   }
 
-  if(data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay Beneficiarios
-        </Typography>
-  }
+
 
   const [filterValue, setFilterValue] = React.useState('');
 

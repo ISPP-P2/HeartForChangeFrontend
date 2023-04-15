@@ -57,7 +57,7 @@ function Activities() {
     })
   }
   const filteredData = query.data.filter((item) =>
-  item.name.toLowerCase().includes(filterValue.toLowerCase())
+    item.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
   const ActivityList = new CustomList(ParseActivity(filteredData, handleDelete, disableButton));
@@ -81,7 +81,7 @@ function Activities() {
           <Box>
                 <TextField
               id="input-with-icon-textfield"
-              label="Nombre del Beneficiario"
+              label="Nombre de la actividad"
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">

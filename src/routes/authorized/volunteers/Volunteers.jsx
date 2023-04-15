@@ -39,11 +39,7 @@ const Listado = ({data, query}) => {
   }
 
 
-  if(data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay voluntarios
-        </Typography>
-  }
+
 
   const [filterValue, setFilterValue] = useState('');
 
@@ -63,7 +59,7 @@ const Listado = ({data, query}) => {
     <Box>
           <TextField
         id="input-with-icon-textfield"
-        label="Nombre del Beneficiario"
+        label="Nombre del voluntario"
         InputProps={{
           endAdornment: (
             <InputAdornment position="start">
@@ -128,10 +124,10 @@ const ToolList = ({usuario, handleDelete, id}) => {
       <CustomLink  to={`/ong/voluntario/${id}`}>
         <SearchIcon />
       </CustomLink>
-      {/* <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
+      <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
         <CustomButton onClick={()=>handleDelete(id, handleClose)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
-        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/> */}
+        </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
 }

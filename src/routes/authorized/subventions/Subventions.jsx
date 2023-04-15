@@ -77,11 +77,6 @@ const Listado = ({query}) => {
 
   
 
-  if(query.data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay subvenciones
-        </Typography>
-  }
 
   const [filterValue, setFilterValue] = useState('');
   const filteredData = query.data.filter((item) =>
@@ -100,7 +95,7 @@ const Listado = ({query}) => {
       <Box>
             <TextField
           id="input-with-icon-textfield"
-          label="Nombre del Beneficiario"
+          label="Justificación"
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">
