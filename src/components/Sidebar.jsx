@@ -18,6 +18,7 @@ function Sidebar({handleClose}) {
           <SecondaryText text={"Registros"} />
           <ButtonSideBoard text={"Beneficiarios"} href={"/ong/beneficiarios"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Talleres"} href={"/ong/talleres"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
+          <ButtonSideBoard text={"Cursos"} href={"/ong/cursos"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Voluntarios"} href={"/ong/voluntarios"} handleClose={handleClose} icon={<PeopleAltIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Actividades"} href={"/ong/actividades"} handleClose={handleClose} icon={<FormatListBulletedIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Subvenciones"} href={"/ong/subvenciones"} handleClose={handleClose} icon={<AttachMoneyIcon sx={{color: 'white'}}/>} />
