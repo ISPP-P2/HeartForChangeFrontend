@@ -32,9 +32,9 @@ function WorkShops() {
     deleteWorkShopAPI(user().token, id).then(() => {
       handleClose.handleClose()
       query.refetch()
-      setSuccessMsg("Curso eliminado correctamente")
+      setSuccessMsg("Taller eliminado correctamente")
     }).catch((err) => {
-      setErrorMsg("Error al eliminar el curso")
+      setErrorMsg("Error al eliminar el taller")
     }).finally(() => {
       setDisableButton(false)
     })
