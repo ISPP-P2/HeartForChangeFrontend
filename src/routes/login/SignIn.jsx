@@ -13,6 +13,7 @@ import axios from '../../api/auth/axios';
 import { CustomNotistackContext } from '../../context/CustomNotistack';
 import { useContext, useEffect, useState } from 'react';
 import CustomReloading from '../../components/CustomReloading';
+import LoadingWrapper from '../../components/LoadingWrapper';
 
 function Copyright(props) {
 return (
@@ -39,6 +40,7 @@ export default function SignIn() {
   });
   const isLogged = useIsAuthenticated()
   const [isLoading, setIsLoading] = useState(true)
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const auth = useAuthUser()
   const navigate = useNavigate()
   
@@ -69,6 +71,7 @@ export default function SignIn() {
   
 
   const onSubmitDev = () => {
+    setButtonDisabled(true)
     axios.post("/api/accounts/signin", {
       username: credentials.username,
       password: credentials.password
@@ -96,7 +99,10 @@ export default function SignIn() {
     }).catch((error) => {
       console.log(error)
       setErrorMsg("Error al iniciar sesión");
+    }).finally(() => {
+      setButtonDisabled(false)
     })
+   
   }
   
 return (
@@ -166,7 +172,7 @@ return (
           />
                 
           <div  style={{ display: 'flex', justifyContent:'center' }}>
-          <CustomButton  onClick={onSubmitDev} text={"Entrar"} variantButton={VARIANTES_BUTTON.ORANGE }/>
+          {buttonDisabled ? <CustomReloading /> : <CustomButton  onClick={onSubmitDev} text={"Entrar"} variantButton={VARIANTES_BUTTON.ORANGE }/>}
           </div>
           <Grid container>
             <Grid item >
