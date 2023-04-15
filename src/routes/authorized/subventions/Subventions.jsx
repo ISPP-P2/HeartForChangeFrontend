@@ -6,6 +6,8 @@ import CustomFlex from '../../../components/CustomFlex';
 import CustomLink from '../../../components/CustomLink';
 import BasicModal from '../../../components/BasicModal';
 import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
@@ -81,10 +83,12 @@ const Listado = ({query}) => {
         </Typography>
   }
 
-
-
-
-  const SubventionList = new CustomList(ParseSubvention(query.data, handleDelete))
+  const [filterValue, setFilterValue] = useState('');
+  console.log(query.data)
+  const filteredData = query.data.filter((item) =>
+  item.justification.toLowerCase().includes(filterValue.toLowerCase())
+  );
+  const SubventionList = new CustomList(ParseSubvention(filteredData, handleDelete))
   let objetoTabla = SubventionList.parseToTable(
     ["Nombre", "Gubernamental","Estado","Privada/Pública","Eliminar"], 
     ["justification", "gubernamental", "state","privateGrant","button"],
@@ -93,7 +97,23 @@ const Listado = ({query}) => {
     )
 
     return (
+      <Box>
+        <TextField
+          id="input-with-icon-textfield"
+          label="Nombre de la Subvención"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+        />
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+        </Box>
     )
 
 }

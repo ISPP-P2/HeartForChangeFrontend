@@ -14,6 +14,9 @@ import { useAuthUser } from 'react-auth-kit';
 import { deleteBeneficiariesAPI, getBeneficiariesAPI } from '../../../api/beneficiario/api';
 import { useQuery } from 'react-query';
 import { Typography} from '@mui/material';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import { useState } from 'react';
 import BodyWrapper from '../../../components/BodyWrapper';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
@@ -78,8 +81,15 @@ const Listado = ({data, query}) => {
         </Typography>
   }
 
+  const [filterValue, setFilterValue] = useState('');
 
-  const BeneficiarieList = new CustomList(ParseBenficiario(data, handleDelete))
+  const filteredData = data.filter((item) =>
+  item.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
+
+
+  const BeneficiarieList = new CustomList(ParseBenficiario(filteredData, handleDelete))
+
   let objetoTabla = BeneficiarieList.parseToTable(
     ["Nombre", "Primer apellido","Segundo Apellido","Nºdocumento","Genero","Ciudad","Numero","Nacionalidad","Herramientas"], 
     ["name", "firstSurname", "secondSurname","documentNumber","gender","town","telephone","nationality","button"],
@@ -87,7 +97,24 @@ const Listado = ({data, query}) => {
     ["birthday","email","address"]
     )
     return (
-        <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+        <Box>
+          <TextField
+        id="input-with-icon-textfield"
+        label="Nombre del Beneficiario"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"v
+        value={filterValue}
+  onChange={(e) => setFilterValue(e.target.value)}
+      />
+          <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+        </Box>
+        
     )
 
 }
