@@ -14,7 +14,8 @@ import { getWorkshopsAPI } from '../../../api/beneficiario/workshop';
 import WorkShopForm from './WorkShopForm';
 import CustomLink from '../../../components/CustomLink';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
@@ -23,6 +24,7 @@ import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton
 function WorkShops() {
   const user = useAuthUser();
   const [handleDeleteFunc, setHandleDeleteFunc] = React.useState({});
+  const [filterValue, setFilterValue] = React.useState('');
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const query = useQuery(["QUERY_WORKSHOP"],() => getWorkshopsAPI(user().token),{
     retry: 2,
@@ -37,9 +39,11 @@ function WorkShops() {
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
-  
+  const filteredData = query.data.filter((item) =>
+  item.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
 
-  const ActivityList = new CustomList(parseTaller(query.data));
+  const ActivityList = new CustomList(parseTaller(filteredData));
   let objetoTabla = ActivityList.parseToTableBasic(
     ["Nombre del taller","Lugar","Coordinador","Fecha","Ver detalles"],
     ["name", "place","coordinator","date", "button"]
@@ -60,7 +64,23 @@ function WorkShops() {
                       />}
                     totalNumber={query.data.length}/>
             </CustomFlex>
+            <Box>
+        <TextField
+          id="input-with-icon-textfield"
+          label="Nombre del curso"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+        />
          <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
+         </Box>
         </CustomFlex> 
       </BodyWrapper>
     );
