@@ -51,7 +51,6 @@ const ToolList = ({id, query}) => {
 
   const [handleClose, setHandleClose] = React.useState({})
 
-
   const handleDelete = () => {
     DeleteAcademixExperience(user().token, id)
     .then(() => {

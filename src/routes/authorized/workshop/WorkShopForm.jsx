@@ -107,7 +107,7 @@ function WorkShopForm({query,handleClose}) {
   return (
         <BasicFrom
         isLoading={disableButton}
-        form={form}
+        form={WorkShop_Form}
         buttonText={"añadir"}
         handleSubmitForm={handleSubmitForm}
     />
