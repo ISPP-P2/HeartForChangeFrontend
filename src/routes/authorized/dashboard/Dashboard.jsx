@@ -53,13 +53,6 @@ function Dashboard() {
         refetchOnWindowFocus: false,
         });
 
-    const queryBeneficiaries = useQuery(["QUERY_BENEFICIARIES"],() => getBeneficiariesAPI(user().token),{
-        retry: 2,
-        onSuccess: (data) => {
-            setBeneficiaries(data);
-        },
-        refetchOnWindowFocus: false,
-    })
     
                     
 
@@ -124,7 +117,7 @@ function Dashboard() {
             </Grid>
             <Grid display={mobile ? "grid" : "flex"} justifyContent={"space-around"} marginTop={"2rem"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={"repeat(auto-fill, minmax(20vw, 40vw))"}>
                     <ActivityListWeek />
-                    { beneficiaries === null ?   <LoadingWrapper />  :<AppointmentsListWeek beneficiaries={beneficiaries}/>}
+                   <AppointmentsListWeek/>
             </Grid>
             </CustomFlex>
         </BodyWrapper>

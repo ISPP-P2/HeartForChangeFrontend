@@ -106,8 +106,8 @@ const ListData = ({id, query}) => {
 
   const BeneficiarieList = new CustomList(ParseToTable(query.data.data, query))
   let objetoTabla = BeneficiarieList.parseToTableBasic(
-    ["Fecha", "Hora", "Acción"],
-    ["date", "hour","toollist"]
+    ["Fecha", "Hora","Notas", "Acción"],
+    ["date", "hour","notes","toollist"]
     )
 
   return (
