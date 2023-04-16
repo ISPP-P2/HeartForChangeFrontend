@@ -46,7 +46,6 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(true)
   const auth = useAuthUser()
   const navigate = useNavigate()
-  
   const SignIn = useSignIn()
   const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
 
@@ -124,7 +123,7 @@ return (
         <Typography component="h1" variant="h5" color="#686868">
           Registrar una ONG
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1, width:'30%' }}>
+        <Box component="form" noValidate sx={{ mt: 1, width: { xs: '90%', sm: '60%', xl:'30%'}, }}>
           <TextField
             margin="normal"
             required
