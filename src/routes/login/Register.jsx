@@ -104,6 +104,8 @@ export default function Register() {
         navigate("/ong")
       }
       setIsLoading(false)
+    }else{
+      navigate("/")
     }
     setIsLoading(false)
   }, [isLogged, navigate])
@@ -118,8 +120,8 @@ export default function Register() {
     axiosWithToken(auth().token).post("/api/ongs/signup", values)
     .then((response) => {
           setSuccessMsg("Cuenta creada correctamente");
-          navigate('/')
           signout()
+          navigate('/')
     }).catch((error) => {
           setErrorMsg("Error al crear la cuenta");
     }).finally(() => {
