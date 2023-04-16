@@ -12,7 +12,7 @@ function CustomCardMini({
 
   return (  
     <Card sx={{
-      width: mobile ? "20em": "20rem",
+      width:  { xs: '20rem', lg: '24em', xl:'20em'},
       height: "min-content",
       filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.3))",
     }}>

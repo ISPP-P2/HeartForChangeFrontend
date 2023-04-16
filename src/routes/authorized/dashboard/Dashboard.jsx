@@ -56,7 +56,7 @@ function Dashboard() {
     return (
         <BodyWrapper title={"Panel de control"}>
             <CustomFlex direction={"column"} >
-            <Grid display={mobile ? "grid" : "flex"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={mobile ? "repeat(auto-fill, minmax(20rem, 1fr))" : "repeat(auto-fill, minmax(10rem, 400px))" }  >
+            <Grid display={mobile ? "grid" : "flex"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} sx={{gridTemplateColumns:{ xs: 'repeat(auto-fill, minmax(10rem, 400px))', sm: 'repeat(auto-fill, minmax(25rem, 1fr))', xl:'repeat(auto-fill, minmax(20rem, 1fr))'},}} >
                 <CustomCardMini 
                     title='Beneficiarios registrados'
                     iconD={<AccountBoxIcon htmlColor='#0055FF'/>}
