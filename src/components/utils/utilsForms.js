@@ -10,6 +10,7 @@ export const FORM_TYPES ={
     CHECKBOX: 'checkbox',
     NUMBER: 'number',
     TIME: 'time',
+    PASSWORD : 'password',
 }
 
 

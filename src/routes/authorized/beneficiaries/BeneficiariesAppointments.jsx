@@ -50,11 +50,12 @@ const ToolList = ({id, query}) => {
 
   const [handleClose, setHandleClose] = React.useState({});
 
-
+  const [disableButton, setDisableButton] = React.useState(false);
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
 
   const handleDelete = () => {
+    setDisableButton(true)
     DeleteAppoinmentAPI(user().token, id)
     .then(() => {
       query.refetch()
@@ -62,7 +63,7 @@ const ToolList = ({id, query}) => {
       setSuccessMsg("Experiencia académica eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la experiencia académica")
-    })
+    }).finally(()=>setDisableButton(false))
 
   }
 
@@ -75,7 +76,7 @@ const ToolList = ({id, query}) => {
           title={"¿Estás seguro?"}
           body={<CustomFlex direction={"column"}>
                 <Typography>Seguro que estas seguro de eliminar esta experiencia académica?</Typography>
-                <CustomButton onClick={handleDelete} variantButton={VARIANTES_BUTTON.RED} text={"Eliminar"}/>
+                <CustomButton onClick={handleDelete} isLoading={disableButton} variantButton={VARIANTES_BUTTON.RED} text={"Eliminar"}/>
             </CustomFlex>}
       />)
 }

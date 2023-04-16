@@ -23,9 +23,10 @@ import BasicTableNoDescription from '../../../components/BasicTableNoDescription
 
 const Listado = ({data, query}) => {
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
-
+  const [disableButton, setDisableButton] = useState(false)
   const user = useAuthUser();
   const handleDelete = (id, handleClose) => {
+    setDisableButton(true)
     deleteVolunteerAPI(user().token, id).then(
       (response) => {
           query.refetch()
@@ -35,7 +36,7 @@ const Listado = ({data, query}) => {
     ).catch((error) => {
         setErrorMsg("Error al eliminar el voluntario")
         handleClose.handleClose()
-    });
+    }).finally(() => setDisableButton(false));
   }
 
 
@@ -45,7 +46,7 @@ const Listado = ({data, query}) => {
   const filteredData = data.filter((item) =>
   item.name.toLowerCase().includes(filterValue.toLowerCase())
   );
-  const VolunteersList = new CustomList(VoluntarioParser(filteredData, handleDelete))
+  const VolunteersList = new CustomList(VoluntarioParser(filteredData, handleDelete, disableButton))
 
   
   let objetoTabla = VolunteersList.parseToTableBasic(
@@ -86,7 +87,6 @@ function Volunteers() {
     refetchOnWindowFocus: false,
   });
   
-
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -114,7 +114,7 @@ export default Volunteers;
 
 
 
-const ToolList = ({usuario, handleDelete, id}) => {
+const ToolList = ({usuario, handleDelete, id, disableButton}) => {
 
   const [handleClose, setHandleClose] = useState({})
 
@@ -125,7 +125,7 @@ const ToolList = ({usuario, handleDelete, id}) => {
       </CustomLink>
       <BasicModal setHandleCloseButton={setHandleClose} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El voluntario se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleClose)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleClose)} isLoading={disableButton} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )
@@ -146,13 +146,13 @@ const RolAccountParser = (rolAccount) => {
 }
 
 
-const VoluntarioParser = (data, handleDelete) => {
+const VoluntarioParser = (data, handleDelete, disableButton) => {
   return data.map((usuario) => {
     return {
       ...usuario,
       gender: usuario.gender === "MALE" ? "Hombre" : "Mujer",
       rolAccount: RolAccountParser(usuario.rolAccount),
-      button:<ToolList usuario={usuario} handleDelete={handleDelete} id={usuario.id}/>,
+      button:<ToolList usuario={usuario} handleDelete={handleDelete} disableButton={disableButton} id={usuario.id}/>,
     };
   });
 }

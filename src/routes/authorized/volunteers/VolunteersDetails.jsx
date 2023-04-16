@@ -190,6 +190,8 @@ function VolunteerDetails({ match }) {
   const { id } = useParams();
   const user = useAuthUser();
   const voluntario = useQuery(["QUERY_VOLUNTEER", id],() => getVolunteerAPI(user().token,id));
+  const [disableButton, setDisableButton] = React.useState(false);
+
   if(voluntario.isLoading){
     return <CustomReloading />
   }
@@ -199,6 +201,7 @@ function VolunteerDetails({ match }) {
   }
   
   const updateVolunteer = (values) => {
+    setDisableButton(true);
     updateVolunteersAPI(user().token, values, id).then(
       (response) => {
         toggleReadOnly(!readOnlyValue);
@@ -206,7 +209,7 @@ function VolunteerDetails({ match }) {
         setSuccessMsg("Voluntario actualizado correctamente")
       }).catch((error) => {
           setErrorMsg("Error al actualizar el voluntario")
-      });
+      }).finally(() => setDisableButton(false));
   }
 
 
@@ -248,6 +251,7 @@ function VolunteerDetails({ match }) {
               readOnly={readOnlyValue}
               buttonText={"Confirmar"}
               width={"100%"}
+              isLoading={disableButton}
               handleSubmitForm={updateVolunteer}
               showButton = {!readOnlyValue}
             /> : null}

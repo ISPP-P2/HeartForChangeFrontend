@@ -74,7 +74,7 @@ function AcademicExperienceForm({id, handleClose, refetch}) {
             }
         ).finally(() => {
             setDisableButton(false)
-          });
+        });
     }
 
   return (

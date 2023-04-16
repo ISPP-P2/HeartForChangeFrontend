@@ -25,7 +25,7 @@ function App() {
                         <Index  />
                     </CustomSecurePath>}/>	
                 <Route path={'/'} element={<SignIn  />} />
-                <Route path={'/register'} element={<Register  />} />
+                <Route path={'/admin/register'} element={<Register  />} />
           </Route>
           <Route path={'/privacidad'} element={<LegalTerms/>}></Route>
       </Routes>

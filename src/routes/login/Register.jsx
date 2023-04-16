@@ -1,18 +1,73 @@
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import {Box} from '@mui/material';
+import {Box, Button} from '@mui/material';
 import logo from '../../static/logo.png'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import CustomButton, { VARIANTES_BUTTON } from '../../components/CustomButton';
 import { parseTokens } from '../../api/auth/tokenUtils';
-import { useAuthUser, useIsAuthenticated, useSignIn } from 'react-auth-kit';
-import axios from '../../api/auth/axios';
+import { useAuthUser, useIsAuthenticated, useSignIn, useSignOut } from 'react-auth-kit';
+import axios, { axiosWithToken } from '../../api/auth/axios';
 import { CustomNotistackContext } from '../../context/CustomNotistack';
 import { useContext, useEffect, useState } from 'react';
 import CustomReloading from '../../components/CustomReloading';
+import BasicFrom from '../../components/BasicFrom';
+import { FORM_TYPES } from '../../components/utils/utilsForms';
+import * as Yup from 'yup';
+const credentialsFrom = [
+ 
+  {
+    name: "username",
+    type: FORM_TYPES.TEXT,
+    label: "Usuario *",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .min(5, "Debe tener menos de 5 caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "password",
+    type: FORM_TYPES.PASSWORD,
+    label: "Contraseña *",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .min(8, "Debe tener menos de 8 caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "name",
+    type: FORM_TYPES.TEXT,
+    label: "Nombre *",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "cif",
+    type: FORM_TYPES.TEXT,
+    label: "CIF *",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .matches(/^[A-Z]{1}\d{8}$/, "El CIF debe tener 9 caracteres, empezar por una letra y terminar por 8 números")
+    .max(150, "debe tener menos de 150 caracteres")
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "email",
+    type: FORM_TYPES.TEXT,
+    label: "Correo electrónico *",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .email("Debe ser un correo electrónico válido")
+    .required("Este campo es obligatorio"),
+  },
+  {
+    name: "description",
+    type: FORM_TYPES.TEXTEAREA,
+    label: "Descripción *",
+    validation: Yup.string("Deber ser una cadena de caracteres")
+    .min(10, "debe tener menos de 10 caracteres")
+    .required("Este campo es obligatorio"),
+  },
+]
+
 
 function Copyright(props) {
 return (
@@ -33,28 +88,20 @@ return (
 
 export default function Register() {
 
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: '',
-    cif:'',
-    name:'',
-    email:'',
-    description:'',
 
-  });
   const isLogged = useIsAuthenticated()
   const [isLoading, setIsLoading] = useState(true)
   const auth = useAuthUser()
   const navigate = useNavigate()
-  const SignIn = useSignIn()
   const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
+  const signout = useSignOut()
+
+
 
   useEffect(() => {
     if(isLogged()){
-      if(auth().rol == "ONG"){
+      if(auth().username != import.meta.env.VITE_USERNAME_ADMIN){
         navigate("/ong")
-      }else{
-        navigate("/vol")
       }
       setIsLoading(false)
     }
@@ -62,46 +109,21 @@ export default function Register() {
   }, [isLogged, navigate])
 
 
-  const onChangePassword = (event) => {
-    setCredentials({ ...credentials, password: event.target.value });
-  };
-
-  const onChangeUser = (event) => {
-    setCredentials({ ...credentials, username: event.target.value });
-  };
-
-  const onChangeDescription = (event) => {
-    setCredentials({ ...credentials, description: event.target.value });
-  };
-
-  const onChangeName = (event) => {
-    setCredentials({ ...credentials, name: event.target.value });
-  };
-
-  const onChangeCif = (event) => {
-    setCredentials({ ...credentials, cif: event.target.value });
-  };
-
-  const onChangeEmail = (event) => {
-    setCredentials({ ...credentials, email: event.target.value });
-  };
-
+ 
+  const [disableButton, setDisableButton] = useState(false)
   
 
-  const onSubmitDev = () => {
-    axios.post("/api/ongs/signup", {
-      username: credentials.username,
-      password: credentials.password,
-      cif: credentials.cif,
-      email: credentials.email,
-      name: credentials.name,
-      description: credentials.description
-    }).then((response) => {
+  const onSubmitDev = (values) => {
+    setDisableButton(true)
+    axiosWithToken(auth().token).post("/api/ongs/signup", values)
+    .then((response) => {
           setSuccessMsg("Cuenta creada correctamente");
           navigate('/')
-    }
-).catch((error) => {
-      setErrorMsg("Error al crear la cuenta");
+          signout()
+    }).catch((error) => {
+          setErrorMsg("Error al crear la cuenta");
+    }).finally(() => {
+      setDisableButton(false)
     })
   }
   
@@ -123,162 +145,28 @@ return (
         <Typography component="h1" variant="h5" color="#686868">
           Registrar una ONG
         </Typography>
+
+        
+      
         <Box component="form" noValidate sx={{ mt: 1, width: { xs: '90%', sm: '60%', xl:'30%'}, }}>
-          <TextField
-            margin="normal"
-            required
-            onChange={onChangeEmail}
-            fullWidth
-            id="email"
-            label="Correo electrónico"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            sx={{
-              // input label when focused
-              "& label.Mui-focused": {
-                color:  "#ff862f"
-              },
-            // focused color for input with variant='outlined'
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#ff862f"
-                  }
-                }
-                }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            onChange={onChangeUser}
-            id="username"
-            label="Nombre de usuario"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            sx={{
-              // input label when focused
-              "& label.Mui-focused": {
-                color:  "#ff862f"
-              },
-            // focused color for input with variant='outlined'
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#ff862f"
-                  }
-                }
-                }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            onChange={onChangePassword}
-            label="Contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-             sx={{
-              // input label when focused
-              "& label.Mui-focused": {
-                color:  "#ff862f"
-              },
-            // focused color for input with variant='outlined'
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#ff862f"
-                  }
-                }
-                }}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, justifyContent: 'space-between', margin:'0' }}>
-          <TextField
-            margin="normal"
-            required
-            
-            onChange={onChangeCif}
-            id="cif"
-            label="CIF"
-            name="cif"
-            autoComplete="cif"
-            autoFocus
-            sx={{width:'47%',
-              // input label when focused
-              "& label.Mui-focused": {
-                color:  "#ff862f"
-              },
-            // focused color for input with variant='outlined'
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#ff862f"
-                  }
-                }
-                }}
-          />
-          <TextField
-            margin="normal"
-            required
-            
-            onChange={onChangeName}
-            id="name"
-            label="Nombre de la ONG"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            sx={{width:'47%',
-            selfAlign:'flex-end',
-              // input label when focused
-              "& label.Mui-focused": {
-                color:  "#ff862f"
-              },
-            // focused color for input with variant='outlined'
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#ff862f"
-                  }
-                }
-                }}
-          />
-          </Box>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            onChange={onChangeDescription}
-            id="description"
-            label="Descripción de la ONG"
-            name="description"
-            autoComplete="description"
-            autoFocus
-            sx={{
-              // input label when focused
-              "& label.Mui-focused": {
-                color:  "#ff862f"
-              },
-            // focused color for input with variant='outlined'
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#ff862f"
-                  }
-                }
-                }}
-          />
-          
+          <BasicFrom 
+            handleSubmitForm={onSubmitDev}
+            isLoading={disableButton}
+            buttonText={"Registrar"}
+            form={credentialsFrom}
+            />
                 
-          <div  style={{ display: 'flex', justifyContent:'center' }}>
-          <CustomButton  onClick={onSubmitDev} text={"Registrar"} variantButton={VARIANTES_BUTTON.ORANGE }/>
-          </div>
-          <Grid container>
-            <Grid item >
-            <Link color="text.secondary" variant="h5" fontSize= "1em" href="/" underline="none" sx={{"&:hover": {
+          <Button onClick={
+                () => {
+                  signout()
+                  navigate('/')}
+
+          } color="text.secondary" variant="h5" fontSize= "1em" href="/" underline="none" sx={{"&:hover": {
                     opacity: 0.70
                 }}}>
-            Iniciar sesión
-        </Link>
-            </Grid>
-          </Grid>
+            Volver
+        </Button>
+        
         </Box>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />

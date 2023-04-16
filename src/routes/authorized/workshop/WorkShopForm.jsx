@@ -101,7 +101,7 @@ function WorkShopForm({query,handleClose}) {
             setErrorMsg("Ha ocurrido un error al añadir el taller")
         }).finally(() => {
             setDisableButton(false)
-          })
+         })
     }
 
   return (

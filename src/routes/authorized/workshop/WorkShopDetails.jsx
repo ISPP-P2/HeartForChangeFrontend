@@ -34,6 +34,7 @@ function WorkShopDetails() {
 
     const { id } = useParams()
     const user = useAuthUser();
+    const [disableButton, setDisableButton] = React.useState(false)
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
     const query = useQuery(["QUERY_WORKSHOP", id],() => getWorkshopByIdAPI(user().token, id),{
       retry: 2,
@@ -60,15 +61,15 @@ function WorkShopDetails() {
     }
 
     const updateActivity = (data) => { 
+      setDisableButton(true)
         const values = {...data, date: moment(data.date).format("YYYY-MM-DD HH:mm:ss")}
         updateWorkshopAPI(user().token, values,id ).then(() => {
             query.refetch()
             toggleReadOnly(true)
             setSuccessMsg("Datos actualizados correctamente")
         }).catch((err) => {
-            console.log(err)
             setErrorMsg("Error al actualizar los datos")
-        })
+        }).finally(() => setDisableButton(false))
     }
     
 
@@ -114,9 +115,8 @@ export const  BasicSelectAttendance = ({attendance}) =>  {
     ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
   
   
-    const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
 
-  console.log(attendance)
   const handleChange = (event, value) => {
     setIsLoading(true)
     updateTypeOfAttendanceById(user().token, attendance.id, value.props.value)
@@ -313,10 +313,11 @@ const DeleteBeneficiarios = ({beneficiario, taskId, refetch}) => {
   
     const [handleCloseFunc, setHandleCloseFunc] = React.useState(null);
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-
+    const [disableButton, setDisableButton] = React.useState(false)
 
     const user = useAuthUser();
     const handleDelete = () => {
+      setDisableButton(true)
       deleteBeneficiarieInWorkShopAPI(user().token,taskId, beneficiario.id)
       .then((res) => {
         handleCloseFunc.handleClose()
@@ -325,14 +326,14 @@ const DeleteBeneficiarios = ({beneficiario, taskId, refetch}) => {
       })
       .catch((err) => {
         setErrorMsg("Error al eliminar beneficiario")
-      })
+      }).finally(() => setDisableButton(false))
     }
 
     return (  
       <CustomFlex>
          <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El actividad se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete()} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete()} isLoading={disableButton} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED}  text={<DeleteForeverIcon />}
         />
       </CustomFlex>

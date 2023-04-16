@@ -12,7 +12,7 @@ function BeneficiaryAppoinmentForm({id, handleClose, refetch}) {
   const [disableButton, setDisableButton] = React.useState(false)
 
   const handleSubmitForm = (values) => {
-        setDisableButton(true)
+    setDisableButton(true)
     postAppointmentAPI(auth().token, values, id).then(
           (response) => {
               setSuccessMsg("Se ha añadido correctamente")
