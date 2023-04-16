@@ -104,7 +104,8 @@ const CustomInput = (props) => {
     || props.type == FORM_TYPES.ONLYDATE   
     || props.type == FORM_TYPES.NUMBER || 
     props.type == FORM_TYPES.DATE || 
-    props.type == FORM_TYPES.TIME) {
+    props.type == FORM_TYPES.TIME ||
+    props.type == FORM_TYPES.PASSWORD) {
     return (
       <TextField
         type={props.type}
