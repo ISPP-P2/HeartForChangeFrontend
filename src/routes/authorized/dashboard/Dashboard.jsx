@@ -51,12 +51,8 @@ function Dashboard() {
     const querySubventionsTotal = useQuery(["QUERY_SUBVENTIONS_TOTAL_NUM"],() => getTOTALSubventionAPI(user().token),{
         retry: 2,
         refetchOnWindowFocus: false,
-        });
-
-    
-                    
-
-
+    });
+         
     return (
         <BodyWrapper title={"Panel de control"}>
             <CustomFlex direction={"column"} >
@@ -117,7 +113,7 @@ function Dashboard() {
             </Grid>
             <Grid display={mobile ? "grid" : "flex"} justifyContent={"space-around"} marginTop={"2rem"} flexDirection={"column-reverse"} gap="1rem" justifyItems={"center"} gridTemplateColumns={"repeat(auto-fill, minmax(20vw, 40vw))"}>
                     <ActivityListWeek />
-                   <AppointmentsListWeek/>
+                    <AppointmentsListWeek />
             </Grid>
             </CustomFlex>
         </BodyWrapper>

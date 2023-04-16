@@ -129,7 +129,7 @@ return (
             onChange={onChangeUser}
             fullWidth
             id="email"
-            label="Correo electrónico"
+            label="Nombre de usuario"
             name="email"
             autoComplete="email"
             autoFocus

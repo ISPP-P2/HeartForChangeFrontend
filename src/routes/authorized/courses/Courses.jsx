@@ -39,6 +39,7 @@ function Courses() {
       setDisableButton(false)
     })
   }
+  
   const query = useQuery(["QUERY_COURSES"],() => getCoursesAPI(user().token),{
     retry: 2,
     refetchOnWindowFocus: false,

@@ -63,15 +63,18 @@ const Listado = ({query}) => {
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
- 
+  const [disableButton, setDisableButton] = useState(false)
+
+
   const handleDelete = (id, handleClose) => {
+    setDisableButton(true)
     deleteSubvencioAPI(user().token, id).then(() => {
       handleClose.handleClose()
       query.refetch()
       setSuccessMsg("Subvención eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la subvención")
-    })
+    }).finally(() => setDisableButton(false))
   }
 
 
@@ -82,7 +85,7 @@ const Listado = ({query}) => {
   const filteredData = query.data.filter((item) =>
   item.justification.toLowerCase().includes(filterValue.toLowerCase())
   );
-  const SubventionList = new CustomList(ParseSubvention(filteredData, handleDelete))
+  const SubventionList = new CustomList(ParseSubvention(filteredData, handleDelete, disableButton))
   let objetoTabla = SubventionList.parseToTable(
     ["Nombre", "Gubernamental","Estado","Privada/Pública","Eliminar"], 
     ["justification", "gubernamental", "state","privateGrant","button"],
@@ -114,14 +117,14 @@ const Listado = ({query}) => {
 
 }
 
-const ParseSubvention = (subvencions, handleDelete) => {
+const ParseSubvention = (subvencions, handleDelete, disableButton) => {
   return subvencions.map((subvencion) => {
     return {
       ...subvencion,
       gubernamental: subvencion.gubernamental ? "Sí" : "No",
       state: StateParser(subvencion.state),
       privateGrant: subvencion.privateGrant ? "Privada" : "Pública",
-      button: <ToolList subvencion={subvencion} handleDelete={handleDelete} id={subvencion.id}/>,
+      button: <ToolList subvencion={subvencion} handleDelete={handleDelete} disableButton={disableButton} id={subvencion.id}/>,
     };
   });
 }
@@ -143,7 +146,7 @@ const StateParser = (state) => {
 }
 
 
-const ToolList = ({subvencion, handleDelete, id}) => {
+const ToolList = ({subvencion, handleDelete, id, disableButton}) => {
   const [handleCloseFunc, setHandleCloseFunc] = useState({});
 
   return (
@@ -151,7 +154,7 @@ const ToolList = ({subvencion, handleDelete, id}) => {
       <CustomLink to={`/ong/subvencion/${subvencion.id}`}><SearchIcon /></CustomLink>
       <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>La subvención se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} isLoading={disableButton} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )

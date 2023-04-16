@@ -44,14 +44,15 @@ function BeneficiariesAcademicExperienceForm({id}) {
 
 
 
-const ToolList = ({id, query}) => {
+export const ToolListAcademicExperience = ({id, query}) => {
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
-
+  const [disableButton, setDisableButton] = React.useState(false)
   const [handleClose, setHandleClose] = React.useState({})
 
   const handleDelete = () => {
+    setDisableButton(true)
     DeleteAcademixExperience(user().token, id)
     .then(() => {
       query.refetch()
@@ -59,6 +60,8 @@ const ToolList = ({id, query}) => {
       setSuccessMsg("Experiencia académica eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la experiencia académica")
+    }).finally(() => {
+      setDisableButton(false)
     })
 
   }
@@ -72,7 +75,7 @@ const ToolList = ({id, query}) => {
           title={"¿Estás seguro?"}
           body={<CustomFlex direction={"column"}>
                 <Typography>Seguro que estas seguro de eliminar esta experiencia académica?</Typography>
-                <CustomButton onClick={handleDelete} variantButton={VARIANTES_BUTTON.RED} text={"Eliminar"}/>
+                <CustomButton onClick={handleDelete} isLoading={disableButton} variantButton={VARIANTES_BUTTON.RED} text={"Eliminar"}/>
             </CustomFlex>}
       />)
 }
@@ -81,7 +84,7 @@ const ParseToTable = (data, query) => {
   return data.map((item) => {
     return {
       ...item,
-      toollist : <ToolList id={item.id} query={query}/>
+      toollist : <ToolListAcademicExperience id={item.id} query={query}/>
     }
   })
 }

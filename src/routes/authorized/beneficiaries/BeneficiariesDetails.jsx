@@ -65,7 +65,7 @@ function BeneficiariesDetails() {
   const query = useQuery(["QUERY_BENEFICIARIES_DETAILS", id],() => getBeneficiarieAPI(user().token,id));
   const mobile = useMediaQuery("(min-width: 850px)");
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
-
+  const [disableButton, setDisableButton] = useState(false)
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -75,6 +75,7 @@ function BeneficiariesDetails() {
   }
 
   const updateBeneficiarie = (values) => {
+    setDisableButton(true)
     updateBeneficiariesAPI(user().token, values, id).then(
       (response) => {
         toggleReadOnly(!readOnlyValue);
@@ -84,7 +85,7 @@ function BeneficiariesDetails() {
     ).catch(
       (error) => {
         setErrorMsg("Error al actualizar beneficiario")
-      });
+      }).finally(() => setDisableButton(false));
 
   }
  
@@ -126,6 +127,7 @@ function BeneficiariesDetails() {
                 readOnly={readOnlyValue}
                 buttonText={"Confirmar"}
                 width={"100%"}
+                isLoading={disableButton}
                 handleSubmitForm={updateBeneficiarie}
                 showButton = {!readOnlyValue}
               /> : null}

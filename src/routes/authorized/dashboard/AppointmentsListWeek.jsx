@@ -24,7 +24,7 @@ export const AppointmentsListWeek = () => {
       retry: 2,
       onSuccess: (data) => {
         setAppointment(data
-                .filter((activity) => {
+              .filter((activity) => {
                 return moment(activity.date)
                 .isBetween(moment(), moment()
                 .add(7, 'days'), null, '[]');
@@ -85,8 +85,6 @@ const ToolList = ({appointmentId}) => {
     refetchOnWindowFocus: false,
   });
 
-  console.log(query)
-
   if(query.isLoading || beneficiarie === null){
     return <CustomReloading />
   }
@@ -116,8 +114,6 @@ const BeneficiarioNombre = ({appointmentId}) => {
       },
     refetchOnWindowFocus: false,
   });
-
-  console.log(query)
 
   if(query.isLoading || beneficiarie === null){
     return <CustomReloading />

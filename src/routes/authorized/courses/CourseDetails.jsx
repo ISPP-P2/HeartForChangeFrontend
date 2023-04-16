@@ -26,7 +26,6 @@ import moment from 'moment';
 
 
 function CourseDetails() {
-
     const { id } = useParams()
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
@@ -35,7 +34,7 @@ function CourseDetails() {
       refetchOnWindowFocus: false,
     });
 
-    
+    const [disableButton, setDisableButton] = React.useState(false)
     const mobile = useMediaQuery('(min-width:1200px)');
 
     const [readOnlyValue, toggleReadOnly] = React.useState(true);
@@ -55,15 +54,15 @@ function CourseDetails() {
     }
 
     const updateActivity = (data) => { 
+      setDisableButton(true)
       const values = {...data, date: moment(data.date).format("YYYY-MM-DD HH:mm:ss")}
       updateCourseAPI(user().token, values,id ).then(() => {
         query.refetch()
         toggleReadOnly(true)
         setSuccessMsg("Datos actualizados correctamente")
     }).catch((err) => {
-        console.log(err)
         setErrorMsg("Error al actualizar los datos")
-    })
+    }).finally(() => setDisableButton(false))
     }
     
 
@@ -84,6 +83,7 @@ function CourseDetails() {
             form={parseTaller(query.data)}
             readOnly={readOnlyValue}
             buttonText={"Confirmar"}
+            isLoading={disableButton}
             handleSubmitForm={updateActivity}
             showButton = {!readOnlyValue}
             />     
@@ -109,9 +109,8 @@ export const  BasicSelectAttendance = ({attendance}) =>  {
     ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
   
   
-    const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
 
-  console.log(attendance)
   const handleChange = (event, value) => {
     setIsLoading(true)
     updateTypeOfAttendanceById(user().token, attendance.id, value.props.value)
@@ -308,10 +307,11 @@ const DeleteBeneficiarios = ({beneficiario, taskId, refetch}) => {
   
     const [handleCloseFunc, setHandleCloseFunc] = React.useState(null);
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-
+    const [disableButton, setDisableButton] = React.useState(false)
 
     const user = useAuthUser();
     const handleDelete = () => {
+      setDisableButton(true)
       deleteBeneficiarieInCourseAPI(user().token,taskId, beneficiario.id)
       .then((res) => {
         handleCloseFunc.handleClose()
@@ -320,7 +320,7 @@ const DeleteBeneficiarios = ({beneficiario, taskId, refetch}) => {
       })
       .catch((err) => {
         setErrorMsg("Error al eliminar beneficiario")
-      })
+      }).finally(() => setDisableButton(false))
     }
 
     return (  

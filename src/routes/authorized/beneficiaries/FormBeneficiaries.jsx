@@ -312,16 +312,15 @@ function FormBeneficiaries() {
   const [disableButton, setDisableButton] = React.useState(false);
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
 
-    const saveBeneficiarie = (values) => {
-        setDisableButton(true);
-        saveBeneficiariesAPI(user().token, values).then((res) => {
-          setSuccessMsg("Beneficiario añadido correctamente")
-          navigate('/ong/beneficiarios')
-        }).catch((err) => {
-          setErrorMsg("Error al añadir el beneficiario")
-        }).finally(() => setDisableButton(false));
-        
-    }
+  const saveBeneficiarie = (values) => {
+      setDisableButton(true);
+      saveBeneficiariesAPI(user().token, values).then((res) => {
+        setSuccessMsg("Beneficiario añadido correctamente")
+        navigate('/ong/beneficiarios')
+      }).catch((err) => {
+        setErrorMsg("Error al añadir el beneficiario")
+      }).finally(() => setDisableButton(false));
+  }
 
   return (
     <BodyWrapper>

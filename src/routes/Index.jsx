@@ -17,6 +17,7 @@ const drawerWidth = 200;
 export default function Index({ window } ) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const auth = useAuthUser()
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -28,7 +29,7 @@ export default function Index({ window } ) {
   const drawer = (
     <div>
       <Toolbar />
-      {auth().rol === "ONG" ? <Sidebar handleClose={handleClose}/> : <SidebarVoluntario handleClose={handleClose}/> }
+      {auth().rol === "ONG" ? <Sidebar handleClose={handleDrawerToggle}/> : <SidebarVoluntario handleClose={handleClose}/> }
     </div>
   );
 
@@ -40,7 +41,13 @@ export default function Index({ window } ) {
       <Box
             component="nav"
             sx={{ 
-              width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+              width: { 
+                sm: drawerWidth 
+                }, 
+                flexShrink: { 
+                  sm: 0 
+                  } 
+                }}>
             <Drawer
             container={container}
             variant="temporary"

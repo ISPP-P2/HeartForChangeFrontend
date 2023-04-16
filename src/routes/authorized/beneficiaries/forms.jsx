@@ -655,7 +655,6 @@ export const beneficiarie_Form = [
     .max(150, "debe tener menos de 150 caracteres")
     .required("Este campo es obligatorio"),
   },
-  
   {
     name: "savingsPossesion",
     type: FORM_TYPES.SELECT,

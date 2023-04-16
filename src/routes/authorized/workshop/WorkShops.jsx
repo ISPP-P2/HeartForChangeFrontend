@@ -102,7 +102,7 @@ function WorkShops() {
 export default WorkShops;
 
 
-const ToolList = ({actividad, handleDelete, id}) => {
+const ToolList = ({actividad, handleDelete, id, disableButton}) => {
   const [handleCloseFunc, setHandleCloseFunc] = React.useState({});
 
   return (
@@ -112,7 +112,7 @@ const ToolList = ({actividad, handleDelete, id}) => {
       </CustomLink>
       <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>El actividad se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} isLoading={disableButton} text={"Eliminar"}  variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED}  text={<DeleteForeverIcon />}
         />
     </CustomFlex>

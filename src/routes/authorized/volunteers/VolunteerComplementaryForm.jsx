@@ -12,6 +12,7 @@ import ComplementaryFormationForm from './ComplementaryFormationForm';
 import AddIcon from '@mui/icons-material/Add';
 import { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import { CustomList } from '../../../static/user';
+import { ToolListComplemetaryInformation } from '../beneficiaries/BeneficiariesComplementaryInformation';
 function VolunteerComplementaryForm({id}) {
 
     const [hadleClose, setHadleClose] = React.useState({});
@@ -40,6 +41,20 @@ function VolunteerComplementaryForm({id}) {
 export default VolunteerComplementaryForm
 
 
+const ParseData = (data, query) => {
+
+  if(data === undefined || data === null){
+    return []
+  }
+  return data.map((item) => {
+      return {
+          ...item,
+          toollist: <ToolListComplemetaryInformation id={item.id} query={query} />
+      }
+  })
+}
+
+
 const ListData = ({id, query}) => {
    
   
@@ -51,23 +66,19 @@ const ListData = ({id, query}) => {
         return <CustomError onClick={()=> query.refetch()}/>
     }
 
-
-    if(query.data.length === 0){
-        return <CustomError onClick={()=> query.refetch()}/>
-    }
-    const BeneficiarieList = new CustomList(query.data.data)
+    const BeneficiarieList = new CustomList(ParseData(query.data.data, query))
     let objetoTabla = BeneficiarieList.parseToTableBasic(
-        ["Nombre","Organismo","Lugar", "Fecha"],
-        ["name","organization","place","date"]
+        ["Nombre","Organismo","Lugar", "Fecha", "Acciones"],
+        ["name","organization","place","date", "toollist"]
     )
 
     return (
         <BasicModal
-                       widthButton={"10rem"}
-                      variant={VARIANTES_BUTTON.ORANGE}
-                      text={"Formación Complementaria"}
-                      title={"Formación Complementaria"}
-                      body={<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />}
-                    />
+              widthButton={"10rem"}
+            variant={VARIANTES_BUTTON.ORANGE}
+            text={"Formación Complementaria"}
+            title={"Formación Complementaria"}
+            body={<BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} />}
+          />
     )
 }

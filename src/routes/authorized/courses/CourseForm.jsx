@@ -95,12 +95,11 @@ function CourseForm({query,handleClose}) {
             query.refetch()
             setSuccessMsg("Se ha añadido el taller correctamente")
             handleClose.handleClose()
-        })
-        .catch((error) => {
+        }).catch((error) => {
             setErrorMsg("Ha ocurrido un error al añadir el taller")
         }).finally(() => {
             setDisableButton(false)
-          })
+        })
     }
 
   return (
