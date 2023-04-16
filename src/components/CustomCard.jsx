@@ -27,7 +27,7 @@ function CustomCard({
         }}>
           <CardContent sx={{ 
             flex: '1 0 auto',
-            width: mobile ?  "10rem" : "20rem",
+            width: { xs: '20rem', sm: '14em', xl:'10rem'},
             flexDirection: 'column', 
             justifyItems: "center",
             textAlign: 'center', 

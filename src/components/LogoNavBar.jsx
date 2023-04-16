@@ -5,7 +5,7 @@ import { Box } from '@mui/system'
 
 function LogoNavBar({height = null}) {
   return (
-    <Box height={height} display={"flex"} alignItems={"center"} justifyItems={"center"} gap={'1rem'} marginTop={"1rem"}>
+    <Box height={height} display={"flex"} alignItems={"center"} justifyItems={"center"} gap={'0.6rem'} marginTop={"1rem"}>
       <img style={{ width: height === null ? "50%" : height }}  src={logo}></img>
       <Box height={height} display={"flex"} flexDirection={height === null ? "column" : "row"} alignItems={'center'}>
             <Typography sx={{fontFamily: "LOGOFONT", color: "white"}}>
