@@ -8,7 +8,10 @@ function LegalPage() {
   return (
     <BodyWrapper>
         <Box>
-        <div style={{fontFamily:"Arial", display:"flex",marginLeft:"6rem", marginRight:"6rem", flexDirection: "column", gap:"1rem"}}><h1>Términos y Condiciones de HeartForChange</h1>
+        <div style={{fontFamily:"Arial", 
+        display:"flex",
+        marginLeft:"4vw", marginRight:"4vw",
+        flexDirection: "column", gap:"1rem"}}><h1>Términos y Condiciones de HeartForChange</h1>
 
 Por favor, lea atentamente los siguientes términos y condiciones antes de utilizar la aplicación HeartForChange.
 

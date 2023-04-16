@@ -26,7 +26,7 @@ function LegalTerms({ window } ) {
         </AppBar>
 
         <Box >
-        <div style={{marginTop:"110px",marginLeft:"6rem", marginRight:"6rem", display:"flex", flexDirection:"column", gap:"1rem", fontFamily:"Arial"}}>
+        <div style={{marginTop:"110px",marginLeft:"4vw", marginRight:"4vw", display:"flex", flexDirection:"column", gap:"1rem", fontFamily:"Arial"}}>
           <h1>Términos y Condiciones de HeartForChange</h1>
 
 Por favor, lea atentamente los siguientes términos y condiciones antes de utilizar la aplicación HeartForChange.
