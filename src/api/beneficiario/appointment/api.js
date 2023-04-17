@@ -9,6 +9,11 @@ export const getAllAppoinmentsByBeneficiary = (token, id) => {
     return axiosWithToken(token).get(`/api/appointments/get/beneficiary/${id}`);
 }
 
+export const getBeneficiaryByAppointment = async (token, id) => {
+    const {data} = await axiosWithToken(token).get(`/api/appointments/get/${id}/beneficiary`);
+    return data
+}
+
 export const DeleteAppoinmentAPI = (token, id) => {
     return axiosWithToken(token).post(`/api/appointments/delete/${id}`);
 }
@@ -19,7 +24,3 @@ export const getAllAppointmentAPI  = async (token) => {
 }
 
 
-export const getBeneficiaryByAppointment = async (token, id) => {
-    const {data} = await axiosWithToken(token).get(`/api/appointments/get/${id}/beneficiary`);
-    return data
-}

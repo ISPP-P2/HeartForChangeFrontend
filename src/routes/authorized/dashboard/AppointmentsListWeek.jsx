@@ -23,9 +23,16 @@ export const AppointmentsListWeek = () => {
     const query = useQuery(["QUERY_APPOINTMENTS"],() => getAllAppointmentAPI(user().token),{
       retry: 2,
       onSuccess: (data) => {
+        console.log(data)
         setAppointment(data
               .filter((activity) => {
-                return moment(activity.date)
+                console.log(activity.date[0])
+                console.log(moment(activity.date))
+                console.log(moment(activity.date)
+                .isBetween(moment(), moment()
+                .add(7, 'days'), null, '[]'))
+
+                return moment(`${activity.date[0]}-${activity.date[1]}-${activity.date[2]} ${activity.hour}`)
                 .isBetween(moment(), moment()
                 .add(7, 'days'), null, '[]');
             }))
@@ -66,7 +73,7 @@ const ParseAppointment = (appointments) =>  {
         return {
             ...appointment,
             name: <BeneficiarioNombre appointmentId={appointment.id}/>,
-            date: moment(appointment.date).format("DD/MM/YYYY HH:mm"),
+            date: moment(`${appointment.date[0]}-${appointment.date[1]}-${appointment.date[2]} ${appointment.hour}`).format("DD/MM/YYYY HH:mm"),
             button: <ToolList appointmentId={appointment.id}/>
         }
     })

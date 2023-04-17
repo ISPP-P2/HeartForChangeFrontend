@@ -85,7 +85,7 @@ const ParseToTable = (data, query) => {
   return data.map((item) => {
     return {
       ...item,
-      date: moment(item.date).format("DD/MM/YYYY"),
+      date: moment(`${item.date[0]}-${item.date[1]}-${item.date[2]}`).format("DD/MM/YYYY"),
       toollist : <ToolList id={item.id} query={query}/>
     }
   })
