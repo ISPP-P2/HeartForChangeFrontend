@@ -23,15 +23,8 @@ export const AppointmentsListWeek = () => {
     const query = useQuery(["QUERY_APPOINTMENTS"],() => getAllAppointmentAPI(user().token),{
       retry: 2,
       onSuccess: (data) => {
-        console.log(data)
         setAppointment(data
               .filter((activity) => {
-                console.log(activity.date[0])
-                console.log(moment(activity.date))
-                console.log(moment(activity.date)
-                .isBetween(moment(), moment()
-                .add(7, 'days'), null, '[]'))
-
                 return moment(`${activity.date[0]}-${activity.date[1]}-${activity.date[2]} ${activity.hour}`)
                 .isBetween(moment(), moment()
                 .add(7, 'days'), null, '[]');
