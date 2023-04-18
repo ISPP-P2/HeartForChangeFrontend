@@ -17,5 +17,5 @@ export const PutComplementaryInformation = (token,data, id) => {
 }
 
 export const DeleteComplementaryInformation = (token,id) => {
-    return axiosWithToken(token).get(`/api/complementaryFormations/delete/${id}`);
+    return axiosWithToken(token).post(`/api/complementaryFormations/delete/${id}`);
 }

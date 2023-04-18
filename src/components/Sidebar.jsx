@@ -7,23 +7,35 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CustomFlex from './CustomFlex';
+import { useSignOut } from 'react-auth-kit';
+import LogoutIcon from '@mui/icons-material/Logout';
 import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 
 
 function Sidebar({handleClose}) {
+  
+
+  const signOut = useSignOut()
+  const navigate = useNavigate()
+  const logout = () => {
+    handleClose()
+    signOut()
+  }
+
   return (
     <>
       <List>
           <ButtonSideBoard text={"Página principal"} href={"/ong"} handleClose={handleClose} icon={<BubbleChartIcon sx={{color: 'white'}}/>}/>
           <SecondaryText text={"Registros"} />
           <ButtonSideBoard text={"Beneficiarios"} href={"/ong/beneficiarios"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
+          <ButtonSideBoard text={"Talleres"} href={"/ong/talleres"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
+          <ButtonSideBoard text={"Cursos"} href={"/ong/cursos"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Voluntarios"} href={"/ong/voluntarios"} handleClose={handleClose} icon={<PeopleAltIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Actividades"} href={"/ong/actividades"} handleClose={handleClose} icon={<FormatListBulletedIcon sx={{color: 'white'}}/>}/>
           <ButtonSideBoard text={"Subvenciones"} href={"/ong/subvenciones"} handleClose={handleClose} icon={<AttachMoneyIcon sx={{color: 'white'}}/>} />
           <SecondaryText text={"Utilidad"} />
           <ButtonSideBoard text={"Privacidad"} href={"/ong/privacidad"} handleClose={handleClose} icon={<PrivacyTipIcon sx={{color: 'white'}}/>} />
-
-
+          <ButtonSideBoard text={"Cerrar sesión"} href={"/"} handleClose={logout} icon={ <LogoutIcon sx={{color: 'white'}}/>} />
       </List>
     </>
   )
@@ -31,12 +43,20 @@ function Sidebar({handleClose}) {
 export default Sidebar
 
 export const  SidebarVoluntario = ({handleClose}) =>  {
+  const signOut = useSignOut()
+  const navigate = useNavigate()
+  const logout = () => {
+    handleClose()
+    signOut()
+  }
+
   return (
     <>
       <List>
           <ButtonSideBoard text={"Página principal"} href={"/vol"} handleClose={handleClose} icon={<BubbleChartIcon sx={{color: 'white'}}/>}/>
           <SecondaryText text={"Registros"} />
           <ButtonSideBoard text={"Mis actividades"} href={"/vol/activities"} handleClose={handleClose} icon={<FaceIcon sx={{color: 'white'}}/>}/>
+          <ButtonSideBoard text={"Cerrar sesión"} href={"/"} handleClose={logout} icon={ <LogoutIcon sx={{color: 'white'}}/>} />
       </List>
     </>
   )
@@ -73,15 +93,14 @@ export const ButtonSideBoard = ({text, icon, href, handleClose}) => {
           filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.1))",
           backgroundColor: location.pathname === href ? "#f28635" : null,
           "& .MuiTypography-root":{
-            fontSize: "0.95rem"
+            fontSize: "0.8rem"
           }
       }} disablePadding>
             <ListItemButton>
-                <ListItemIcon>
                    {icon}
-                </ListItemIcon>
                 <ListItemText primary={text} sx={{  
-                  fontSize: "1px"
+                  fontSize: "1px",
+                  marginLeft: '1vw',
                 }}/>
             </ListItemButton>
         </ListItem>

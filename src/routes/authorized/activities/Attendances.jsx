@@ -26,6 +26,7 @@ const ToolList = ({usuarioId}) => {
   const {id} = useParams("id");
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const user = useAuthUser();
+  const [disableButton, setDisableButton] = React.useState(false);
 
   const query = useQuery(["QUERY_PERSON_ATTENDANTE",id, usuarioId],() => getStateByVolunteerAndActivity(user().token, usuarioId, id),{
     retry: 2,
@@ -42,22 +43,28 @@ const ToolList = ({usuarioId}) => {
 
 
   const handleAccept = (id, handleClose) => {
+    setDisableButton(true)
     acceptAttendancesAPI(user().token, id).then(() => {
       handleClose.handleClose()
       query.refetch()
       setSuccessMsg("Solicitud aceptada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al aceptar la solicitud")
+    }).finally(() => {
+      setDisableButton(false)
     })
   }
 
   const handleDeny = (id, handleClose) => {
+    setDisableButton(true)
     denyAttendancesAPI(user().token, id).then(() => {
       handleClose.handleClose()
       query.refetch()
       setSuccessMsg("Solicitud rechazada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al rechazar la solicitud")
+    }).finally(() => {
+      setDisableButton(false)
     })
   }
   return (
@@ -68,18 +75,17 @@ const ToolList = ({usuarioId}) => {
       <CustomFlex justifyContent={"flex-start"} direction={"row"}>
       { query.data.state !== "ACEPTADA" ? <BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
           <Typography>La solicitud se aceptará</Typography>
-          <CustomButton onClick={()=>handleAccept(query.data.id, handleCloseFunc)} text={"Aceptar"}  variantButton={VARIANTES_BUTTON.GREEN} />
+          <CustomButton isLoading={disableButton} onClick={()=>handleAccept(query.data.id, handleCloseFunc)} text={"Aceptar"}  variantButton={VARIANTES_BUTTON.GREEN} />
           </Box>} variant={VARIANTES_BUTTON.GREEN }text={<CheckIcon />}
           /> : null}
          { query.data.state !== "DENEGADA" ?<BasicModal  setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
           <Typography>La solicitud se rechazará</Typography>
-          <CustomButton onClick={()=>handleDeny(query.data.id, handleCloseFunc)} text={"Rechazar"}  variantButton={VARIANTES_BUTTON.RED} />
+          <CustomButton isLoading={disableButton} onClick={()=>handleDeny(query.data.id, handleCloseFunc)} text={"Rechazar"}  variantButton={VARIANTES_BUTTON.RED} />
           </Box>} variant={VARIANTES_BUTTON.RED}  text={<DeleteForeverIcon />}
           />: null}
       </CustomFlex>
     </CustomFlex>
 
-    
   )
 }
 
@@ -99,10 +105,13 @@ const AttendanceParser = (data) => {
 }
 
 function Attendances() {
-    const {id} = useParams("id");
+    const {id} = useParams();
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-    const attendances = useQuery(["QUERY_ACTIVITY_ATTENDANCES",id],() => getVolunteersByActivityAPI(user().token,id));
+    const attendances = useQuery(["QUERY_ACTIVITY_ATTENDANCES",id],() => getVolunteersByActivityAPI(user().token,id),{
+      retry: 2,
+      refetchOnWindowFocus: false,
+    });
   
 
     const ActivityList = new CustomList(AttendanceParser(attendances.data))
@@ -112,9 +121,16 @@ function Attendances() {
     ["Nombre","Primer Apellido", "Segundo Apellido"],
     ["name", "firstSurname","secondSurname"])
 
+    if(attendances.isLoading){
+      return <CustomReloading />
+    }
+
+    if(attendances.isError){
+      return <CustomError onClick={()=> attendances.refetch()}/>
+    }
       
     return (
-      <BodyWrapper title={`Aceptar Solicitudes ${id}`}>
+      <BodyWrapper title={`Aceptar Solicitudes`}>
         <CustomFlex direction={"column"}>
           <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
         </CustomFlex>

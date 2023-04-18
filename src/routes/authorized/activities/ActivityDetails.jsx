@@ -4,7 +4,7 @@ import BasicTable from '../../../components/BasicTable';
 import CustomCard from '../../../components/CustomCard';
 import CustomFlex from '../../../components/CustomFlex';
 import { CustomList } from '../../../static/user';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -27,6 +27,9 @@ import { getActivityAPI, getVolunteersAcceptedByActivityAPI, getVolunteersByActi
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import { BasicSelectAttendance } from '../workshop/WorkShopDetails';
+import { getAllAttendancesByTaskId } from '../../../api/beneficiario/workshop';
+import moment from 'moment';
 
 const form = [
     {
@@ -102,32 +105,53 @@ const ToolList = ({usuario, id}) => {
       </CustomLink>
     </CustomFlex>
   )
+}
+
   
-  }
   
 
   
-  const VoluntarioParser = (data) => {
-    if(data!==undefined&&data.length!==0){
-      return data.map((volunteer) => {
-          return {
-            ...volunteer,
-            gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
-            button:<ToolList usuario={volunteer} id={volunteer.id}/>,
-          }; 
-      });
-    }
-    return [];
+const VoluntarioParser = (data, attendances) => {
+  if(data!==undefined&&data.length!==0){
+    return data.map((volunteer) => {
+        return {
+          ...volunteer,
+          gender: volunteer.gender === "MALE" ? "Hombre" : "Mujer",
+          button:<ToolList usuario={volunteer} id={volunteer.id}/>,
+          state: <BasicSelectAttendance attendance={attendances.find((value)  => value.personId === volunteer.id)} />
+        }; 
+    });
   }
+  return [];
+
+
+}
+
+
+
+
 
 function ActivityDetails() {
   const [readOnlyValue, toggleReadOnly] = useState(true)
   const { id } = useParams()
+  const navigate = useNavigate();
   const user = useAuthUser();
   const mobile = useMediaQuery('(min-width:1200px)');
   const query = useQuery(["QUERY_ACTIVITY_DETAILS",id],() => getActivityAPI(user().token,id));
-  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
+  const [attendances, setAttendances] = useState([])
+  const [disableButton, setDisableButton] = useState(false);
+  const volunteers = useQuery(["QUERY_ACTIVITY_VOLUNTEERS",id],() => getVolunteersAcceptedByActivityAPI(user().token,id));
+
+  const queryAttendaces = useQuery(["QUERY_WORKSHOP_ATTENDANCES", id], () => getAllAttendancesByTaskId(user().token, id),{
+    retry: 2,
+    onSuccess: (data) => {
+      setAttendances(data)
+    },
+    refetchOnWindowFocus: false,
+  });
+
+
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -137,41 +161,53 @@ function ActivityDetails() {
   }
 
   const updateActivity = (values) => {
-    updateActivityAPI(user().token, values, id).then((res) => {
+    setDisableButton(true)
+    const values2 = {...values, date: moment(values.date).format("YYYY-MM-DD HH:mm:ss")}
+    updateActivityAPI(user().token, values2, id)
+    .then((res) => {
       toggleReadOnly(!readOnlyValue);
       query.refetch();
       setSuccessMsg("Actividad actualizada correctamente")
     }).catch((err) => {
       setErrorMsg("Ha ocurrido un error al actualizar la actividad")
+    }).finally(() => {
+      setDisableButton(false)
     })
    
   }
 
-  const VolunteerList = new CustomList(VoluntarioParser(volunteers.data))
+  if(query.data.type !== "ACTIVIDAD"){
+    query.remove()
+    setErrorMsg("Error al cargar")
+    navigate("/ong/actividades")
+  }
+
+
+  const VolunteerList = new CustomList(VoluntarioParser(volunteers.data, attendances))
   let objetoTabla = VolunteerList.parseToTable(
-    ["Nombre de usuario","Género", "Email","Herramientas"], 
-    ["username", "gender","email", "button"],
+    ["Nombre de usuario","Género", "Email", "Estado", "Herramientas"], 
+    ["username", "gender","email","state","button"],
     ["Nombre","Primer Apellido", "Segundo Apellido"],
     ["name", "firstSurname","secondSurname"]
   )
   
   return (
-    <BodyWrapper title={`Detalles de la actividad ${id}`} >
+    <BodyWrapper title={`Detalles de la actividad`} >
     <CustomFlex direction={"column"}>
-      <Typography fontWeight={600} color='#999'>Ayudanos a salvar a los lemures rojos</Typography>
       <CustomFlex direction={mobile ? "column" : "row"}>
         <Grid
         display={"grid"}
         gap={"1rem"}
         gridTemplateColumns={mobile ? "1fr 1fr":"1fr"}
         gridTemplateRows={mobile ? "100%":"1fr"}> 
-        <BasicFrom 
+         <BasicFrom
+         isLoading={disableButton} 
         form={parseActividad(query.data)}
         readOnly={readOnlyValue}
         buttonText={"Confirmar"}
         handleSubmitForm={updateActivity}
         showButton = {!readOnlyValue}
-        />     
+        /> 
           <Grid
               display={"grid"}
               gap={"1rem"}
@@ -180,7 +216,7 @@ function ActivityDetails() {
                 <CustomCard
                   title='Editar actividad'
                   iconD={<PeopleOutlineIcon color='disabled' />}
-                  buttonSidebar={<CustomButton text={"Editar"} 
+                  buttonSidebar={<CustomButton isLoading={disableButton} text={"Editar"} 
                   onClick={() => {toggleReadOnly(!readOnlyValue) }}  
                   iconD={<ArrowForwardIcon sx={{marginLeft: "2rem"}}/>} 
                   variantButton={VARIANTES_BUTTON.BLUE}/>}/> 

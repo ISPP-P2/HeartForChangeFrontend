@@ -1,6 +1,7 @@
 import { Button } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
+import CustomReloading from './CustomReloading'
 
 
 
@@ -15,17 +16,26 @@ function CustomButton({
     outline = false,
     show = true,
     height="auto",
+    isLoading = false,
     }) {
+    
     return (
-        <Box >
-            <Button type={'button'} sx={{
-                 width: widthButton,
-                 height: heightButton,
+        <>
+            {  isLoading ? <CustomReloading /> : <Box  sx={{display: "flex", justifyContent:"center", alignItems:"center"}}> 
+            <Button type={'button'} 
+            sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row",
+                width: widthButton,
+                height: heightButton,
+                minWidth: "0",
+                minHeight: "0",
                 backgroundColor: variantButton + "!important",
                 "&:hover": {
                     opacity: 0.85
                 },
-                display: show ? 'block':'none',
+                display: show ? 'flex':'none',
             }}
             onClick={onClick} 
             variant="contained"
@@ -33,7 +43,9 @@ function CustomButton({
                 {text}
                 {iconD}
             </Button>
-        </Box>
+        </Box>}
+        </>
+      
         
     )
 }

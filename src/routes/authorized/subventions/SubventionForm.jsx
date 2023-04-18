@@ -90,8 +90,10 @@ export const form = [
 function SubventionForm({handleClose, query}) {
     const user = useAuthUser();
     const {setSuccessMsg,setErrorMsg} = useContext(CustomNotistackContext)
-    
+    const [disableButton, setDisableButton] = React.useState(false)
+
     const saveSubvention = (values) => {
+        setDisableButton(true)
         saveSubventionAPI(user().token, values).then(
             (res) => {
                 handleClose.handleClose()
@@ -102,11 +104,13 @@ function SubventionForm({handleClose, query}) {
             (err) => {
                 setErrorMsg("Ha ocurrido un error")
             }
-        )
+        ).finally(() => {
+            setDisableButton(false)
+          })
     }
 
     return (
-        <BasicFrom form={form} buttonText={"añadir"} handleSubmitForm={saveSubvention} />
+        <BasicFrom isLoading={disableButton} form={form} buttonText={"añadir"} handleSubmitForm={saveSubvention} />
     )
 }
 

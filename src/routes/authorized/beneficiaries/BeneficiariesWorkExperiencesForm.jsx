@@ -1,13 +1,13 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 import BasicFrom from '../../../components/BasicFrom'
 import BasicModal from '../../../components/BasicModal'
-import { VARIANTES_BUTTON } from '../../../components/CustomButton'
+import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton'
 import CustomFlex from '../../../components/CustomFlex'
 import WorkExperienceForm from '../volunteers/WorkExperienceForm'
 import { extraForm, extraForm2 } from './BeneficiariesDetails'
 import AddIcon from '@mui/icons-material/Add';
-import { GetWorkExperienceBeneficiary } from '../../../api/complementaryInformation/workExperience'
+import { DeleteWorkExperience, GetWorkExperienceBeneficiary } from '../../../api/complementaryInformation/workExperience'
 import { useQuery } from 'react-query'
 import CustomReloading from '../../../components/CustomReloading'
 import CustomError from '../../../components/CustomError'
@@ -15,7 +15,9 @@ import { useAuthUser } from 'react-auth-kit'
 import BasicTable from '../../../components/BasicTable'
 import { CustomList } from '../../../static/user'
 import BasicTableNoDescription from '../../../components/BasicTableNoDescription'
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useContext } from 'react'
+import { CustomNotistackContext } from '../../../context/CustomNotistack'
 
 
 
@@ -26,7 +28,6 @@ function BeneficiariesWorkExperiencesForm({id}) {
     retry: 2,
     refetchOnWindowFocus: false,
   });
-
 
   return (
     <CustomFlex direction={"row"} >
@@ -47,6 +48,47 @@ function BeneficiariesWorkExperiencesForm({id}) {
 export default BeneficiariesWorkExperiencesForm
 
 
+export const ToolListWorkExperience = ({id, query}) => {
+
+  const [handleClose, setHandleClose] = React.useState({});
+  const user = useAuthUser();
+  const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
+  const [disableButton, setDisableButton] = React.useState(false)
+  const handleDelete = () => {
+    setDisableButton(true)
+    DeleteWorkExperience(user().token, id)
+    .then(() => {
+      handleClose.handleClose()
+      query.refetch()
+      setSuccessMsg("Experiencia laboral eliminada correctamente")
+    }).catch((err) => {
+      setErrorMsg("Error al eliminar la experiencia laboral")
+    }).finally(() => setDisableButton(false))
+  }
+
+  return (
+    <BasicModal
+          widthButton={"10rem"}
+          variant={VARIANTES_BUTTON.RED}
+          setHandleCloseButton={setHandleClose}
+          text={<DeleteIcon />}
+          title={"¿Estás seguro?"}
+          body={<CustomFlex direction={"column"}>
+                <Typography>Seguro que estas seguro de eliminar esta experiencia académica?</Typography>
+                <CustomButton onClick={handleDelete} isLoading={disableButton} variantButton={VARIANTES_BUTTON.RED} text={"Eliminar"}/>
+            </CustomFlex>}
+      />)
+}
+
+const ParseToTable = (data, query) => {
+  return data.map((item) => {
+    return {
+      ...item,
+      toollist : <ToolListWorkExperience id={item.id} query={query}/>
+    }
+  })
+}
+
 
 const ListData = ({id, query}) => {
   
@@ -64,8 +106,11 @@ const ListData = ({id, query}) => {
     return <CustomError onClick={()=> query.refetch()}/>
   }
 
-  const BeneficiarieList = new CustomList(query.data.data)
-  let objetoTabla = BeneficiarieList.parseToTableBasic(["Trabajo", "Lugar","Tiempo","Razon"], ["job","place","time","reasonToFinish"])
+  const BeneficiarieList = new CustomList(ParseToTable(query.data.data, query))
+  let objetoTabla = BeneficiarieList.parseToTableBasic(
+    ["Trabajo", "Lugar","Tiempo","Razon", "Acciones"], 
+    ["job","place","time","reasonToFinish", "toollist"])
+
   return (
     <BasicModal
                         widthButton={"10rem"}

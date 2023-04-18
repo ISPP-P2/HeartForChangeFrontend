@@ -6,6 +6,8 @@ import CustomFlex from '../../../components/CustomFlex';
 import CustomLink from '../../../components/CustomLink';
 import BasicModal from '../../../components/BasicModal';
 import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import { Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomButton, { VARIANTES_BUTTON } from '../../../components/CustomButton';
@@ -61,30 +63,29 @@ const Listado = ({query}) => {
 
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
- 
+  const [disableButton, setDisableButton] = useState(false)
+
+
   const handleDelete = (id, handleClose) => {
+    setDisableButton(true)
     deleteSubvencioAPI(user().token, id).then(() => {
       handleClose.handleClose()
       query.refetch()
       setSuccessMsg("Subvención eliminada correctamente")
     }).catch((err) => {
       setErrorMsg("Error al eliminar la subvención")
-    })
+    }).finally(() => setDisableButton(false))
   }
 
 
   
 
-  if(query.data.length === 0){
-    return <Typography variant="h4" component="div" gutterBottom>
-            No hay subvenciones
-        </Typography>
-  }
 
-
-
-
-  const SubventionList = new CustomList(ParseSubvention(query.data, handleDelete))
+  const [filterValue, setFilterValue] = useState('');
+  const filteredData = query.data.filter((item) =>
+  item.justification.toLowerCase().includes(filterValue.toLowerCase())
+  );
+  const SubventionList = new CustomList(ParseSubvention(filteredData, handleDelete, disableButton))
   let objetoTabla = SubventionList.parseToTable(
     ["Nombre", "Gubernamental","Estado","Privada/Pública","Eliminar"], 
     ["justification", "gubernamental", "state","privateGrant","button"],
@@ -93,19 +94,37 @@ const Listado = ({query}) => {
     )
 
     return (
+      <Box display={"flex"} flexDirection={"column"} gap={'1rem'}>
+      <Box>
+            <TextField
+          id="input-with-icon-textfield"
+          label="Nombre de la subvención"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"  
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+        />
+      </Box>
         <BasicTable objetoTabla = {objetoTabla}  maxHeight={"80vh"} maxWidth={"85vw"} ></BasicTable>
+        </Box>
     )
 
 }
 
-const ParseSubvention = (subvencions, handleDelete) => {
+const ParseSubvention = (subvencions, handleDelete, disableButton) => {
   return subvencions.map((subvencion) => {
     return {
       ...subvencion,
       gubernamental: subvencion.gubernamental ? "Sí" : "No",
       state: StateParser(subvencion.state),
       privateGrant: subvencion.privateGrant ? "Privada" : "Pública",
-      button: <ToolList subvencion={subvencion} handleDelete={handleDelete} id={subvencion.id}/>,
+      button: <ToolList subvencion={subvencion} handleDelete={handleDelete} disableButton={disableButton} id={subvencion.id}/>,
     };
   });
 }
@@ -127,7 +146,7 @@ const StateParser = (state) => {
 }
 
 
-const ToolList = ({subvencion, handleDelete, id}) => {
+const ToolList = ({subvencion, handleDelete, id, disableButton}) => {
   const [handleCloseFunc, setHandleCloseFunc] = useState({});
 
   return (
@@ -135,7 +154,7 @@ const ToolList = ({subvencion, handleDelete, id}) => {
       <CustomLink to={`/ong/subvencion/${subvencion.id}`}><SearchIcon /></CustomLink>
       <BasicModal setHandleCloseButton={setHandleCloseFunc} title={"¿Estás seguro?"} heightButton={"2.25rem"} body={<Box>
         <Typography>La subvención se eliminará permanentemente</Typography>
-        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
+        <CustomButton onClick={()=>handleDelete(id, handleCloseFunc)} isLoading={disableButton} text={"Eliminar"} variantButton={VARIANTES_BUTTON.RED} />
         </Box>} variant={VARIANTES_BUTTON.RED} text={<DeleteForeverIcon />}/>
     </CustomFlex>
   )

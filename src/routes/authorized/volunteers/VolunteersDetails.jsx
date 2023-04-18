@@ -25,6 +25,9 @@ import VolunteerComplementaryForm from "./VolunteerComplementaryForm";
 import VolunteerWorkForm from "./VolunteerWorkForm";
 import ActivityListByVolunteer from "./ActivityListByVolunteer";
 import { CustomNotistackContext } from "../../../context/CustomNotistack";
+import CustomReloading from "../../../components/CustomReloading";
+import CustomError from "../../../components/CustomError";
+import moment from "moment";
 
 
 let voluntarioForm = [
@@ -162,11 +165,18 @@ let voluntarioForm = [
 ];
 
 
+const parseDates = (voluntario) => {
+  return {
+    ...voluntario,
+    birthday: moment(`${voluntario.birthday[0]}-${voluntario.birthday[1]}-${voluntario.birthday[2]}`).format("yyyy-MM-DD"),
+    entryDate: moment(`${voluntario.entryDate[0]}-${voluntario.entryDate[1]}-${voluntario.entryDate[2]}`).format("yyyy-MM-DD"),
+    leavingDate: moment(`${voluntario.leavingDate[0]}-${voluntario.leavingDate[1]}-${voluntario.leavingDate[2]}`).format("yyyy-MM-DD")
+}};
 
 
 const VolunteerDetailsParser = (voluntario) => {
   return voluntarioForm.map((item) => {
-    return { ...item, value: voluntario[item.name] };
+    return { ...item, value: parseDates(voluntario)[item.name] };
   });
 }
 
@@ -188,19 +198,18 @@ function VolunteerDetails({ match }) {
   const { id } = useParams();
   const user = useAuthUser();
   const voluntario = useQuery(["QUERY_VOLUNTEER", id],() => getVolunteerAPI(user().token,id));
+  const [disableButton, setDisableButton] = React.useState(false);
+
   if(voluntario.isLoading){
-    return <Typography variant="h4" component="div" gutterBottom>
-            Cargando...
-        </Typography>
+    return <CustomReloading />
   }
 
   if(voluntario.isError){
-    return <Typography variant="h4" component="div" gutterBottom>
-           {query.error}
-        </Typography>
+    return <CustomError onClick={()=> voluntario.refetch()}/>
   }
   
   const updateVolunteer = (values) => {
+    setDisableButton(true);
     updateVolunteersAPI(user().token, values, id).then(
       (response) => {
         toggleReadOnly(!readOnlyValue);
@@ -208,7 +217,7 @@ function VolunteerDetails({ match }) {
         setSuccessMsg("Voluntario actualizado correctamente")
       }).catch((error) => {
           setErrorMsg("Error al actualizar el voluntario")
-      });
+      }).finally(() => setDisableButton(false));
   }
 
 
@@ -250,6 +259,7 @@ function VolunteerDetails({ match }) {
               readOnly={readOnlyValue}
               buttonText={"Confirmar"}
               width={"100%"}
+              isLoading={disableButton}
               handleSubmitForm={updateVolunteer}
               showButton = {!readOnlyValue}
             /> : null}

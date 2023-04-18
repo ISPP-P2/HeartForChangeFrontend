@@ -28,3 +28,8 @@ export const getTotalBeneficiariesAPI = async (token) => {
     const {data} = await axiosWithToken(token).get(`/api/beneficiaries/total`)
     return data
 }
+
+export const updateTypeOfAttendanceById = async (token, id, type) => {
+    const {data} = await axiosWithToken(token).put(`/api/attendances/confirm/${id}/${type}`)
+    return data
+}

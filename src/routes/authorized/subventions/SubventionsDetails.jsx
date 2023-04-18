@@ -18,6 +18,7 @@ import { form } from './SubventionForm'
 import { getSubventionAPI, updateSubventionAPI } from '../../../api/subvenciones/api';
 import CustomReloading from "../../../components/CustomReloading";
 import CustomError from "../../../components/CustomError";
+import { CustomNotistackContext } from "../../../context/CustomNotistack";
 
 
 
@@ -29,11 +30,14 @@ const parseSubvention = (subvention) => {
 }
 
 function SubventionsDetails() {
+  const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const [readOnlyValue, toggleReadOnly] = useState(true)
   const user = useAuthUser();
   const { id } = useParams();
   const query = useQuery(["QUERY_SUBVENTIONS_DETAILS", id],() => getSubventionAPI(user().token,id));
   const mobile = useMediaQuery("(min-width: 850px)");
+
+  const [disableButton, setDisableButton] = useState(false)
 
   if(query.isLoading){
     return <CustomReloading />
@@ -44,8 +48,19 @@ function SubventionsDetails() {
   }
 
   const updateSubvention = (values) => {
+    setDisableButton(true)
     updateSubventionAPI(user().token, values, id)
-    toggleReadOnly(!readOnlyValue);
+    .then((res) => {
+      setSuccessMsg("Subvención actualizada correctamente")
+      query.refetch()
+    })
+    .catch((err) => {
+      setErrorMsg("Error al actualizar la subvención")
+    }).finally
+    (() => {
+      setDisableButton(false)
+      toggleReadOnly(!readOnlyValue);
+    })
   }
 
   return (
@@ -72,6 +87,7 @@ function SubventionsDetails() {
                 readOnly={readOnlyValue}
                 buttonText={"Confirmar"}
                 width={"100%"}
+                isLoading={disableButton}
                 handleSubmitForm={updateSubvention}
                 showButton = {!readOnlyValue}
               /> : null}

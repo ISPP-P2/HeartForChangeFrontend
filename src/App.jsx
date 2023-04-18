@@ -9,6 +9,8 @@ import { lazy } from "react";
 
 const Index = lazy(() => import('./routes/Index'))
 const SignIn = lazy(() => import('./routes/login/SignIn'))
+const Register = lazy(() => import('./routes/login/Register'))
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
                         <Index  />
                     </CustomSecurePath>}/>	
                 <Route path={'/'} element={<SignIn  />} />
+                <Route path={'/admin/register'} element={<Register  />} />
           </Route>
           <Route path={'/privacidad'} element={<LegalTerms/>}></Route>
       </Routes>

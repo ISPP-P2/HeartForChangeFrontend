@@ -12,11 +12,9 @@ function CustomCardMini({
 
   return (  
     <Card sx={{
-      width: "20em",
+      width:  { xs: '20rem', lg: '24em', xl:'20em'},
       height: "min-content",
       filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.3))",
-     
-    
     }}>
       <Box sx={{ 
         padding: "0.75rem",
@@ -26,34 +24,28 @@ function CustomCardMini({
         justifyContent: "space-between", 
         gap: "1rem"
         }}>
-        <Box sx={{ display: 'flex',
-         flexDirection: 'column', 
-         textAlign: 'center', 
-         gap: "1rem",
-         alignItems: "end"
-         }}>
-          <CardContent sx={{ flex: '1 0 auto' }}>
-            <Box sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              flexDirection: "column",
-            }}>
-            <Typography component="div" fontSize={"1rem"} fontWeight={550} color={"#5C5C5C"} >
-              {title}
-            </Typography>
-            <Typography component="div" fontSize={"1.75rem"} fontWeight={550}>
-              {totalNumber}
-            </Typography>
-            </Box>
-          </CardContent>  
-        </Box>
+       
+        <CardContent sx={{ flex: '1 0 auto' }}>
+          <Box sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            flexDirection: "column",
+          }}>
+          <Typography component="div" fontSize={"1rem"} fontWeight={550} color={"#5C5C5C"} >
+            {title}
+          </Typography>
+          <Typography component="div" fontSize={"1.75rem"} fontWeight={550}>
+            {totalNumber}
+          </Typography>
+          </Box>
+        </CardContent>  
         <Box  sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           "& .MuiSvgIcon-root": {
-            width: mobile ? "3rem" : "0rem",
-            height:  mobile ? "3rem" : "0rem",
+            width:  "3rem",
+            height:  "3rem",
           }
         }}>
             {iconD}

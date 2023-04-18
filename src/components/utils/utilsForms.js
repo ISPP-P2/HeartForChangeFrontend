@@ -9,7 +9,8 @@ export const FORM_TYPES ={
     ONLYDATE: 'date',
     CHECKBOX: 'checkbox',
     NUMBER: 'number',
-
+    TIME: 'time',
+    PASSWORD : 'password',
 }
 
 

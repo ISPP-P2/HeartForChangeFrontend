@@ -79,7 +79,7 @@ const form = [
   {
     name: "birthday",
     type: FORM_TYPES.ONLYDATE,
-    label: "Fecha de cumpleaños",
+    label: "Fecha de nacimiento",
     validation: Yup.date()
     .max(new Date(), "La fecha de nacimiento no puede ser en el futuro")
     .required("Este campo es obligatorio"),
@@ -209,10 +209,14 @@ function FormVolunteers() {
   const [password, setPassword] = React.useState('');
   const [usuario, setUsuario] = React.useState('');
 
+  const [disableButton, setDisableButton] = React.useState(false);
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {};
 
   const saveVolunteer = (values) => {
+      setDisableButton(true)
       const passwordAux = random(8, 'upper')
       setPassword(passwordAux)
       const values2 = {
@@ -229,7 +233,9 @@ function FormVolunteers() {
           (error) => {
               setErrorMsg("Error al añadir el voluntario")
           }
-      )
+      ).finally(() => {
+        setDisableButton(false)
+      })
   }
 
 
@@ -239,6 +245,7 @@ function FormVolunteers() {
   return (
     <BodyWrapper>
         <BasicFrom 
+            isLoading={disableButton}
             buttonText={"Añadir"}
             form={form}
             handleSubmitForm={saveVolunteer}

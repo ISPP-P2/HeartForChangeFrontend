@@ -59,8 +59,9 @@ const form = [
 function AcademicExperienceForm({id, handleClose, refetch}) {
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
     const auth = useAuthUser()
-
+    const [disableButton, setDisableButton] = React.useState(false)
     const handleSubmitForm = (values) => {
+        setDisableButton(true)
         PostAcademixExperience(auth().token, values, id).then(
             (response) => {
                 setSuccessMsg("Se ha añadido la experiencia académica")
@@ -71,11 +72,14 @@ function AcademicExperienceForm({id, handleClose, refetch}) {
             (error) => {
                 setErrorMsg("Ha ocurrido un error")
             }
-        );
+        ).finally(() => {
+            setDisableButton(false)
+        });
     }
 
   return (
         <BasicFrom 
+        isLoading={disableButton}
         form={form} 
         buttonText={"añadir"}
         handleSubmitForm={handleSubmitForm}

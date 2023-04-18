@@ -28,7 +28,8 @@ function BasicFrom({
   width = "-webkit-fill-available",
   buttonText = null,
   readOnly = false,
-  showButton = true
+  showButton = true,
+  isLoading=false,
 }) {
   if (form == null || handleSubmitForm == null) {
     <div>Loading form...</div>;
@@ -84,6 +85,7 @@ function BasicFrom({
             {buttonText === null ?  null : 
             <Box gridColumn={"-2/-1"} display={"flex"} alignItems={"flex-end"} justifyContent={"center"}>
                 <CustomButton 
+                isLoading={isLoading}
                 onClick={handleSubmit} 
                 text={buttonText} 
                 show={showButton}
@@ -98,7 +100,12 @@ function BasicFrom({
 }
 
 const CustomInput = (props) => {
-  if (props.type == FORM_TYPES.TEXT || props.type == FORM_TYPES.ONLYDATE   || props.type == FORM_TYPES.NUMBER || props.type == FORM_TYPES.DATE) {
+  if (props.type == FORM_TYPES.TEXT 
+    || props.type == FORM_TYPES.ONLYDATE   
+    || props.type == FORM_TYPES.NUMBER || 
+    props.type == FORM_TYPES.DATE || 
+    props.type == FORM_TYPES.TIME ||
+    props.type == FORM_TYPES.PASSWORD) {
     return (
       <TextField
         type={props.type}
