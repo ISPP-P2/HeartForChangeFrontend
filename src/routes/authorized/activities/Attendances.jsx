@@ -27,6 +27,7 @@ const ToolList = ({usuarioId}) => {
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
   const user = useAuthUser();
   const [disableButton, setDisableButton] = React.useState(false);
+
   const query = useQuery(["QUERY_PERSON_ATTENDANTE",id, usuarioId],() => getStateByVolunteerAndActivity(user().token, usuarioId, id),{
     retry: 2,
     refetchOnWindowFocus: false,
@@ -85,7 +86,6 @@ const ToolList = ({usuarioId}) => {
       </CustomFlex>
     </CustomFlex>
 
-    
   )
 }
 
@@ -105,10 +105,13 @@ const AttendanceParser = (data) => {
 }
 
 function Attendances() {
-    const {id} = useParams("id");
+    const {id} = useParams();
     const user = useAuthUser();
     const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-    const attendances = useQuery(["QUERY_ACTIVITY_ATTENDANCES",id],() => getVolunteersByActivityAPI(user().token,id));
+    const attendances = useQuery(["QUERY_ACTIVITY_ATTENDANCES",id],() => getVolunteersByActivityAPI(user().token,id),{
+      retry: 2,
+      refetchOnWindowFocus: false,
+    });
   
 
     const ActivityList = new CustomList(AttendanceParser(attendances.data))
@@ -118,9 +121,16 @@ function Attendances() {
     ["Nombre","Primer Apellido", "Segundo Apellido"],
     ["name", "firstSurname","secondSurname"])
 
+    if(attendances.isLoading){
+      return <CustomReloading />
+    }
+
+    if(attendances.isError){
+      return <CustomError onClick={()=> attendances.refetch()}/>
+    }
       
     return (
-      <BodyWrapper title={`Aceptar Solicitudes ${id}`}>
+      <BodyWrapper title={`Aceptar Solicitudes`}>
         <CustomFlex direction={"column"}>
           <BasicTable objetoTabla = {objetoTabla}  maxHeight={"60vh"}></BasicTable>
         </CustomFlex>

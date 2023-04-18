@@ -23,7 +23,6 @@ export const AppointmentsListWeek = () => {
     const query = useQuery(["QUERY_APPOINTMENTS"],() => getAllAppointmentAPI(user().token),{
       retry: 2,
       onSuccess: (data) => {
-        console.log(data)
         setAppointment(data
               .filter((activity) => {
                 return moment(`${activity.date[0]}-${activity.date[1]}-${activity.date[2]} ${activity.hour}`)
@@ -33,8 +32,6 @@ export const AppointmentsListWeek = () => {
         },
       refetchOnWindowFocus: false,
     });
-
-
 
     if(query.isLoading || appointment === null){
       return <CustomReloading />

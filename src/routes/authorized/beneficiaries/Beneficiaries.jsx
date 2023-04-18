@@ -140,7 +140,6 @@ const ToolList = ({beneficiarie, handleDelete, id, disableButton}) => {
 
 const ParseBenficiario = (data, handleDelete, disableButton) => {
   return data.map((beneficiarie) => {
-    console.log(beneficiarie)
     return {
       ...beneficiarie,
       gender: beneficiarie.gender === "MALE" ? "Hombre" : "Mujer",

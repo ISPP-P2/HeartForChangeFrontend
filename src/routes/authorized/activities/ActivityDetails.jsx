@@ -192,7 +192,7 @@ function ActivityDetails() {
   )
   
   return (
-    <BodyWrapper title={`Detalles de la actividad ${id}`} >
+    <BodyWrapper title={`Detalles de la actividad`} >
     <CustomFlex direction={"column"}>
       <CustomFlex direction={mobile ? "column" : "row"}>
         <Grid

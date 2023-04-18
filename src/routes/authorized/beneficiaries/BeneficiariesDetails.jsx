@@ -43,7 +43,6 @@ const parseBenfeiciario = (beneficiario) => {
 
 
  const parseDates = (beneficiario) => {
-  console.log(beneficiario)
   return {
     ...beneficiario,
     birthday: moment(`${beneficiario.birthday[0]}-${beneficiario.birthday[1]}-${beneficiario.birthday[2]}`).format("yyyy-MM-DD"),
@@ -104,7 +103,6 @@ function BeneficiariesDetails() {
       }).finally(() => setDisableButton(false));
 
   }
-  console.log(parseBenfeiciario(query.data))
   return (
     
     <BodyWrapper  title={
