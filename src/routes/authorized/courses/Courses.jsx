@@ -69,7 +69,7 @@ function Courses() {
       <CustomFlex direction={"column"}>
           <CustomFlex direction={"row"}>
               <CustomCardMini
-                    title='Nº de talleres'
+                    title='Nº de cursos'
                     iconD={<BasicModal 
                       setHandleCloseButton={setHandleDeleteFunc} 
                       title={"Añadir taller"} 
@@ -78,21 +78,23 @@ function Courses() {
                       />}
                     totalNumber={query.data.length}/>
             </CustomFlex>
-            <Box>
-        <TextField
-          id="input-with-icon-textfield"
-          label="Nombre del curso"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="standard"
-          value={filterValue}
-          onChange={(e) => setFilterValue(e.target.value)}
-        />
+        <Box display={"flex"} flexDirection={"column"} gap={'1rem'}>
+          <Box>
+                <TextField
+                  id="input-with-icon-textfield"
+                  label="Nombre del curso"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="standard"
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                />
+            </Box>
          <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
          </Box>
         </CustomFlex> 

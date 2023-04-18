@@ -30,15 +30,30 @@ import BeneficiariesWorkExperiencesForm from "./BeneficiariesWorkExperiencesForm
 import { CustomNotistackContext } from "../../../context/CustomNotistack";
 import { useContext } from "react";
 import BeneficiariesAppointments from "./BeneficiariesAppointments";
+import moment from "moment";
 
 
 
 
 const parseBenfeiciario = (beneficiario) => {
   return beneficiarie_Form.map((item) => {
-    return { ...item, value: beneficiario[item.name] };
+    return { ...item, value: parseDates(beneficiario)[item.name] };
   });
 }
+
+
+ const parseDates = (beneficiario) => {
+  console.log(beneficiario)
+  return {
+    ...beneficiario,
+    birthday: moment(`${beneficiario.birthday[0]}-${beneficiario.birthday[1]}-${beneficiario.birthday[2]}`).format("yyyy-MM-DD"),
+    entryDate: moment(`${beneficiario.entryDate[0]}-${beneficiario.entryDate[1]}-${beneficiario.entryDate[2]}`).format("yyyy-MM-DD"),
+    arrivedDate: moment(`${beneficiario.arrivedDate[0]}-${beneficiario.arrivedDate[1]}-${beneficiario.arrivedDate[2]}`).format("yyyy-MM-DD"),
+    leavingDate: moment(`${beneficiario.leavingDate[0]}-${beneficiario.leavingDate[1]}-${beneficiario.leavingDate[2]}`).format("yyyy-MM-DD"),
+    dateTouristVisa: moment(`${beneficiario.dateTouristVisa[0]}-${beneficiario.dateTouristVisa[1]}-${beneficiario.dateTouristVisa[2]}`).format("yyyy-MM-DD"),
+}};
+
+
 export const extraForm2 = (title, variable) => {
    return { 
       name: "academicExperience",
@@ -66,6 +81,7 @@ function BeneficiariesDetails() {
   const mobile = useMediaQuery("(min-width: 850px)");
   const {setSuccessMsg, setErrorMsg} = useContext(CustomNotistackContext)
   const [disableButton, setDisableButton] = useState(false)
+
   if(query.isLoading){
     return <CustomReloading />
   }
@@ -88,7 +104,7 @@ function BeneficiariesDetails() {
       }).finally(() => setDisableButton(false));
 
   }
- 
+  console.log(parseBenfeiciario(query.data))
   return (
     
     <BodyWrapper  title={

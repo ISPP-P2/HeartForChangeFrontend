@@ -77,7 +77,8 @@ function WorkShops() {
                       />}
                     totalNumber={query.data.length}/>
             </CustomFlex>
-            <Box>
+      <Box display={"flex"} flexDirection={"column"} gap={'1rem'}>
+          <Box>
         <TextField
           id="input-with-icon-textfield"
           label="Nombre del taller"
@@ -92,6 +93,7 @@ function WorkShops() {
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
         />
+          </Box>
          <BasicTableNoDescription objetoTabla = {objetoTabla}  maxHeight={"60vh"} />
          </Box>
         </CustomFlex> 

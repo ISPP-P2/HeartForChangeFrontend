@@ -21,6 +21,7 @@ import BodyWrapper from '../../../components/BodyWrapper';
 import CustomReloading from '../../../components/CustomReloading';
 import CustomError from '../../../components/CustomError';
 import { CustomNotistackContext } from '../../../context/CustomNotistack';
+import moment from 'moment';
 
 
 
@@ -97,7 +98,7 @@ const Listado = ({data, query}) => {
     return (
         <Box display={"flex"} flexDirection={"column"} gap={'1rem'}>
           <Box>
-                <TextField
+              <TextField
               id="input-with-icon-textfield"
               label="Nombre del Beneficiario"
               InputProps={{
@@ -139,9 +140,11 @@ const ToolList = ({beneficiarie, handleDelete, id, disableButton}) => {
 
 const ParseBenficiario = (data, handleDelete, disableButton) => {
   return data.map((beneficiarie) => {
+    console.log(beneficiarie)
     return {
       ...beneficiarie,
       gender: beneficiarie.gender === "MALE" ? "Hombre" : "Mujer",
+      birthday: moment(`${beneficiarie.birthday[0]}-${beneficiarie.birthday[1]}-${beneficiarie.birthday[2]}`).format("DD/MM/YYYY"),
       button: <ToolList disableButton={disableButton} beneficiarie={beneficiarie} handleDelete={handleDelete} id={beneficiarie.id}/>,
     };
   });

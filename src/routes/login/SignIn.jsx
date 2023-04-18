@@ -175,11 +175,6 @@ return (
           </div>
           <Grid container>
             <Grid item >
-            <Link color="text.secondary" variant="h5" fontSize= "1em" href="/register" underline="none" sx={{"&:hover": {
-                    opacity: 0.70
-                }}}>
-            Crear Cuenta
-        </Link>
             </Grid>
           </Grid>
         </Box>

@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { VARIANTES_BUTTON } from '../../../components/CustomButton';
 import { CustomList } from '../../../static/user';
 import { ToolListComplemetaryInformation } from '../beneficiaries/BeneficiariesComplementaryInformation';
+import moment from 'moment';
 function VolunteerComplementaryForm({id}) {
 
     const [hadleClose, setHadleClose] = React.useState({});
@@ -49,6 +50,7 @@ const ParseData = (data, query) => {
   return data.map((item) => {
       return {
           ...item,
+          date: moment(`${item.date[0]}-${item.date[1]}-${item.date[2]}`).format("yyyy-MM-DD"),
           toollist: <ToolListComplemetaryInformation id={item.id} query={query} />
       }
   })

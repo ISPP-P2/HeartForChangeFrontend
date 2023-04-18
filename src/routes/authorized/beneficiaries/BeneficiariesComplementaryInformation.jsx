@@ -16,6 +16,7 @@ import { useContext } from 'react'
 import { CustomNotistackContext } from '../../../context/CustomNotistack'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Typography } from '@mui/material'
+import moment from 'moment'
 function BeneficiariesComplementaryInformation({id}) {
     
     const [handleClose, setHandleClose] = React.useState({});
@@ -82,9 +83,8 @@ const ParseToTable = (data, query) => {
   return data.map((item) => {
     return {
       ...item,
-      toollist : <ToolListComplemetaryInformation 
-      id={item.id} 
-      query={query}/>
+      date: moment(`${item.date[0]}-${item.date[1]}-${item.date[2]}`).format("yyyy-MM-DD"),
+      toollist : <ToolListComplemetaryInformation id={item.id}  query={query}/>
     }
   })
 }

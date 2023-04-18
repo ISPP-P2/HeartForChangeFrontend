@@ -20,6 +20,7 @@ export const DeleteAppoinmentAPI = (token, id) => {
 
 export const getAllAppointmentAPI  = async (token) => {
     const {data} = await axiosWithToken(token).get(`/api/appointments/get`);
+    
     return data
 }
 

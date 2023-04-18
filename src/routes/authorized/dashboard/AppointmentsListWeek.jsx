@@ -15,14 +15,15 @@ import SearchIcon from '@mui/icons-material/Search';
 
 
 
+
 export const AppointmentsListWeek = () => {
     const user = useAuthUser();
     const [appointment, setAppointment] = useState(null);
 
-
     const query = useQuery(["QUERY_APPOINTMENTS"],() => getAllAppointmentAPI(user().token),{
       retry: 2,
       onSuccess: (data) => {
+        console.log(data)
         setAppointment(data
               .filter((activity) => {
                 return moment(`${activity.date[0]}-${activity.date[1]}-${activity.date[2]} ${activity.hour}`)
