@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import CustomFlex from './CustomFlex'
-
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = (mobile) => {
     return {

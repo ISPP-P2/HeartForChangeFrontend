@@ -53,6 +53,7 @@ const form = [
         type: FORM_TYPES.DATE,
         label: "Fecha",
         validation: Yup.date()
+        .min(new Date(), "La fecha deber ser futura")
         .required("Este campo es obligatorio"),
     },
     {
