@@ -123,7 +123,11 @@ export default function Register() {
           signout()
           navigate('/')
     }).catch((error) => {
+        if(error.response.status === 436) {
+          setErrorMsg(error.response.data)
+        }else{
           setErrorMsg("Error al crear la cuenta");
+        }
     }).finally(() => {
       setDisableButton(false)
     })

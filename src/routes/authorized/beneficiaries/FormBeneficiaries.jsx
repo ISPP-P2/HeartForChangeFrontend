@@ -318,7 +318,12 @@ function FormBeneficiaries() {
         setSuccessMsg("Beneficiario añadido correctamente")
         navigate('/ong/beneficiarios')
       }).catch((err) => {
-        setErrorMsg("Error al añadir el beneficiario")
+        if(err.response.status === 436) {
+          setErrorMsg(err.response.data)
+        }else{
+          setErrorMsg("Error al añadir el beneficiario")
+        }
+
       }).finally(() => setDisableButton(false));
   }
 

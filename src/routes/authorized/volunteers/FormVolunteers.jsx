@@ -230,8 +230,12 @@ function FormVolunteers() {
               setSuccessMsg("Voluntario añadido correctamente")
           }
       ).catch(
-          (error) => {
+          (err) => {
+            if(err.response.status === 436) {
+              setErrorMsg(err.response.data)
+            }else{
               setErrorMsg("Error al añadir el voluntario")
+            }
           }
       ).finally(() => {
         setDisableButton(false)
