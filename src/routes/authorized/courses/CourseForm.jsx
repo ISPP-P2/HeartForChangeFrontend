@@ -49,8 +49,8 @@ export const Course_Form = [
          name: "date",
          type: FORM_TYPES.DATE,
          label: "Fecha",
-         validation: Yup.date("Deber ser una fecha"),
          validation: Yup.date()
+         .min(new Date(), "La fecha deber ser futura")
          .required("Este campo es obligatorio"),
      },
      {
@@ -71,7 +71,7 @@ export const Course_Form = [
          name: "numParticipants",
          type: FORM_TYPES.NUMBER,
          label: "Número de participantes",
-         validation: Yup.number().required("Este campo es obligatorio"),
+         validation: Yup.number("Deber ser una cadena de caracteres").min(0, "El número de participantes debe ser mayor o igual a 0"),
      },
      {
          name: "observations",
