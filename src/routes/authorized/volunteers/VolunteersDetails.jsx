@@ -168,9 +168,9 @@ let voluntarioForm = [
 const parseDates = (voluntario) => {
   return {
     ...voluntario,
-    birthday: moment(`${voluntario.birthday[0]}-${voluntario.birthday[1]}-${voluntario.birthday[2]}`).format("yyyy-MM-DD"),
-    entryDate: moment(`${voluntario.entryDate[0]}-${voluntario.entryDate[1]}-${voluntario.entryDate[2]}`).format("yyyy-MM-DD"),
-    leavingDate: moment(`${voluntario.leavingDate[0]}-${voluntario.leavingDate[1]}-${voluntario.leavingDate[2]}`).format("yyyy-MM-DD")
+    birthday: voluntario.birthday === null ? "" : moment(`${voluntario.birthday[0]}-${voluntario.birthday[1]}-${voluntario.birthday[2]}`).format("yyyy-MM-DD"),
+    entryDate: voluntario.entryDate === null ? "" : moment(`${voluntario.entryDate[0]}-${voluntario.entryDate[1]}-${voluntario.entryDate[2]}`).format("yyyy-MM-DD"),
+    leavingDate: voluntario.leavingDate === null ? "" : moment(`${voluntario.leavingDate[0]}-${voluntario.leavingDate[1]}-${voluntario.leavingDate[2]}`).format("yyyy-MM-DD")
 }};
 
 

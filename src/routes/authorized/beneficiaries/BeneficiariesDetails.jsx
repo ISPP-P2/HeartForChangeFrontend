@@ -43,13 +43,14 @@ const parseBenfeiciario = (beneficiario) => {
 
 
  const parseDates = (beneficiario) => {
+  console.log(beneficiario.leavingDate)
   return {
     ...beneficiario,
-    birthday: moment(`${beneficiario.birthday[0]}-${beneficiario.birthday[1]}-${beneficiario.birthday[2]}`).format("yyyy-MM-DD"),
-    entryDate: moment(`${beneficiario.entryDate[0]}-${beneficiario.entryDate[1]}-${beneficiario.entryDate[2]}`).format("yyyy-MM-DD"),
-    arrivedDate: moment(`${beneficiario.arrivedDate[0]}-${beneficiario.arrivedDate[1]}-${beneficiario.arrivedDate[2]}`).format("yyyy-MM-DD"),
-    leavingDate: moment(`${beneficiario.leavingDate[0]}-${beneficiario.leavingDate[1]}-${beneficiario.leavingDate[2]}`).format("yyyy-MM-DD"),
-    dateTouristVisa: moment(`${beneficiario.dateTouristVisa[0]}-${beneficiario.dateTouristVisa[1]}-${beneficiario.dateTouristVisa[2]}`).format("yyyy-MM-DD"),
+    birthday: beneficiario.birthday === null ? "" :  moment(`${beneficiario.birthday[0]}-${beneficiario.birthday[1]}-${beneficiario.birthday[2]}`).format("yyyy-MM-DD"),
+    entryDate: beneficiario.entryDate === null ? "" :  moment(`${beneficiario.entryDate[0]}-${beneficiario.entryDate[1]}-${beneficiario.entryDate[2]}`).format("yyyy-MM-DD"),
+    arrivedDate: beneficiario.arrivedDate === null ?  "" : moment(`${beneficiario.arrivedDate[0]}-${beneficiario.arrivedDate[1]}-${beneficiario.arrivedDate[2]}`).format("yyyy-MM-DD"),
+    leavingDate: beneficiario.leavingDate === null ? "" : moment(`${beneficiario.leavingDate[0]}-${beneficiario.leavingDate[1]}-${beneficiario.leavingDate[2]}`).format("yyyy-MM-DD"),
+    dateTouristVisa: beneficiario.dateTouristVisa === null ? "" : moment(`${beneficiario.dateTouristVisa[0]}-${beneficiario.dateTouristVisa[1]}-${beneficiario.dateTouristVisa[2]}`).format("yyyy-MM-DD"),
 }};
 
 
