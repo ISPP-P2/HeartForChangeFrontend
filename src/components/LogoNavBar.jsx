@@ -1,4 +1,4 @@
-import logo from '../static/logo2.png'
+import logo from '../static/logoblanco.png'
 import font from '../static/fonts/NewYork.otf'
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'

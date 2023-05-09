@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import {Box} from '@mui/material';
-import logo from '../../static/logo.png'
+import logo from '../../static/logosinfondo.png'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
@@ -117,7 +117,7 @@ return (
         }}
       >
         <div  style={{ display: 'flex',justifyContent:'center' }}>
-          <img style={{ maxWidth: '50%' }}  src={logo}   ></img>
+          <img style={{ maxWidth: '20%' }}  src={logo}   ></img>
         </div>
         <Typography component="h1" variant="h5" color="#686868">
           Iniciar sesión
