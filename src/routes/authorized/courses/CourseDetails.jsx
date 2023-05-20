@@ -107,8 +107,7 @@ export const  BasicSelectAttendance = ({attendance}) =>  {
   const [state, setState] = React.useState(attendance === null ?
     -1 : 
     ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
-  
-  
+
   const [isLoading, setIsLoading] = React.useState(false)
 
   const handleChange = (event, value) => {
