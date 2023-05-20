@@ -108,9 +108,10 @@ const ATTENDANCES_TYPES = ["TOTAL", "PARCIAL", "NO_ASISTIDA"]
 
 
 export const  BasicSelectAttendance = ({attendance}) =>  {
+  
   const user = useAuthUser();
   const {setSuccessMsg, setErrorMsg} = React.useContext(CustomNotistackContext)
-  const [state, setState] = React.useState(attendance === null ?
+  const [state, setState] = React.useState(attendance === null || attendance === undefined ?
     -1 : 
     ATTENDANCES_TYPES.findIndex((value) => value === attendance.type));
   

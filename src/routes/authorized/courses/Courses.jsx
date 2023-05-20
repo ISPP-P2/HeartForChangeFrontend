@@ -59,7 +59,7 @@ function Courses() {
 
   const ActivityList = new CustomList(parseCurso(filteredData, handleDelete, disableButton));
   let objetoTabla = ActivityList.parseToTableBasic(
-    ["Nombre del taller","Lugar","Coordinador","Fecha","Ver detalles"],
+    ["Nombre del curso","Lugar","Coordinador","Fecha","Ver detalles"],
     ["name", "place","coordinator","date", "button"]
   )
 

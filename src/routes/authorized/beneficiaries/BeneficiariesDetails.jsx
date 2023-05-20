@@ -43,7 +43,6 @@ const parseBenfeiciario = (beneficiario) => {
 
 
  const parseDates = (beneficiario) => {
-  console.log(beneficiario.leavingDate)
   return {
     ...beneficiario,
     birthday: beneficiario.birthday === null ? "" :  moment(`${beneficiario.birthday[0]}-${beneficiario.birthday[1]}-${beneficiario.birthday[2]}`).format("yyyy-MM-DD"),
