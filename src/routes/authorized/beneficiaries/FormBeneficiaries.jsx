@@ -145,13 +145,9 @@ const form = [
     name: "postalCode",
     type: FORM_TYPES.NUMBER,
     label: "Código Postal",
-    validation: Yup.number()
-  .required("Este campo es obligatorio")
-  .test(
-    "len",
-    "El código postal debe tener 5 cifras",
-    (val) => val.toString().length === 5
-  )
+    validation: Yup.string()
+    .matches(/^(0[1-9]|[1-4]\d|5[0-2])\d{3}$/, 'El código postal no es válido')
+    .required('El código postal es obligatorio'),
   },
   {
     name: "registrationAddress",
